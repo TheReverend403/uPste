@@ -139,6 +139,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
+        Matriphe\Format\FormatServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -177,6 +178,7 @@ return [
         'Event'     => Illuminate\Support\Facades\Event::class,
         'File'      => Illuminate\Support\Facades\File::class,
         'Form'      => Illuminate\Html\FormFacade::class,
+        'Format'    => Matriphe\Format\Facades\FormatFacade::class,
         'Hash'      => Illuminate\Support\Facades\Hash::class,
         'HTML'      => Illuminate\Html\HtmlFacade::class,
         'Input'     => Illuminate\Support\Facades\Input::class,

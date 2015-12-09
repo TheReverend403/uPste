@@ -35,6 +35,7 @@
                     @else
                         <a href="{{ route('admin.users.unban', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-success">Unban</a>
                     @endif
+                        <a href="{{ route('admin.users.uploads', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-default">Uploads</a>
                 </td>
             </tr>
         @endforeach

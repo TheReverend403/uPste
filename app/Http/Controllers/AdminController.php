@@ -44,6 +44,12 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+    public function uploads($user)
+    {
+        $uploads = $user->uploads;
+        return view('admin.uploads', compact('uploads', 'user'));
+    }
+
     public function enable($user)
     {
         $user->fill(['enabled' => true])->save();

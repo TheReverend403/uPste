@@ -67,14 +67,17 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
     Route::get('users', [
         'as' => 'admin.users', 'uses' => 'AdminController@users']);
 
-    Route::get('users/ban/{user}', [
+    Route::get('users/{user}/ban', [
         'as' => 'admin.users.ban', 'uses' => 'AdminController@ban']);
 
-    Route::get('users/unban/{user}', [
+    Route::get('users/{user}/unban', [
         'as' => 'admin.users.unban', 'uses' => 'AdminController@unban']);
 
-    Route::get('users/enable/{user}', [
+    Route::get('users/{user}/enable', [
         'as' => 'admin.users.enable', 'uses' => 'AdminController@enable']);
+
+    Route::get('users/{user}/uploads', [
+        'as' => 'admin.users.uploads', 'uses' => 'AdminController@uploads']);
 });
 
 /*

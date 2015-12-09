@@ -10,7 +10,8 @@
         "barryvdh/laravel-debugbar": "v2.0.6",
         "illuminate/html": "v5.0.0",
         "barryvdh/laravel-ide-helper": "v2.1.0",
-        "doctrine/dbal": "2.3.5"
+        "doctrine/dbal": "2.3.5",
+        "matriphe/format": "1.6.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
