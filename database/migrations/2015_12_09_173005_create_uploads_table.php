@@ -15,7 +15,7 @@ class CreateUploadsTable extends Migration
         Schema::create('uploads', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->string('hash', 20);
             $table->string('name', 32)->unique();
             $table->unsignedBigInteger('size');
