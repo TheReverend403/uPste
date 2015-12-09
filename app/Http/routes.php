@@ -78,6 +78,9 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
 
     Route::get('users/{user}/uploads', [
         'as' => 'admin.users.uploads', 'uses' => 'AdminController@uploads']);
+
+    Route::get('users/{user}/delete', [
+        'as' => 'admin.users.delete', 'uses' => 'AdminController@delete']);
 });
 
 /*

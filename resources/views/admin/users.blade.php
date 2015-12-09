@@ -31,10 +31,11 @@
                 <td>{{ $user->updated_at }}</td>
                 <td>
                     @if (!$user->banned)
-                        <a href="{{ route('admin.users.ban', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-danger">Ban</a>
+                        <a href="{{ route('admin.users.ban', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-warning">Ban</a>
                     @else
                         <a href="{{ route('admin.users.unban', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-success">Unban</a>
                     @endif
+                        <a href="{{ route('admin.users.delete', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-danger">Delete</a>
                         <a href="{{ route('admin.users.uploads', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-default">Uploads</a>
                 </td>
             </tr>

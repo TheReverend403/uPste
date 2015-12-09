@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 
 use App\Http\Requests;
+use File;
 use Mail;
 use Session;
 
@@ -35,6 +36,21 @@ class AdminController extends Controller
             return redirect()->back();
         }
         $user->fill(['banned' => true])->save();
+        return redirect()->back();
+    }
+
+    public function delete($user)
+    {
+        if ($user->id == 1) {
+            Session::flash('alert',
+                'You cannot delete the superuser account.');
+            return redirect()->back();
+        }
+        $path = storage_path() . '/uploads/';
+        foreach ($user->uploads as $upload) {
+            File::delete($path . $upload->name);
+        }
+        $user->forceDelete();
         return redirect()->back();
     }
 
