@@ -13,9 +13,10 @@ class CreateUploadsTable extends Migration
     public function up()
     {
         Schema::create('uploads', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->integer('user_id');
-            $table->binary('hash', 20);
+            $table->string('hash', 20);
             $table->string('name', 32)->unique();
             $table->unsignedBigInteger('size');
             $table->string('original_name');
@@ -34,3 +35,4 @@ class CreateUploadsTable extends Migration
         Schema::drop('uploads');
     }
 }
+
