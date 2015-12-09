@@ -4,6 +4,7 @@
 
 @section('admin-content')
     @if (count($users))
+        <div class="table-responsive">
         <table class="table table-bordered">
             <tr>
                 <th>#</th>
@@ -22,6 +23,7 @@
                 </tr>
             @endforeach
         </table>
+        </div>
     @else
         <div class="text-center">
             <div class="alert alert-info">There are no users awaiting approval.</div>

@@ -4,6 +4,7 @@
 
 @section('account-content')
     @if(count($uploads))
+        <div class="table-responsive">
         <table class="table table-bordered">
             <tr>
                 <th>Name</th>
@@ -24,6 +25,7 @@
             </tr>
         @endforeach
             </table>
+         </div>
     @else
         <div class="text-center alert alert-warning">You don't have any uploads!</div>
     @endif
