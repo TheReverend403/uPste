@@ -17,7 +17,7 @@
             <input type="text" name="name" class="form-control" placeholder="Me" value="{{ old('name') }}">
         </div>
         <div class="form-group">
-            <label for="email">Name</label>
+            <label for="email">Email</label>
             <input type="email" name="email" class="form-control" placeholder="me@mydomain.com" value="{{ old('email') }}">
         </div>
         <div class="form-group">
