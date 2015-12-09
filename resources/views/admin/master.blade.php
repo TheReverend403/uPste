@@ -11,6 +11,8 @@
                role="button" aria-haspopup="true" aria-expanded="false">
                 {{ Auth::user()->name }} &nbsp;<i class="fa fa-caret-down"></i></a>
             <ul class="dropdown-menu">
+                <li><a href="#"><i class="fa fa-lock fa-fw"></i>&nbsp; Change Password</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out fa-fw"></i>&nbsp; Logout</a></li>
             </ul>
         </li>
