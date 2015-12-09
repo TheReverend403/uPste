@@ -15,11 +15,11 @@
         @if($new)
             @include('account.new-member')
         @endif
-        <div id="previews" class="dropzone">
-        </div>
         <div class="upload">
             <a class="upload-button" href="#">Drag and drop or click to upload files</a>
         </div>
+            <div id="previews" class="dropzone">
+            </div>
         <hr>
         <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#api-modal">API Info</button>
     </div>

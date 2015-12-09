@@ -8,7 +8,6 @@
         <table class="table table-bordered">
             <tr>
                 <th>Name</th>
-                <th>Original Name</th>
                 <th>URL</th>
                 <th>Size</th>
                 <th>SHA1</th>
@@ -16,7 +15,6 @@
             </tr>
         @foreach($uploads as $upload)
             <tr>
-                <td>{{ $upload->name }}</td>
                 <td>{{ $upload->original_name }}</td>
                 <td><a href="{{ env('UPLOAD_URL') . '/' . $upload->name }}">{{ env('UPLOAD_URL') . '/' . $upload->name }}</a></td>
                 <td>{{ format_bytes($upload->size, 0) }}</td>
