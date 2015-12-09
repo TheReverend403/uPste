@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# pstepw - Upload files/scrots/urls to {{ route('index') }} (rip pomf & uguu)
+# pstepw - Upload files/scrots/urls to {{ route('index') }}
 # By onodera, modified by TheReverend403
 
 ## CONFIGURATION
@@ -63,7 +63,7 @@ desktop() {
 
 # This function uploads the $file
 upload() {
-	url="$(curl --silent -F key="{{ Auth::user()->apikey }}" -F file="@$uploadme" "{{ route('api.upload') }}" | grep -o -i "{{ route('index') }}/*.[a-z0-9._-]*")"
+	url="$(curl --silent -F key="$key" -F file="@$uploadme" "{{ route('api.upload') }}" | grep -o -i "{{ route('index') }}/*.[a-z0-9._-]*")"
 }
 
 # This function logs the url,  copies the url to the clipboard, and/or opens the url in your browser
