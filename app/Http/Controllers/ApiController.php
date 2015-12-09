@@ -7,6 +7,7 @@ use Auth;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Response;
 
 class ApiController extends Controller
 {
@@ -45,6 +46,8 @@ class ApiController extends Controller
             'url' => url($newname)
         ];
 
-        return response()->json($result);
+        $response = Response::make(json_encode($result, JSON_UNESCAPED_SLASHES), 200);
+        $response->header('Content-Type', 'application/json');
+        return $response;
     }
 }
