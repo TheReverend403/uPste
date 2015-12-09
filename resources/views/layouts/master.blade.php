@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="{{ url('img/favicon.png') }}">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/yeti/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url('css/app.css') }}">
     @yield('stylesheets')
