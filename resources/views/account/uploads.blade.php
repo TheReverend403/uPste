@@ -17,7 +17,7 @@
             <tr>
                 <td>{{ $upload->name }}</td>
                 <td>{{ $upload->original_name }}</td>
-                <td><a href="{{ url($upload->name) }}">{{ url($upload->name) }}</a></td>
+                <td><a href="{{ url('f/'.$upload->name) }}">{{ url('f/'.$upload->name) }}</a></td>
                 <td>{{ $upload->size }}</td>
                 <td>{{ $upload->hash }}</td>
                 <td>{{ $upload->created_at }}</td>
