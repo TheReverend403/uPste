@@ -8,7 +8,7 @@
         <p>If you make something neat, <a href="mailto:{{ env('OWNER_EMAIL') }}">let us know</a> and we'll feature it here.</p>
         <hr>
         <h3>Bash script</h3>
-        <p>You can upload to {{ env('DOMAIN') }} with our <a href="{{ route('account.script') }}">bash script</a>.</p>
+        <p>You can upload to {{ env('DOMAIN') }} with our bash script.</p>
         <p>This script depends on <a href="https://github.com/naelstrof/slop">slop</a> and <a href="https://github.com/naelstrof/maim">maim</a>.</p>
         <p>Save this to <code>~/.config/pstepw</code>:</p>
     </div>
