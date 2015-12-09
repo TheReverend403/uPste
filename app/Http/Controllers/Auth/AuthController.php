@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use Auth;
+use Illuminate\Http\Request;
 use Mail;
 use Session;
 use Validator;
@@ -71,15 +71,30 @@ class AuthController extends Controller
             'enabled' => $firstUser
         ]);
 
-        Mail::queue('emails.admin.new_registration', $data, function($message) use ($data)
+        return $user;
+    }
+
+    public function postRegister(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        $data = $request->all();
+        $this->create($data);
+
+        Mail::queue(['text' => 'emails.admin.new_registration'], $data, function($message) use ($data)
         {
             $message->from(env('SITE_EMAIL_FROM'), env('SITE_NAME'));
             $message->subject(sprintf("[%s] New User Registration", env('DOMAIN')));
             $message->to(env('OWNER_EMAIL'));
         });
-
         Session::flash('info',
-            'Your account request has successfully been registered. You will receive an email when an admin approves or denies your request.');
-        return $user;
+            'Your account request has successfully been registered. You will receive an email when an admin approves your request.');
+        return redirect()->route('index');
     }
 }

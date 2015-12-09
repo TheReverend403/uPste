@@ -72,7 +72,7 @@ class AdminController extends Controller
     public function enable($user)
     {
         $user->fill(['enabled' => true])->save();
-        Mail::queue('emails.user.account_approved', ['user' => $user], function($message) use ($user)
+        Mail::queue(['text' => 'emails.user.account_approved'], ['user' => $user], function($message) use ($user)
         {
             $message->from(env('SITE_EMAIL_FROM'), env('SITE_NAME'));
             $message->subject(sprintf("[%s] Account Approved", env('DOMAIN')));

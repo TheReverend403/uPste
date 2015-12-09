@@ -38,7 +38,7 @@ class AccountController extends Controller
     public function resetKey()
     {
         Auth::user()->fill(['apikey' => str_random(64)])->save();
-        Mail::queue('emails.user.api_key_reset', ['user' => Auth::user()], function($message)
+        Mail::queue(['text' => 'emails.user.api_key_reset'], ['user' => Auth::user()], function($message)
         {
             $message->from(env('SITE_EMAIL_FROM'), env('SITE_NAME'));
             $message->subject(sprintf("[%s] API Key Reset", env('DOMAIN')));

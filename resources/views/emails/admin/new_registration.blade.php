@@ -1,2 +1,3 @@
-<p>{{ $name }} ({{ $email }}) just registered at {{ env('DOMAIN') }}</p>
-<a href="{{ route('admin.requests') }}">Click here to check pending requests.</a>
+{{ $name }} ({{ $email }}) has just registered at {{ env('DOMAIN') }}
+
+Check pending requests at {{ route('admin.requests') }}
