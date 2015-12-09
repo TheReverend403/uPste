@@ -46,6 +46,10 @@ class Api
             return response()->json(["message" => "Invalid API key", 'code' => 401]);
         }
 
+        if (!$user->enabled) {
+            return response()->json(["message" => "Your account has not been approved by an admin", 'code' => 401]);
+        }
+
         if ($user->banned) {
             return response()->json(["message" => "You are banned", 'code' => 401]);
         }

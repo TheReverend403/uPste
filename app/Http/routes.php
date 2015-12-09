@@ -79,7 +79,6 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
 
 /*
  * API routes
- * TODO: Write an API middleware to authenticate based on API key
  */
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     Route::post('upload', [
