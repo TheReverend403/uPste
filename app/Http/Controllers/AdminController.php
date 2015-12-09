@@ -48,7 +48,10 @@ class AdminController extends Controller
         }
         $path = storage_path() . '/uploads/';
         foreach ($user->uploads as $upload) {
-            File::delete($path . $upload->name);
+            $filePath = $path . $upload->name;
+            if (File::isFile($filePath)) {
+                File::delete($filePath);
+            }
         }
         $user->forceDelete();
         return redirect()->back();
