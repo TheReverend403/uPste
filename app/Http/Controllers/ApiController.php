@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Upload;
 use Auth;
+use File;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -28,7 +29,10 @@ class ApiController extends Controller
             $ext = 'txt';
         }
 
-        $newname = str_random('5').".$ext";
+        do {
+            $newname = str_random('5') . ".$ext";
+        } while (File::exists($path . $newname));
+
         $upload = Upload::create([
             'user_id' => Auth::user()->id,
             'hash' => sha1_file($file),

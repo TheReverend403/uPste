@@ -11,8 +11,11 @@ $(function () {
                 $(file.previewTemplate).append($('<a>', {
                     'href': responseText.url,
                     html: responseText.url
-                }));
-            })
-        }
-    });
+                }))
+            }).on("addedfile", function(file) {
+                if (!file.type.match(/image.*/)) {
+                    this.emit("thumbnail", file, "/img/thumbnail.png");
+                }
+        })
+    }})
 });
