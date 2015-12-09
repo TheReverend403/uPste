@@ -43,7 +43,7 @@ class ApiController extends Controller
         $result = [
             'code' => 200,
             'hash' => $upload->getAttribute('hash'),
-            'url' => url($newname)
+            'url' => url('f/'.$newname)
         ];
 
         $response = Response::make(json_encode($result, JSON_UNESCAPED_SLASHES), 200);
