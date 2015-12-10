@@ -23,7 +23,7 @@ class ApiController extends Controller
             return response()->json(['invalid_file_upload'], 400);
         }
 
-        $path = storage_path() . '/uploads/';
+        $path = storage_path() . '/app/uploads/';
         $ext = $file->getClientOriginalExtension();
         if (!$ext) {
             $ext = 'txt';

@@ -48,7 +48,7 @@ class AdminController extends Controller
                 'You cannot delete the superuser account.');
             return redirect()->back();
         }
-        $path = storage_path() . '/uploads/';
+        $path = storage_path() . '/app/uploads/';
         foreach ($user->uploads as $upload) {
             $filePath = $path . $upload->name;
             if (File::isFile($filePath)) {
