@@ -7,7 +7,7 @@
         <div class="table-responsive">
             <table class="table table-bordered">
                 <tr>
-                    <th>Original Name</th>
+                    <th>Name</th>
                     <th>URL</th>
                     <th>Size</th>
                     <th>SHA1</th>
