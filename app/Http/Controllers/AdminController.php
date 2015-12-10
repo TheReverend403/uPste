@@ -34,31 +34,32 @@ class AdminController extends Controller
     public function ban($user)
     {
         if ($user->id == 1) {
-            Session::flash('alert',
-                'You cannot ban the superuser account.');
+            Session::flash('alert', 'You cannot ban the superuser account.');
             return redirect()->back();
         }
         $user->fill(['banned' => true])->save();
+        Session::flash('info', 'Banned user ' . $user->name);
         return redirect()->back();
     }
 
     public function delete($user)
     {
         if ($user->id == 1) {
-            Session::flash('alert',
-                'You cannot delete the superuser account.');
+            Session::flash('alert', 'You cannot delete the superuser account.');
             return redirect()->back();
         }
         foreach ($user->uploads as $upload) {
-            Storage::disk()->delete("uploads/$upload");
+            Storage::disk()->delete("uploads/" . $upload->name);
         }
         $user->forceDelete();
+        Session::flash('info', 'Deleted user ' . $user->name);
         return redirect()->back();
     }
 
     public function unban($user)
     {
         $user->fill(['banned' => false])->save();
+        Session::flash('info', 'Unbanned user ' . $user->name);
         return redirect()->back();
     }
 
@@ -75,6 +76,7 @@ class AdminController extends Controller
             $message->subject(sprintf("[%s] Account Request Accepted", env('DOMAIN')));
             $message->to($user->email);
         });
+        Session::flash('info', 'Approved user ' . $user->name);
         return redirect()->back();
     }
 
@@ -85,6 +87,7 @@ class AdminController extends Controller
             $message->to($user->email);
         });
         $user->forceDelete();
+        Session::flash('info', 'Rejected user ' . $user->name);
         return redirect()->back();
     }
 }
