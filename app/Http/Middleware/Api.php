@@ -6,6 +6,7 @@ use App\User;
 use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Input;
 
 class Api
 {
@@ -36,11 +37,11 @@ class Api
      */
     public function handle($request, Closure $next)
     {
-        $apikey = $request->get('key');
-        if (!$apikey) {
+        if (!Input::has('key')) {
             return response()->json(["message" => "Missing API key", 'code' => 401]);
         }
 
+        $apikey = Input::get('key');
         $user = User::where('apikey', $apikey)->first();
         if (!$user) {
             return response()->json(["message" => "Invalid API key", 'code' => 401]);
