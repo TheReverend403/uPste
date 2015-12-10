@@ -2,7 +2,7 @@
 
 @section('content')
     @section('nav-left')
-        <li><a href="{{ route('admin.requests') }}"><i class="fa fa-user-plus"></i>&nbsp; Pending Accounts</a></li>
+        <li><a href="{{ route('admin.requests') }}"><i class="fa fa-user-plus"></i>&nbsp; Pending Requests</a></li>
         <li><a href="{{ route('admin.users') }}"><i class="fa fa-user"></i>&nbsp; Users</a></li>
     @stop
     @section('nav-right')
