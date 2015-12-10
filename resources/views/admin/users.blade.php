@@ -42,6 +42,9 @@
         @endforeach
         </table>
         </div>
+        <div class="text-center">
+            {!! $users->render() !!}
+        </div>
     @else
         <div class="text-center">
             <div class="alert alert-info">There are no users...somehow?</div>

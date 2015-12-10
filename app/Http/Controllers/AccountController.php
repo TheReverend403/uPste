@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Upload;
 use Auth;
 use Mail;
 
@@ -31,7 +32,7 @@ class AccountController extends Controller
 
     public function uploads()
     {
-        $uploads = Auth::user()->uploads;
+        $uploads = Upload::where('user_id', Auth::user()->id)->paginate(15);
         return view('account.uploads', compact('uploads'));
     }
 

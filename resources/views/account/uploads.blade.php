@@ -24,6 +24,9 @@
         @endforeach
             </table>
          </div>
+        <div class="text-center">
+            {!! $uploads->render() !!}
+        </div>
     @else
         <div class="text-center alert alert-warning">You don't have any uploads!</div>
     @endif

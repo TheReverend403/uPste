@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Upload;
 use App\User;
 
 use App\Http\Requests;
+use Auth;
 use File;
 use Mail;
 use Session;
@@ -18,13 +20,13 @@ class AdminController extends Controller
 
     public function requests()
     {
-        $users = User::where('enabled', 0)->get();
+        $users = User::where('enabled', 0)->paginate(15);
         return view('admin.requests', compact('users'));
     }
 
     public function users()
     {
-        $users = User::all();
+        $users = User::paginate(15);
         return view('admin.users', ['users' => $users]);
     }
 
@@ -65,7 +67,7 @@ class AdminController extends Controller
 
     public function uploads($user)
     {
-        $uploads = $user->uploads;
+        $uploads = Upload::where('user_id', Auth::user()->id)->paginate(15);
         return view('admin.uploads', compact('uploads', 'user'));
     }
 
