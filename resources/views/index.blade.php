@@ -6,6 +6,8 @@
     <div class="text-center">
         <p>u.pste.pw is a private file hosting website.</p>
         <p>Accounts are given with approval from Leliana &lt;<a href="mailto:rev@revthefox.co.uk">rev@revthefox.co.uk</a>&gt;.</p>
+        <p>Your request will NOT be accepted if I don't know you or I'm not expecting your request prior to you making it.</p>
+        <p>In other words, random requests are not welcome..</p>
         <a href="{{ route('login') }}" role="button" class="btn btn-primary">Login</a>
         <a href="{{ route('register') }}" role="button" class="btn btn-primary">Register</a>
     </div>
