@@ -94,7 +94,7 @@ class AuthController extends Controller
             $message->to(env('OWNER_EMAIL'));
         });
         Session::flash('info',
-            'Your account request has successfully been registered. You will receive an email when an admin approves your request.');
+            'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.');
         return redirect()->route('index');
     }
 }

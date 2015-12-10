@@ -10,7 +10,7 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Registered</th>
+                <th>Date</th>
                 <th>Actions</th>
             </tr>
             @foreach($users as $user)
@@ -19,7 +19,10 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->created_at }}</td>
-                    <td><a href="{{ route('admin.users.enable', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-success">Enable</a></td>
+                    <td>
+                        <a href="{{ route('admin.users.accept', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-success">Accept</a>
+                        <a href="{{ route('admin.users.reject', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-danger">Reject</a>
+                    </td>
                 </tr>
             @endforeach
         </table>
@@ -29,7 +32,7 @@
         </div>
     @else
         <div class="text-center">
-            <div class="alert alert-info">There are no users awaiting approval.</div>
+            <div class="alert alert-info">There are no pending account requests.</div>
         </div>
     @endif
 @stop

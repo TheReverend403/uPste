@@ -15,18 +15,18 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.index');
+        return redirect()->route('admin.requests');
     }
 
     public function requests()
     {
-        $users = User::where('enabled', 0)->orderBy('created_at', 'asc')->paginate(15);
+        $users = User::where('enabled', false)->orderBy('created_at', 'asc')->paginate(15);
         return view('admin.requests', compact('users'));
     }
 
     public function users()
     {
-        $users = User::paginate(15);
+        $users = User::where('enabled', true)->paginate(15);
         return view('admin.users', ['users' => $users]);
     }
 
@@ -71,15 +71,25 @@ class AdminController extends Controller
         return view('admin.uploads', compact('uploads', 'user'));
     }
 
-    public function enable($user)
+    public function accept($user)
     {
         $user->fill(['enabled' => true])->save();
-        Mail::queue(['text' => 'emails.user.account_approved'], ['user' => $user], function($message) use ($user)
-        {
+        Mail::queue(['text' => 'emails.user.account_accepted'], ['user' => $user], function ($message) use ($user) {
             $message->from(env('SITE_EMAIL_FROM'), env('SITE_NAME'));
-            $message->subject(sprintf("[%s] Account Approved", env('DOMAIN')));
+            $message->subject(sprintf("[%s] Account Request Accepted", env('DOMAIN')));
             $message->to($user->email);
         });
+        return redirect()->back();
+    }
+
+    public function reject($user)
+    {
+        Mail::queue(['text' => 'emails.user.account_rejected'], ['user' => $user], function ($message) use ($user) {
+            $message->from(env('SITE_EMAIL_FROM'), env('SITE_NAME'));
+            $message->subject(sprintf("[%s] Account Request Rejected", env('DOMAIN')));
+            $message->to($user->email);
+        });
+        $user->forceDelete();
         return redirect()->back();
     }
 }

@@ -73,14 +73,17 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
     Route::get('users/{user}/unban', [
         'as' => 'admin.users.unban', 'uses' => 'AdminController@unban']);
 
-    Route::get('users/{user}/enable', [
-        'as' => 'admin.users.enable', 'uses' => 'AdminController@enable']);
-
     Route::get('users/{user}/uploads', [
         'as' => 'admin.users.uploads', 'uses' => 'AdminController@uploads']);
 
     Route::get('users/{user}/delete', [
         'as' => 'admin.users.delete', 'uses' => 'AdminController@delete']);
+
+    Route::get('users/{user}/accept', [
+        'as' => 'admin.users.accept', 'uses' => 'AdminController@accept']);
+
+    Route::get('users/{user}/reject', [
+        'as' => 'admin.users.reject', 'uses' => 'AdminController@reject']);
 });
 
 /*

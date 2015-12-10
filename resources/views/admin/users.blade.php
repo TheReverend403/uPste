@@ -17,8 +17,6 @@
         @foreach($users as $user)
             @if ($user->banned)
                 <tr class="danger">
-            @elseif (!$user->enabled)
-                <tr class="warning">
             @elseif ($user->admin)
                 <tr class="success">
             @else
