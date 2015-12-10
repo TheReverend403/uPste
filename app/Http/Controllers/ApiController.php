@@ -4,26 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Upload;
 use Auth;
-use File;
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Input;
 use Response;
+use Storage;
 
 class ApiController extends Controller
 {
-    public function upload(Request $request)
+    public function upload()
     {
-        if (!$request->hasFile('file')) {
+        if (!Input::hasFile('file')) {
             return response()->json(['upload_file_not_found'], 400);
         }
 
-        $file = $request->file('file');
+        $file = Input::file('file');
         if (!$file->isValid()) {
             return response()->json(['invalid_file_upload'], 400);
         }
 
-        $path = storage_path() . '/app/uploads/';
         $ext = $file->getClientOriginalExtension();
         if (!$ext) {
             $ext = 'txt';
@@ -31,24 +30,27 @@ class ApiController extends Controller
 
         $randomLen = 4;
         do {
-            $newname = str_random($randomLen++) . ".$ext";
-        } while (File::exists($path . $newname));
+            $newName = str_random($randomLen++) . ".$ext";
+        } while (Storage::disk()->exists("uploads/$newName"));
 
         $upload = Upload::create([
             'user_id' => Auth::user()->id,
             'hash' => sha1_file($file),
-            'name' => $newname,
+            'name' => $newName,
             'size' => $file->getSize(),
             'original_name' => $file->getClientOriginalName()
         ]);
 
         $upload->save();
-        $file->move($path, $newname);
+
+        Storage::disk()->put('uploads/'.$newName,
+            file_get_contents($file->getRealPath())
+        );
 
         $result = [
             'code' => 200,
             'hash' => $upload->getAttribute('hash'),
-            'url' => env('UPLOAD_URL') . '/' . $newname
+            'url' => env('UPLOAD_URL') . '/' . $newName
         ];
 
         $response = Response::make(json_encode($result, JSON_UNESCAPED_SLASHES), 200);

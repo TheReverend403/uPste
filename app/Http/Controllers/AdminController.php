@@ -10,6 +10,7 @@ use Auth;
 use File;
 use Mail;
 use Session;
+use Storage;
 
 class AdminController extends Controller
 {
@@ -48,12 +49,8 @@ class AdminController extends Controller
                 'You cannot delete the superuser account.');
             return redirect()->back();
         }
-        $path = storage_path() . '/app/uploads/';
         foreach ($user->uploads as $upload) {
-            $filePath = $path . $upload->name;
-            if (File::isFile($filePath)) {
-                File::delete($filePath);
-            }
+            Storage::disk()->delete("uploads/$upload");
         }
         $user->forceDelete();
         return redirect()->back();
