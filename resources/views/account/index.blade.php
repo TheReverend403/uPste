@@ -39,10 +39,10 @@
                         <pre class="apikey">{{ Auth::user()->apikey }}</pre>
                         <p>This key allows anyone to upload to u.pste.pw as you. Do not lose it. Upload like
                             so:</p>
-                    <pre>curl \
-        -F key={{ Auth::user()->apikey }} \
-        -F file=@example.png \
-                        {{ route('api.upload') }}</pre>
+<pre>curl \
+-F key={{ Auth::user()->apikey }} \
+-F file=@example.png \
+{{ route('api.upload') }}</pre>
                         <p>If your key is compromised, press "Reset Key" below.</p>
                     </div>
                     <div class="modal-footer">
