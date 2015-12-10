@@ -67,7 +67,7 @@ class AdminController extends Controller
 
     public function uploads($user)
     {
-        $uploads = Upload::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(15);
+        $uploads = Upload::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
         return view('admin.uploads', compact('uploads', 'user'));
     }
 
