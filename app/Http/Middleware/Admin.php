@@ -40,6 +40,8 @@ class Admin
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
+                Session::flash('alert',
+                    'You must log in to access that page.');
                 return redirect()->route('login');
             }
         }

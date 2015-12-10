@@ -45,7 +45,7 @@ class Authenticate
                 return redirect()->route('login');
             }
         }
-        
+
         if (!Auth::user()->enabled) {
             Session::flash('alert',
                 'Your account has not been approved. You will be notified via email when your account status changes.');
