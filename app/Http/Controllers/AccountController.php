@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Upload;
 use Auth;
 use Mail;
+use Session;
 
 class AccountController extends Controller
 {
@@ -36,7 +37,12 @@ class AccountController extends Controller
         return view('account.uploads', compact('uploads'));
     }
 
-    public function resetKey()
+    public function getResetKey() {
+        Session::flash('warning', 'You cannot navigate to that URL, use the "Reset Key" button on your account page instead.');
+        return redirect()->back();
+    }
+
+    public function postResetKey()
     {
         Auth::user()->fill(['apikey' => str_random(64)])->save();
         Mail::queue(['text' => 'emails.user.api_key_reset'], ['user' => Auth::user()], function($message)

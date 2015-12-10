@@ -27,7 +27,6 @@ class PasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
         $this->redirectTo = route('account');
     }
 }
