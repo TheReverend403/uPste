@@ -20,7 +20,7 @@ class AdminController extends Controller
 
     public function requests()
     {
-        $users = User::where('enabled', 0)->paginate(15);
+        $users = User::where('enabled', 0)->orderBy('created_at', 'asc')->paginate(15);
         return view('admin.requests', compact('users'));
     }
 
@@ -67,7 +67,7 @@ class AdminController extends Controller
 
     public function uploads($user)
     {
-        $uploads = Upload::where('user_id', Auth::user()->id)->paginate(15);
+        $uploads = Upload::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(15);
         return view('admin.uploads', compact('uploads', 'user'));
     }
 
