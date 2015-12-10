@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use DB;
 use Illuminate\Http\Request;
 use Mail;
 use Session;
@@ -60,7 +61,7 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $firstUser = count(User::all()) == 0;
+        $firstUser = DB::table('users')->count() == 0;
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
