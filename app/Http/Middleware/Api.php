@@ -54,7 +54,7 @@ class Api
             return response()->json(["message" => "You are banned", 'code' => 401]);
         }
 
-        Auth::login($user);
+        Auth::onceUsingId($user->id);
         return $next($request);
     }
 }
