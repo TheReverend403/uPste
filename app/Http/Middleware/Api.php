@@ -38,21 +38,21 @@ class Api
     public function handle($request, Closure $next)
     {
         if (!Input::has('key')) {
-            return response()->json(["message" => "Missing API key", 'code' => 401]);
+            return response()->json(["error" => "Missing API key", 'code' => 401]);
         }
 
         $apikey = Input::get('key');
         $user = User::where('apikey', $apikey)->first();
         if (!$user) {
-            return response()->json(["message" => "Invalid API key", 'code' => 401]);
+            return response()->json(["error" => "Invalid API key", 'code' => 401]);
         }
 
         if (!$user->enabled) {
-            return response()->json(["message" => "Your account has not been approved by an admin", 'code' => 401]);
+            return response()->json(["error" => "Your account has not been approved", 'code' => 401]);
         }
 
         if ($user->banned) {
-            return response()->json(["message" => "You are banned", 'code' => 401]);
+            return response()->json(["error" => "You are banned", 'code' => 401]);
         }
 
         Auth::onceUsingId($user->id);

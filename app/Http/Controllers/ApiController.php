@@ -43,7 +43,7 @@ class ApiController extends Controller
 
         $upload->save();
 
-        Storage::disk()->put('uploads/'.$newName,
+        Storage::disk()->put("uploads/$newName",
             file_get_contents($file->getRealPath())
         );
 

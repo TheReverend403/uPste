@@ -17,7 +17,7 @@
 
 # DO NOT SHARE YOUR KEY
 key={{ Auth::user()->apikey }}
-    # Log URLs
+# Log URLs
 log=false
 # Log file location (if relevant)
 logfile="$HOME/.pstepw"
