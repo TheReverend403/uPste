@@ -29,8 +29,9 @@ class ApiController extends Controller
             $ext = 'txt';
         }
 
+        $randomLen = 4;
         do {
-            $newname = str_random('5') . ".$ext";
+            $newname = str_random($randomLen++) . ".$ext";
         } while (File::exists($path . $newname));
 
         $upload = Upload::create([
