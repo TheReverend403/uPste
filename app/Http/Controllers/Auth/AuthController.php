@@ -89,7 +89,6 @@ class AuthController extends Controller
 
         Mail::queue(['text' => 'emails.admin.new_registration'], $data, function($message) use ($data)
         {
-            $message->from(env('SITE_EMAIL_FROM'), env('SITE_NAME'));
             $message->subject(sprintf("[%s] New User Registration", env('DOMAIN')));
             $message->to(env('OWNER_EMAIL'));
         });

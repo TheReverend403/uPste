@@ -75,7 +75,6 @@ class AdminController extends Controller
     {
         $user->fill(['enabled' => true])->save();
         Mail::queue(['text' => 'emails.user.account_accepted'], ['user' => $user], function ($message) use ($user) {
-            $message->from(env('SITE_EMAIL_FROM'), env('SITE_NAME'));
             $message->subject(sprintf("[%s] Account Request Accepted", env('DOMAIN')));
             $message->to($user->email);
         });
@@ -85,7 +84,6 @@ class AdminController extends Controller
     public function reject($user)
     {
         Mail::queue(['text' => 'emails.user.account_rejected'], ['user' => $user], function ($message) use ($user) {
-            $message->from(env('SITE_EMAIL_FROM'), env('SITE_NAME'));
             $message->subject(sprintf("[%s] Account Request Rejected", env('DOMAIN')));
             $message->to($user->email);
         });
