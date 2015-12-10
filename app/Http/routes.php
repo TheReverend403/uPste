@@ -29,6 +29,18 @@ Route::group(['middleware' => 'guest'], function () {
 
     Route::post('register', [
         'as' => 'register', 'uses' => 'Auth\AuthController@postRegister']);
+
+    Route::get('password/email', [
+        'as' => 'account.password.email', 'uses' => 'Auth\PasswordController@getEmail']);
+
+    Route::post('password/email', [
+        'as' => 'account.password.email', 'uses' => 'Auth\PasswordController@postEmail']);
+
+    Route::get('password/reset/{token}', [
+        'as' => 'account.password.reset', 'uses' => 'Auth\PasswordController@getReset']);
+
+    Route::post('password/reset', [
+        'as' => 'account.password.reset', 'uses' => 'Auth\PasswordController@postReset']);
 });
 
 /*
@@ -54,8 +66,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'u'], function () {
         'as' => 'account.resetkey', 'uses' => 'AccountController@resetKey']);
 
     Route::get('resetkey', function () {
-        Session::flash('warning', 'You cannot navigate to that URL, use the "Reset Key" button instead.');
-        return redirect()->route('account');
+        Session::flash('warning', 'You cannot navigate to that URL, use the "Reset Key" button on your account page instead.');
+        return redirect()->back();
     });
 });
 

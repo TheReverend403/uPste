@@ -18,6 +18,7 @@
             </label>
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
+        <a href="{{ route('account.password.email') }}" role="button" class="btn btn-default">Forgot Password</a>
         {!! csrf_field() !!}
     </form>
 @stop

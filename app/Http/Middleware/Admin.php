@@ -48,7 +48,7 @@ class Admin
         if (!Auth::user()->admin) {
             Session::flash('alert',
                 'You do not have permission to access that area.');
-            return redirect()->route('account');
+            return redirect()->back();
         }
         return $next($request);
     }

@@ -40,6 +40,9 @@
             @if(Session::has('info'))
                 <div class="alert alert-success">{{ Session::get('info') }}</div>
             @endif
+                @if(Session::has('status'))
+                    <div class="alert alert-info">{{ Session::get('status') }}</div>
+                @endif
             @if(Session::has('warning'))
                 <div class="alert alert-warning">{{ Session::get('warning') }}</div>
             @endif
