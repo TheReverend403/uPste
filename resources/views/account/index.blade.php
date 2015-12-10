@@ -44,8 +44,13 @@
                     <p>If your key is compromised, press "Reset Key" below.</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{ route('account.resetkey') }}" class="btn btn-danger" role="button">Reset Key</a>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
+                    <form action="{{ route('account.resetkey') }}" method="POST">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-danger">Reset Key</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
+                        </div>
+                        {!! csrf_field() !!}
+                    </form>
                 </div>
             </div>
         </div>

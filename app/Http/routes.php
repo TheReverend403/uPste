@@ -50,8 +50,13 @@ Route::group(['middleware' => 'auth', 'prefix' => 'u'], function () {
     Route::get('uploads', [
         'as' => 'account.uploads', 'uses' => 'AccountController@uploads']);
 
-    Route::get('resetkey', [
+    Route::post('resetkey', [
         'as' => 'account.resetkey', 'uses' => 'AccountController@resetKey']);
+
+    Route::get('resetkey', function () {
+        Session::flash('warning', 'You cannot navigate to that URL, use the "Reset Key" button instead.');
+        return redirect()->route('account');
+    });
 });
 
 /*

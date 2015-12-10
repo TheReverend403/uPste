@@ -40,8 +40,16 @@
             @if(Session::has('info'))
                 <div class="alert alert-success">{{ Session::get('info') }}</div>
             @endif
+            @if(Session::has('warning'))
+                <div class="alert alert-warning">{{ Session::get('warning') }}</div>
+            @endif
             @if(Session::has('alert'))
                 <div class="alert alert-danger">{{ Session::get('alert') }}</div>
+            @endif
+            @if (count($errors) > 0)
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger">{{ $error }}</div>
+                @endforeach
             @endif
         </div>
         @yield('content')
@@ -53,7 +61,7 @@
             <p class="text-muted"><small>{{ env('IRC_CHANNEL') }} @ {{ env('IRC_SERVER') }}</small></p>
         </div>
     </footer>
-    <script src="//code.jquery.com/jquery-1.11.3.min.js" type="application/javascript"></script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     @yield('javascript')
 </body>

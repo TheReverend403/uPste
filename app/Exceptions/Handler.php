@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use Auth;
 use Exception;
+use Illuminate\Session\TokenMismatchException;
+use Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -39,6 +42,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof TokenMismatchException){
+            Session::flash('alert', 'CSRF verification failed, try logging in again.');
+            Auth::logout();
+            return redirect()->route('login');
+        }
         return parent::render($request, $e);
     }
 }

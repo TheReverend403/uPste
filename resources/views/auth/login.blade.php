@@ -4,14 +4,6 @@
 
 @section('content')
     <form method="POST" action="{{ route('login') }}">
-        <div class="text-center">
-            @if (count($errors) > 0)
-                @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger">{{ $error }}</div>
-                @endforeach
-            @endif
-        </div>
-        {!! csrf_field() !!}
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
@@ -26,5 +18,6 @@
             </label>
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
+        {!! csrf_field() !!}
     </form>
 @stop

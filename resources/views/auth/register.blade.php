@@ -4,7 +4,6 @@
 
 @section('content')
     <form method="POST" action="{{ route('register') }}">
-        {!! csrf_field() !!}
         <div class="text-center">
             @if (count($errors) > 0)
                 @foreach ($errors->all() as $error)
@@ -31,5 +30,6 @@
         <div>
             <button type="submit" class="btn btn-primary">Register</button>
         </div>
+        {!! csrf_field() !!}
     </form>
 @stop
