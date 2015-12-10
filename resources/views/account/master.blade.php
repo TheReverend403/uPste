@@ -21,6 +21,6 @@
     @yield('account-content')
 
 @section('footer')
-    <p class="text-muted"><small>Currently hosting {{ DB::table('uploads')->count() }} files for {{ DB::table('users')->count() }} users.</small></p>
+    <p class="text-muted"><small>Currently hosting {{ DB::table('uploads')->count() }} files for {{ DB::table('users')->where('enabled', true)->count() }} users.</small></p>
 @stop
 @stop
