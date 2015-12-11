@@ -1,7 +1,13 @@
 @extends('layouts.master')
 
 @section('nav-left')
-    <li><a href="{{ route('admin.requests') }}"><i class="fa fa-user-plus"></i>&nbsp; Pending Requests</a></li>
+    <li>
+        <a href="{{ route('admin.requests') }}">
+            <span class="badge">
+                {{ DB::table('users')->where('enabled', false)->count() }}
+            </span>&nbsp; Pending Requests
+        </a>
+    </li>
     <li><a href="{{ route('admin.users') }}"><i class="fa fa-user"></i>&nbsp; Users</a></li>
 @stop
 
