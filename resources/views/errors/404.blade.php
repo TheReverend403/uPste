@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>We'll be right back.</title>
+    <title>404 - Page Not Found</title>
     <link rel="icon" type="image/png" href="{{ url('img/favicon.png') }}">
 
     <link href="//fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
@@ -40,7 +40,7 @@
 <body>
 <div class="container">
     <div class="content">
-        <p>We'll be right back.</p>
+        <p>We couldn't find the page you were looking for.</p>
     </div>
 </div>
 </body>
