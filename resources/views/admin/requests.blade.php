@@ -3,7 +3,7 @@
 @section('title', 'AdminCP - Requests')
 
 @section('content')
-    @if (count($users))
+    @if ($request_count)
         <div class="table-responsive">
             <table class="table table-bordered">
                 <tr>

@@ -21,8 +21,8 @@
 
 @section('footer')
     <p class="text-muted">
-        <small>Currently hosting {{ DB::table('uploads')->count() }} files
-            for {{ DB::table('users')->where('enabled', true)->count() }} users.
+        <small>Currently hosting {{ $site_stats['uploads'] }} files
+            for {{ $site_stats['users'] }} users.
         </small>
     </p>
 @stop

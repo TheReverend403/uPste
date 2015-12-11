@@ -5,12 +5,26 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Upload;
 use App\User;
+use Cache;
+use DB;
 use Mail;
 use Session;
 use Storage;
+use View;
 
 class AdminController extends Controller
 {
+    protected $request_count;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->request_count = Cache::remember('request_count', 5, function () {
+            return DB::table('users')->where('enabled', false)->count();
+        });
+        View::share('request_count', $this->request_count);
+    }
+
     public function getIndex()
     {
         return redirect()->route('admin.requests');
@@ -19,7 +33,7 @@ class AdminController extends Controller
     public function getRequests()
     {
         $users = User::where('enabled', false)->orderBy('created_at', 'asc')->paginate(15);
-        return view('admin.requests', compact('users'));
+        return view('admin.requests', compact('users', 'request_count'));
     }
 
     public function getUsers()
