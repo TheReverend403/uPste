@@ -63,7 +63,7 @@
         </div>
     @else
         <div class="message-area">
-            <div class="alert alert-info">There are no users...somehow?</div>
+            <div class="alert alert-danger">There are no users...somehow?</div>
         </div>
     @endif
 @stop
