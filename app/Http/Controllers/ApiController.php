@@ -12,7 +12,7 @@ use Storage;
 
 class ApiController extends Controller
 {
-    public function upload()
+    public function postUpload()
     {
         if (!Input::hasFile('file')) {
             return response()->json(['upload_file_not_found'], 400);

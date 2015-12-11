@@ -16,7 +16,7 @@
  */
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', [
-        'as' => 'index', 'uses' => 'IndexController@index']);
+        'as' => 'index', 'uses' => 'IndexController@getIndex']);
 
     Route::get('login', [
         'as' => 'login', 'uses' => 'Auth\AuthController@getLogin']);
@@ -30,17 +30,19 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('register', [
         'as' => 'register', 'uses' => 'Auth\AuthController@postRegister']);
 
-    Route::get('password/email', [
-        'as' => 'account.password.email', 'uses' => 'Auth\PasswordController@getEmail']);
+    Route::group(['prefix' => 'password'], function () {
+        Route::get('email', [
+            'as' => 'account.password.email', 'uses' => 'Auth\PasswordController@getEmail']);
 
-    Route::post('password/email', [
-        'as' => 'account.password.email', 'uses' => 'Auth\PasswordController@postEmail']);
+        Route::post('email', [
+            'as' => 'account.password.email', 'uses' => 'Auth\PasswordController@postEmail']);
 
-    Route::get('password/reset/{token}', [
-        'as' => 'account.password.reset', 'uses' => 'Auth\PasswordController@getReset']);
+        Route::get('reset/{token}', [
+            'as' => 'account.password.reset', 'uses' => 'Auth\PasswordController@getReset']);
 
-    Route::post('password/reset', [
-        'as' => 'account.password.reset', 'uses' => 'Auth\PasswordController@postReset']);
+        Route::post('reset', [
+            'as' => 'account.password.reset', 'uses' => 'Auth\PasswordController@postReset']);
+    });
 });
 
 /*
@@ -48,57 +50,73 @@ Route::group(['middleware' => 'guest'], function () {
  */
 Route::group(['middleware' => 'auth', 'prefix' => 'u'], function () {
     Route::get('/', [
-        'as' => 'account', 'uses' => 'AccountController@index']);
+        'as' => 'account', 'uses' => 'AccountController@getindex']);
 
     Route::get('logout', [
         'as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
 
     Route::get('resources', [
-        'as' => 'account.resources', 'uses' => 'AccountController@resources']);
+        'as' => 'account.resources', 'uses' => 'AccountController@getResources']);
 
     Route::get('resources/scripts/bash', [
-        'as' => 'account.resources.bash', 'uses' => 'AccountController@bashScript']);
+        'as' => 'account.resources.bash', 'uses' => 'AccountController@getBashScript']);
 
-    Route::get('uploads', [
-        'as' => 'account.uploads', 'uses' => 'AccountController@uploads']);
+    Route::group(['prefix' => 'uploads'], function () {
+        Route::get('/', [
+            'as' => 'account.uploads', 'uses' => 'AccountController@getUploads']);
+
+        Route::get('{upload}/delete', [
+            'as' => 'account.uploads.delete', 'uses' => 'Controller@getNotAllowed']);
+
+        Route::post('{upload}/delete', [
+            'as' => 'account.uploads.delete', 'uses' => 'AccountController@postUploadsDelete']);
+    });
 
     Route::post('resetkey', [
         'as' => 'account.resetkey', 'uses' => 'AccountController@postResetKey']);
 
     Route::get('resetkey', [
-        'as' => 'account.resetkey', 'uses' => 'AccountController@getResetKey']);
+        'as' => 'account.resetkey', 'uses' => 'AccountController@getNotAllowed']);
 });
 
 /*
  * Routes only admins can access
  */
 Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
+
     Route::get('/', [
-        'as' => 'admin', 'uses' => 'AdminController@index']);
+        'as' => 'admin', 'uses' => 'AdminController@getIndex']);
 
     Route::get('requests', [
-        'as' => 'admin.requests', 'uses' => 'AdminController@requests']);
+        'as' => 'admin.requests', 'uses' => 'AdminController@getRequests']);
 
-    Route::get('users', [
-        'as' => 'admin.users', 'uses' => 'AdminController@users']);
+    Route::group(['prefix' => 'users'], function () {
 
-    Route::get('users/{user}/ban', [
-        'as' => 'admin.users.ban', 'uses' => 'AdminController@ban']);
+        Route::get('/', [
+            'as' => 'admin.users', 'uses' => 'AdminController@getUsers']);
 
-    Route::get('users/{user}/unban', [
-        'as' => 'admin.users.unban', 'uses' => 'AdminController@unban']);
+        Route::post('{user}/ban', [
+            'as' => 'admin.users.ban', 'uses' => 'AdminController@postUserBan']);
 
-    Route::get('users/{user}/uploads', [
-        'as' => 'admin.users.uploads', 'uses' => 'AdminController@uploads']);
+        Route::post('{user}/unban', [
+            'as' => 'admin.users.unban', 'uses' => 'AdminController@postUserUnban']);
 
-    Route::get('users/{user}/delete', [
-        'as' => 'admin.users.delete', 'uses' => 'AdminController@delete']);
+        Route::get('{user}/uploads', [
+            'as' => 'admin.users.uploads', 'uses' => 'AdminController@getUploads']);
 
-    Route::get('users/{user}/accept', [
-        'as' => 'admin.users.accept', 'uses' => 'AdminController@accept']);
+        Route::post('uploads/{upload}/delete', [
+            'as' => 'admin.uploads.delete', 'uses' => 'AccountController@postUploadsDelete']);
 
-    Route::get('users/{user}/reject', [
-        'as' => 'admin.users.reject', 'uses' => 'AdminController@reject']);
+        Route::post('{user}/delete', [
+            'as' => 'admin.users.delete', 'uses' => 'AdminController@postUserDelete']);
+
+        Route::post('{user}/accept', [
+            'as' => 'admin.users.accept', 'uses' => 'AdminController@postUserAccept']);
+
+        Route::post('{user}/reject', [
+            'as' => 'admin.users.reject', 'uses' => 'AdminController@postUserReject']);
+
+    });
 });
 
 /*
@@ -106,5 +124,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
  */
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     Route::post('upload', [
-        'as' => 'api.upload', 'uses' => 'ApiController@upload']);
+        'as' => 'api.upload', 'uses' => 'ApiController@postUpload']);
+
+    Route::get('upload', [
+        'as' => 'api.upload', 'uses' => 'Controller@getNotAllowed']);
 });

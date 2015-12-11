@@ -12,7 +12,7 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getIndex()
     {
         if (Auth::user()) {
             return redirect()->route('account');

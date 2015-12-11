@@ -6,32 +6,30 @@ use App\Upload;
 use App\User;
 
 use App\Http\Requests;
-use Auth;
-use File;
 use Mail;
 use Session;
 use Storage;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function getIndex()
     {
         return redirect()->route('admin.requests');
     }
 
-    public function requests()
+    public function getRequests()
     {
         $users = User::where('enabled', false)->orderBy('created_at', 'asc')->paginate(15);
         return view('admin.requests', compact('users'));
     }
 
-    public function users()
+    public function getUsers()
     {
         $users = User::where('enabled', true)->paginate(15);
         return view('admin.users', ['users' => $users]);
     }
 
-    public function ban($user)
+    public function postUserBan($user)
     {
         if ($user->id == 1) {
             Session::flash('alert', 'You cannot ban the superuser account.');
@@ -42,34 +40,46 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function delete($user)
+    public function postUserDelete($user)
     {
         if ($user->id == 1) {
             Session::flash('alert', 'You cannot delete the superuser account.');
             return redirect()->back();
         }
         foreach ($user->uploads as $upload) {
-            Storage::disk()->delete("uploads/" . $upload->name);
+            if (Storage::disk()->exists("uploads/" . $upload->name)) {
+                Storage::disk()->delete("uploads/" . $upload->name);
+            }
         }
         $user->forceDelete();
         Session::flash('info', 'Deleted user ' . $user->name);
         return redirect()->back();
     }
 
-    public function unban($user)
+    public function postUserUnban($user)
     {
         $user->fill(['banned' => false])->save();
         Session::flash('info', 'Unbanned user ' . $user->name);
         return redirect()->back();
     }
 
-    public function uploads($user)
+    public function getUploads($user)
     {
         $uploads = Upload::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
         return view('admin.uploads', compact('uploads', 'user'));
     }
 
-    public function accept($user)
+    public function postUploadsDelete($upload)
+    {
+        if (Storage::disk()->exists("uploads/" . $upload->name)) {
+            Storage::disk()->delete("uploads/" . $upload->name);
+        }
+        $upload->forceDelete();
+        Session::flash('info', $upload->name . ' has been deleted.');
+        return redirect()->back();
+    }
+
+    public function postUserAccept($user)
     {
         $user->fill(['enabled' => true])->save();
         Mail::queue(['text' => 'emails.user.account_accepted'], ['user' => $user], function ($message) use ($user) {
@@ -80,7 +90,7 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function reject($user)
+    public function postUserReject($user)
     {
         Mail::queue(['text' => 'emails.user.account_rejected'], ['user' => $user], function ($message) use ($user) {
             $message->subject(sprintf("[%s] Account Request Rejected", env('DOMAIN')));

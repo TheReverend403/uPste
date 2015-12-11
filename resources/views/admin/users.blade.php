@@ -12,7 +12,6 @@
                 <th>Email</th>
                 <th>Registered</th>
                 <th>Updated</th>
-                <th>Actions</th>
             </tr>
         @foreach($users as $user)
             @if ($user->banned)
@@ -27,16 +26,31 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->created_at }}</td>
                 <td>{{ $user->updated_at }}</td>
-                <td>
                     @if (!$user->banned)
-                        <a href="{{ route('admin.users.ban', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-warning">Ban</a>
+                        <td class="text-center">
+                        <form class="form" action="{{ route('admin.users.ban', ['id' => $user->id]) }}" method="POST">
+                            <button type="submit" class="btn btn-xs btn-warning">Ban</button>
+                            {!! csrf_field() !!}
+                        </form>
+                        </td>
                     @else
-                        <a href="{{ route('admin.users.unban', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-success">Unban</a>
+                        <td class="text-center">
+                        <form class="form" action="{{ route('admin.users.unban', ['id' => $user->id]) }}" method="POST">
+                            <button type="submit" class="btn btn-xs btn-success">Unban</button>
+                            {!! csrf_field() !!}
+                        </form>
+                        </td>
                     @endif
-                        <a href="{{ route('admin.users.delete', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-danger">Delete</a>
-                        <a href="{{ route('admin.users.uploads', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-default">Uploads</a>
-                </td>
-            </tr>
+                    <td class="text-center">
+                        <form class="form" action="{{ route('admin.users.delete', ['id' => $user->id]) }}" method="POST">
+                            <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                            {!! csrf_field() !!}
+                        </form>
+                    </td>
+                    <td class="text-center">
+                            <a href="{{ route('admin.users.uploads', ['id' => $user->id]) }}" role="button" class="btn btn-xs btn-default">Uploads</a>
+                    </td>
+                </tr>
         @endforeach
         </table>
         </div>

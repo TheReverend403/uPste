@@ -7,10 +7,11 @@ use App\Upload;
 use Auth;
 use Mail;
 use Session;
+use Storage;
 
 class AccountController extends Controller
 {
-    public function index()
+    public function getIndex()
     {
         $now = time();
         $registered_date = strtotime(Auth::user()->created_at);
@@ -21,24 +22,34 @@ class AccountController extends Controller
         return view('account.index', ['new' => $new]);
     }
 
-    public function resources()
+    public function getResources()
     {
         return view('account.resources');
     }
 
-    public function bashScript()
+    public function getBashScript()
     {
         return response()->view('account.resources.bash')->header('Content-Type', 'text/plain');
     }
 
-    public function uploads()
+    public function getUploads()
     {
         $uploads = Upload::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(15);
         return view('account.uploads', compact('uploads'));
     }
 
-    public function getResetKey() {
-        Session::flash('warning', 'You cannot navigate to that URL, use the "Reset Key" button on your account page instead.');
+    public function postUploadsDelete($upload)
+    {
+        if (!Auth::user()->id == $upload->user_id) {
+            Session::flash('error', 'That file is not yours, you cannot delete it!');
+            return redirect()->back();
+        }
+
+        if (Storage::disk()->exists("uploads/" . $upload->name)) {
+            Storage::disk()->delete("uploads/" . $upload->name);
+        }
+        $upload->forceDelete();
+        Session::flash('info', $upload->name . ' has been deleted.');
         return redirect()->back();
     }
 
