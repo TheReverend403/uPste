@@ -3,7 +3,7 @@
 @section('title', 'Do you know the way?')
 
 @section('content')
-    <div class="text-center">
+    <div class="container-sm text-center">
         <p>{{ env('DOMAIN') }} is a private file hosting website.</p>
         <p>Accounts are given with approval from {{ env('OWNER_NAME') }} &lt;<a
                     href="mailto:{{ env('OWNER_EMAIL') }}">{{ env('OWNER_EMAIL') }}</a>&gt;.</p>
