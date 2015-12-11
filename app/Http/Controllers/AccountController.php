@@ -34,7 +34,7 @@ class AccountController extends Controller
 
     public function getUploads()
     {
-        $uploads = Upload::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(15);
+        $uploads = Upload::where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(15);
         return view('account.uploads', compact('uploads'));
     }
 
