@@ -22,10 +22,8 @@
         </div>
         <div id="previews" class="dropzone">
         </div>
+        <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#api-modal">API Info</button>
         <hr>
-        <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#api-modal">API
-            Info
-        </button>
     </div>
 
     <div class="modal fade" id="api-modal">
@@ -45,13 +43,11 @@
 -F key={{ Auth::user()->apikey }} \
 -F file=@example.png \
 {{ route('api.upload') }}</pre>
-                    <p>If your key is compromised, press "Reset Key" below.</p>
                 </div>
                 <div class="modal-footer">
                     <form action="{{ route('account.resetkey') }}" method="POST">
-                        <div class="form-group">
+                        <div class="form-group text-center">
                             <button type="submit" class="btn btn-danger">Reset Key</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
                         </div>
                         {!! csrf_field() !!}
                     </form>
@@ -62,7 +58,6 @@
 @stop
 
 @section('javascript')
-    <script src="//cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"
-            type="application/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js" type="application/javascript"></script>
     <script src="{{ url('js/dropzone.js') }}" type="application/javascript"></script>
 @stop

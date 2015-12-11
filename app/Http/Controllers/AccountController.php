@@ -15,11 +15,12 @@ class AccountController extends Controller
     {
         $now = time();
         $registered_date = strtotime(Auth::user()->created_at);
-        $datediff = $now - $registered_date;
-        $days = floor($datediff / (60 * 60 * 24));
-        $new = $days == 0;
+        $datediff = abs($now - $registered_date);
+        $days_registered = round($datediff / (60 * 60 * 24));
+        $new = $days_registered <= 7;
+        $days_registered = 7 - $days_registered;
 
-        return view('account.index', ['new' => $new]);
+        return view('account.index', compact('new', 'days_registered'));
     }
 
     public function getResources()

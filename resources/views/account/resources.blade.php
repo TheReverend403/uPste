@@ -8,7 +8,6 @@
             <h3>Third Party Integrations</h3>
             <p>If you make something neat, <a href="mailto:{{ env('OWNER_EMAIL') }}">let us know</a> and we'll feature it
                 here.</p>
-            <hr>
             <h3>Bash script</h3>
             <p>You can upload to {{ env('DOMAIN') }} with our bash script.</p>
             <p>This script depends on <a href="https://github.com/naelstrof/slop">slop</a> and <a
