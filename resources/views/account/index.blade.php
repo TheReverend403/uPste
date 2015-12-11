@@ -10,6 +10,8 @@
     <script>
         window.root = "{{ route('index') }}";
         window.api_key = "{{ Auth::user()->apikey }}";
+        window.api_upload_url = "{{ route('api.upload') }}";
+        window.dropzone_thumbnail = "{{ url('img/thumbnail.png') }}";
     </script>
     <div class="container-sm text-center">
         @if($new)
@@ -62,5 +64,5 @@
 @section('javascript')
     <script src="//cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"
             type="application/javascript"></script>
-    <script src="{{ url('js/dropzone_config.js') }}" type="application/javascript"></script>
+    <script src="{{ url('js/dropzone.js') }}" type="application/javascript"></script>
 @stop

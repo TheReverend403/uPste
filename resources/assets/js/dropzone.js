@@ -1,7 +1,7 @@
 Dropzone.autoDiscover = false;
 $(function () {
     $(document.body).dropzone({
-        url: "/api/upload",
+        url: window.api_upload_url,
         previewsContainer: "#previews",
         clickable: ".upload-button",
         params: {'key': window.api_key},
@@ -14,7 +14,7 @@ $(function () {
                 }))
             }).on("addedfile", function(file) {
                 if (!file.type.match(/image.*/)) {
-                    this.emit("thumbnail", file, "/img/thumbnail.png");
+                    this.emit("thumbnail", file, window.dropzone_thumbnail);
                 }
         })
     }})
