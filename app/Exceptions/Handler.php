@@ -20,7 +20,6 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         TokenMismatchException::class,
-        NotFoundHttpException::class,
         HttpException::class,
     ];
 
@@ -40,10 +39,12 @@ class Handler extends ExceptionHandler
             'exception' => $e
         ];
 
-        Mail::send(['text' => 'emails.admin.exception'], $data, function ($message) {
-            $message->subject(sprintf("[%s] Application Exception", env('DOMAIN')));
-            $message->to(env('OWNER_EMAIL'));
-        });
+        if (!$e instanceof HttpException) {
+            Mail::send(['text' => 'emails.admin.exception'], $data, function ($message) {
+                $message->subject(sprintf("[%s] Application Exception", env('DOMAIN')));
+                $message->to(env('OWNER_EMAIL'));
+            });
+        }
 
         return parent::report($e);
     }
