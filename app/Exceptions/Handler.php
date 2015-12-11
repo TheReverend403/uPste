@@ -32,14 +32,14 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        $data = [
-            'ip' => request()->getClientIp(),
-            'url' => request()->fullUrl(),
-            'exception' => $e
-        ];
-
         if ($this->shouldReport($e)) {
-            Mail::send(['text' => 'emails.admin.exception'], $data, function ($message) {
+            $data = [
+                'ip' => request()->getClientIp(),
+                'url' => request()->fullUrl(),
+                'exception' => $e
+            ];
+
+            Mail::queue(['text' => 'emails.admin.exception'], $data, function ($message) {
                 $message->subject(sprintf("[%s] Application Exception", env('DOMAIN')));
                 $message->to(env('OWNER_EMAIL'));
             });
