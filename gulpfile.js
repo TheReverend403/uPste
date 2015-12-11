@@ -17,5 +17,6 @@ elixir.config.sourcemaps = false;
 
 elixir(function(mix) {
     mix.sass('app.scss');
-    mix.scripts(["dropzone.js"], 'public/js/dropzone.js');
+    mix.sass("error.scss", 'public/css/error.css');
+    mix.scripts("dropzone.js", 'public/js/dropzone.js');
 });
