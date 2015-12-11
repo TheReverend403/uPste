@@ -91,7 +91,6 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
         'as' => 'admin.requests', 'uses' => 'AdminController@getRequests']);
 
     Route::group(['prefix' => 'users'], function () {
-
         Route::get('/', [
             'as' => 'admin.users', 'uses' => 'AdminController@getUsers']);
 
@@ -115,7 +114,6 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
 
         Route::post('{user}/reject', [
             'as' => 'admin.users.reject', 'uses' => 'AdminController@postUserReject']);
-
     });
 });
 
