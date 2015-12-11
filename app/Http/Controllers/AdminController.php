@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests;
 use App\Upload;
 use App\User;
-
-use App\Http\Requests;
 use Mail;
 use Session;
 use Storage;

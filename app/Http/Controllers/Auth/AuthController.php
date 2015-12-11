@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\User;
 use DB;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Mail;
 use Session;
 use Validator;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
@@ -38,10 +38,32 @@ class AuthController extends Controller
         $this->loginPath = route('login');
     }
 
+    public function postRegister(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        $data = $request->all();
+        $this->create($data);
+
+        Mail::queue(['text' => 'emails.admin.new_registration'], $data, function ($message) use ($data) {
+            $message->subject(sprintf("[%s] New User Registration", env('DOMAIN')));
+            $message->to(env('OWNER_EMAIL'));
+        });
+        Session::flash('info',
+            'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.');
+        return redirect()->route('index');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -56,7 +78,7 @@ class AuthController extends Controller
     /**
      * Create a new account instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
@@ -73,28 +95,5 @@ class AuthController extends Controller
         ]);
 
         return $user;
-    }
-
-    public function postRegister(Request $request)
-    {
-        $validator = $this->validator($request->all());
-
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
-
-        $data = $request->all();
-        $this->create($data);
-
-        Mail::queue(['text' => 'emails.admin.new_registration'], $data, function($message) use ($data)
-        {
-            $message->subject(sprintf("[%s] New User Registration", env('DOMAIN')));
-            $message->to(env('OWNER_EMAIL'));
-        });
-        Session::flash('info',
-            'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.');
-        return redirect()->route('index');
     }
 }

@@ -16,7 +16,7 @@ class AccountController extends Controller
         $now = time();
         $registered_date = strtotime(Auth::user()->created_at);
         $datediff = $now - $registered_date;
-        $days = floor($datediff / (60*60*24));
+        $days = floor($datediff / (60 * 60 * 24));
         $new = $days == 0;
 
         return view('account.index', ['new' => $new]);
@@ -48,6 +48,7 @@ class AccountController extends Controller
         if (Storage::disk()->exists("uploads/" . $upload->name)) {
             Storage::disk()->delete("uploads/" . $upload->name);
         }
+
         $upload->forceDelete();
         Session::flash('info', $upload->original_name . ' has been deleted.');
         return redirect()->back();
@@ -57,8 +58,7 @@ class AccountController extends Controller
     {
         Auth::user()->fill(['apikey' => str_random(64)])->save();
         Session::flash('info', 'Your API key was reset. New API key: ' . Auth::user()->apikey);
-        Mail::queue(['text' => 'emails.user.api_key_reset'], ['user' => Auth::user()], function($message)
-        {
+        Mail::queue(['text' => 'emails.user.api_key_reset'], ['user' => Auth::user()], function ($message) {
             $message->subject(sprintf("[%s] API Key Reset", env('DOMAIN')));
             $message->to(Auth::user()->email);
         });
