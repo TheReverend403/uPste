@@ -6,6 +6,7 @@ use Auth;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
+use Mail;
 use Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -17,6 +18,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
+        TokenMismatchException::class,
         HttpException::class,
     ];
 
@@ -30,6 +32,17 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
+        $data = [
+            'ip' => request()->getClientIp(),
+            'url' => request()->fullUrl(),
+            'exception' => $e
+        ];
+
+        Mail::send(['text' => 'emails.admin.exception'], $data, function ($message) {
+            $message->subject(sprintf("[%s] Application Exception", env('DOMAIN')));
+            $message->to(env('OWNER_EMAIL'));
+        });
+
         return parent::report($e);
     }
 
@@ -47,6 +60,7 @@ class Handler extends ExceptionHandler
             Auth::logout();
             return redirect()->route('login');
         }
+
         return parent::render($request, $e);
     }
 }
