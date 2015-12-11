@@ -26,7 +26,7 @@ class ApiController extends Controller
         $fileHash = sha1_file($file);
         $existing = Upload::where('hash', $fileHash)
             ->where('user_id', Auth::user()->id)->first();
-        if ($existing->count()) {
+        if ($existing) {
             $result = [
                 'code' => 200,
                 'hash' => $existing->getAttribute('hash'),
