@@ -104,7 +104,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
             'as' => 'admin.users.uploads', 'uses' => 'AdminController@getUploads']);
 
         Route::post('uploads/{upload}/delete', [
-            'as' => 'admin.uploads.delete', 'uses' => 'AccountController@postUploadsDelete']);
+            'as' => 'admin.uploads.delete', 'uses' => 'AdminController@postUploadsDelete']);
 
         Route::post('{user}/delete', [
             'as' => 'admin.users.delete', 'uses' => 'AdminController@postUserDelete']);
