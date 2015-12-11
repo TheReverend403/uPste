@@ -12,7 +12,8 @@
                 <li>Max file size per upload is {{ env('UPLOAD_LIMIT') }}.</li>
                 <li>Do not upload child porn or malware, you'll be banned without mercy.</li>
                 <li>Scripts and third-party integrations are provided for members,
-                    <a href="{{ route('account.resources') }}">{{ route('account.resources') }}</a>.</li>
+                    <a href="{{ route('account.resources') }}">{{ route('account.resources') }}</a>.
+                </li>
             </ul>
         </div>
     </div>
