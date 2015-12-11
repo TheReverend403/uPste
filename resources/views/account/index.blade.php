@@ -17,13 +17,24 @@
         @if($new)
             @include('account.new-member')
         @endif
+        <div class="panel panel-danger text-left">
+            <div class="panel-heading text-center">
+                <h3 class="panel-title">WARNING</h3>
+            </div>
+            <div class="panel-body">
+                <p>While only members can upload files, all uploads are visible to the public if they know (or accidentally
+                    find) the URL. Therefore, <b>DO NOT</b> upload anything you consider private as we will not accept any
+                    responsibility if it gets leaked.
+                </p>
+            </div>
+        </div>
         <div class="upload">
             <a class="upload-button" href="#">Drag and drop or click to upload files</a>
         </div>
         <div id="previews" class="dropzone">
         </div>
-        <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#api-modal">API Info</button>
-        <hr>
+        <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#api-modal">API Info
+        </button>
     </div>
 
     <div class="modal fade" id="api-modal">
@@ -42,7 +53,7 @@
 <pre>curl \
 -F key={{ Auth::user()->apikey }} \
 -F file=@example.png \
-{{ route('api.upload') }}</pre>
+    {{ route('api.upload') }}</pre>
                 </div>
                 <div class="modal-footer">
                     <form action="{{ route('account.resetkey') }}" method="POST">
@@ -58,6 +69,7 @@
 @stop
 
 @section('javascript')
-    <script src="//cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js" type="application/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"
+            type="application/javascript"></script>
     <script src="{{ url('js/dropzone.js') }}" type="application/javascript"></script>
 @stop

@@ -57,7 +57,8 @@
     @yield('content')
 </div>
 <footer class="footer">
-    <div class="text-center">
+    <div class="text-center container-sm">
+        <hr>
         @yield('footer')
         <p class="text-muted">
             <small>{{ env('IRC_CHANNEL') }} @ {{ env('IRC_SERVER') }}</small>
