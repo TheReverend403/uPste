@@ -56,8 +56,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'u'], function () {
     Route::get('resources', [
         'as' => 'account.resources', 'uses' => 'AccountController@resources']);
 
-    Route::get('script', [
-        'as' => 'account.script', 'uses' => 'AccountController@script']);
+    Route::get('resources/scripts/bash', [
+        'as' => 'account.resources.bash', 'uses' => 'AccountController@bashScript']);
 
     Route::get('uploads', [
         'as' => 'account.uploads', 'uses' => 'AccountController@uploads']);

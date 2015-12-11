@@ -26,9 +26,9 @@ class AccountController extends Controller
         return view('account.resources');
     }
 
-    public function script()
+    public function bashScript()
     {
-        return response()->view('account.script')->header('Content-Type', 'text/plain');
+        return response()->view('account.resources.bash')->header('Content-Type', 'text/plain');
     }
 
     public function uploads()
