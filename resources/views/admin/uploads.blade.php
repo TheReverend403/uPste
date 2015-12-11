@@ -1,8 +1,8 @@
-@extends('admin.master')
+@extends('layouts.admin')
 
 @section('title', 'AdminCP - Uploads: '. $user->name)
 
-@section('admin-content')
+@section('content')
     @if(count($uploads))
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -16,7 +16,9 @@
                 @foreach($uploads as $upload)
                     <tr>
                         <td>{{ $upload->original_name }}</td>
-                        <td><a href="{{ env('UPLOAD_URL') . '/' . $upload->name }}">{{ env('UPLOAD_URL') . '/' . $upload->name }}</a></td>
+                        <td>
+                            <a href="{{ env('UPLOAD_URL') . '/' . $upload->name }}">{{ env('UPLOAD_URL') . '/' . $upload->name }}</a>
+                        </td>
                         <td>{{ format_bytes($upload->size, 0) }}</td>
                         <td>{{ $upload->hash }}</td>
                         <td>{{ $upload->created_at }}</td>
@@ -34,6 +36,8 @@
             {!! $uploads->render() !!}
         </div>
     @else
-        <div class="text-center alert alert-warning">{{ $user->name }} doesn't have any uploads!</div>
+        <div class="message-area">
+            <div class="alert alert-warning">{{ $user->name }} doesn't have any uploads!</div>
+        </div>
     @endif
 @stop

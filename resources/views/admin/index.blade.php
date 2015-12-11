@@ -1,8 +1,8 @@
-@extends('admin.master')
+@extends('layouts.admin')
 
 @section('title', 'AdminCP')
 
-@section('admin-content')
+@section('content')
     <div class="text-center">
         <p>Install Gentoo</p>
     </div>

@@ -1,8 +1,8 @@
-@extends('admin.master')
+@extends('layouts.admin')
 
 @section('title', 'AdminCP - Requests')
 
-@section('admin-content')
+@section('content')
     @if (count($users))
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -19,13 +19,15 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->created_at }}</td>
                         <td class="text-center">
-                            <form class="form" action="{{ route('admin.users.accept', ['id' => $user->id]) }}" method="POST">
+                            <form class="form" action="{{ route('admin.users.accept', ['id' => $user->id]) }}"
+                                  method="POST">
                                 <button type="submit" class="btn btn-xs btn-success">Accept</button>
                                 {!! csrf_field() !!}
                             </form>
                         </td>
                         <td class="text-center">
-                            <form class="form" action="{{ route('admin.users.reject', ['id' => $user->id]) }}" method="POST">
+                            <form class="form" action="{{ route('admin.users.reject', ['id' => $user->id]) }}"
+                                  method="POST">
                                 <button type="submit" class="btn btn-xs btn-danger">Reject</button>
                                 {!! csrf_field() !!}
                             </form>
@@ -38,7 +40,7 @@
             {!! $users->render() !!}
         </div>
     @else
-        <div class="text-center">
+        <div class="message-area">
             <div class="alert alert-info">There are no pending account requests.</div>
         </div>
     @endif

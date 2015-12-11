@@ -1,4 +1,4 @@
-@extends('account.master')
+@extends('layouts.account')
 
 @section('title', 'My Account')
 
@@ -6,7 +6,7 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/basic.min.css" rel="stylesheet">
 @stop
 
-@section('account-content')
+@section('content')
         <script>
             window.root = "{{ route('index') }}";
             window.api_key = "{{ Auth::user()->apikey }}";

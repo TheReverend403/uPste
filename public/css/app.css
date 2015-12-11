@@ -15,4 +15,10 @@
     text-shadow: 0 1px rgba(255, 255, 255, 0.5);
     transition: background-color 0.25s, width 0.5s, height 0.5s; }
 
+.message-area {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; }
+
 /*# sourceMappingURL=app.css.map */
