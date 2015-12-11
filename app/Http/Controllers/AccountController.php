@@ -41,7 +41,7 @@ class AccountController extends Controller
     public function postUploadsDelete($upload)
     {
         if (Auth::user()->id != $upload->user_id) {
-            Session::flash('error', 'That file is not yours, you cannot delete it!');
+            Session::flash('alert', 'That file is not yours, you cannot delete it!');
             return redirect()->back();
         }
 
