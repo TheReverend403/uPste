@@ -13,6 +13,7 @@ var elixir = require('laravel-elixir');
 
 // Disable notify-send
 process.env.DISABLE_NOTIFIER = true;
+elixir.config.sourcemaps = false;
 
 elixir(function(mix) {
     mix.sass('app.scss');
