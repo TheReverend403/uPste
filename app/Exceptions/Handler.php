@@ -9,7 +9,6 @@ use Illuminate\Session\TokenMismatchException;
 use Mail;
 use Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -39,7 +38,7 @@ class Handler extends ExceptionHandler
             'exception' => $e
         ];
 
-        if (!$e instanceof HttpException) {
+        if ($this->shouldReport($e)) {
             Mail::send(['text' => 'emails.admin.exception'], $data, function ($message) {
                 $message->subject(sprintf("[%s] Application Exception", env('DOMAIN')));
                 $message->to(env('OWNER_EMAIL'));
