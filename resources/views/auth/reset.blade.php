@@ -3,20 +3,17 @@
 @section('title', 'Reset Password')
 
 @section('content')
-    <div class="container-sm">
+    <div class="container-sm jumbotron">
         <form method="POST" action="{{ route('account.password.reset') }}">
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" class="form-control" placeholder="me@mydomain.com"
+                <input title="Email" type="email" name="email" class="form-control" placeholder="me@mydomain.com"
                        value="{{ old('email') }}">
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password">
+                <input title="Password" type="password" name="password" class="form-control" placeholder="Password">
             </div>
             <div class="form-group">
-                <label for="password">Confirm Password</label>
-                <input type="password" name="password_confirmation" class="form-control" placeholder="Password">
+                <input title="Confirm Password" type="password" name="password_confirmation" class="form-control" placeholder="Confirm password">
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Reset</button>

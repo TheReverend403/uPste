@@ -57,12 +57,13 @@
     @yield('content')
 </div>
 <footer class="footer">
-    <div class="text-center container-sm">
+    <div class="text-center container-sm text-muted">
         <hr>
         @yield('footer')
-        <p class="text-muted">
-            <small>{{ env('IRC_CHANNEL') }} @ {{ env('IRC_SERVER') }}</small>
+        <p>
+            <small>Currently hosting {{ $site_stats['uploads'] }} file(s) for {{ $site_stats['users'] }} user(s).</small>
         </p>
+        <p><small>{{ env('IRC_CHANNEL') }} @ {{ env('IRC_SERVER') }}</small></p>
     </div>
 </footer>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>

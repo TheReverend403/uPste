@@ -3,24 +3,20 @@
 @section('title', 'Request Account')
 
 @section('content')
-    <div class="container-sm">
+    <div class="container-sm jumbotron">
         <form method="POST" action="{{ route('register') }}">
             <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" name="name" class="form-control" placeholder="Me" value="{{ old('name') }}">
+                <input title="Name" type="text" name="name" class="form-control" placeholder="Username" value="{{ old('name') }}">
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" class="form-control" placeholder="me@mydomain.com"
+                <input title="Email" type="email" name="email" class="form-control" placeholder="Email"
                        value="{{ old('email') }}">
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password">
+                <input title="Password" type="password" name="password" class="form-control" placeholder="Password">
             </div>
             <div class="form-group">
-                <label for="password">Confirm Password</label>
-                <input type="password" name="password_confirmation" class="form-control" placeholder="Password">
+                <input title="Confirm Password" type="password" name="password_confirmation" class="form-control" placeholder="Confirm password">
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Submit</button>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Cache;
 use DB;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -19,17 +18,15 @@ abstract class Controller extends BaseController
 
     public function __construct()
     {
-        if (Auth::check()) {
-            $this->site_stats['users'] = Cache::remember('users', 10, function () {
-                return DB::table('users')->where('enabled', true)->count();
-            });
+        $this->site_stats['users'] = Cache::remember('users', 10, function () {
+            return DB::table('users')->where('enabled', true)->count();
+        });
 
-            $this->site_stats['uploads'] = Cache::remember('uploads', 10, function () {
-                return DB::table('uploads')->count();
-            });
+        $this->site_stats['uploads'] = Cache::remember('uploads', 10, function () {
+            return DB::table('uploads')->count();
+        });
 
-            View::share('site_stats', $this->site_stats);
-        }
+        View::share('site_stats', $this->site_stats);
     }
 
     public function getNotAllowed()
