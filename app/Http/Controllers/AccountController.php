@@ -13,12 +13,12 @@ class AccountController extends Controller
 {
     public function getIndex()
     {
+        // Check if the user has been registered for 7 days or less
         $now = time();
         $registered_date = strtotime(Auth::user()->created_at);
         $datediff = abs($now - $registered_date);
-        $days_registered = round($datediff / (60 * 60 * 24));
+        $days_registered = 7 - round($datediff / (60 * 60 * 24));
         $new = $days_registered <= 7;
-        $days_registered = 7 - $days_registered;
 
         return view('account.index', compact('new', 'days_registered'));
     }
