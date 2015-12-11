@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Auth;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Mail\Message;
 use Illuminate\Session\TokenMismatchException;
 use Mail;
 use Session;
@@ -39,7 +40,7 @@ class Handler extends ExceptionHandler
                 'exception' => $e
             ];
 
-            Mail::send(['text' => 'emails.admin.exception'], $data, function ($message) {
+            Mail::send(['text' => 'emails.admin.exception'], $data, function (Message $message) {
                 $message->subject(sprintf("[%s] Application Exception", env('DOMAIN')));
                 $message->to(env('OWNER_EMAIL'));
             });

@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Upload;
 use App\User;
-use Cache;
-use DB;
+use Illuminate\Mail\Message;
 use Mail;
 use Session;
 use Storage;
@@ -19,9 +18,7 @@ class AdminController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->request_count = Cache::remember('request_count', 5, function () {
-            return DB::table('users')->where('enabled', false)->count();
-        });
+        $this->request_count = User::whereEnabled(false)->count();
         View::share('request_count', $this->request_count);
     }
 
@@ -32,17 +29,17 @@ class AdminController extends Controller
 
     public function getRequests()
     {
-        $users = User::where('enabled', false)->orderBy('created_at', 'asc')->paginate(15);
-        return view('admin.requests', compact('users', 'request_count'));
+        $users = User::whereEnabled(false)->orderBy('created_at', 'asc')->paginate(15);
+        return view('admin.requests', compact('users'));
     }
 
     public function getUsers()
     {
-        $users = User::where('enabled', true)->paginate(15);
+        $users = User::whereEnabled(true)->paginate(15);
         return view('admin.users', ['users' => $users]);
     }
 
-    public function postUserBan($user)
+    public function postUserBan(User $user)
     {
         if ($user->id == 1) {
             Session::flash('alert', 'You cannot ban the superuser account.');
@@ -53,7 +50,7 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function postUserDelete($user)
+    public function postUserDelete(User $user)
     {
         if ($user->id == 1) {
             Session::flash('alert', 'You cannot delete the superuser account.');
@@ -69,20 +66,20 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function postUserUnban($user)
+    public function postUserUnban(User $user)
     {
         $user->fill(['banned' => false])->save();
         Session::flash('info', 'Unbanned user ' . $user->name);
         return redirect()->back();
     }
 
-    public function getUploads($user)
+    public function getUploads(User $user)
     {
-        $uploads = Upload::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+        $uploads = Upload::whereUserId($user->id)->orderBy('created_at', 'desc')->paginate(15);
         return view('admin.uploads', compact('uploads', 'user'));
     }
 
-    public function postUploadsDelete($upload)
+    public function postUploadsDelete(Upload $upload)
     {
         if (Storage::disk()->exists("uploads/" . $upload->name)) {
             Storage::disk()->delete("uploads/" . $upload->name);
@@ -92,10 +89,10 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function postUserAccept($user)
+    public function postUserAccept(User $user)
     {
         $user->fill(['enabled' => true])->save();
-        Mail::queue(['text' => 'emails.user.account_accepted'], ['user' => $user], function ($message) use ($user) {
+        Mail::queue(['text' => 'emails.user.account_accepted'], ['user' => $user], function (Message $message) use ($user) {
             $message->subject(sprintf("[%s] Account Request Accepted", env('DOMAIN')));
             $message->to($user->email);
         });
@@ -103,9 +100,9 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function postUserReject($user)
+    public function postUserReject(User $user)
     {
-        Mail::queue(['text' => 'emails.user.account_rejected'], ['user' => $user], function ($message) use ($user) {
+        Mail::queue(['text' => 'emails.user.account_rejected'], ['user' => $user], function (Message $message) use ($user) {
             $message->subject(sprintf("[%s] Account Request Rejected", env('DOMAIN')));
             $message->to($user->email);
         });

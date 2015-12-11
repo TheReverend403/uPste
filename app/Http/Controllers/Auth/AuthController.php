@@ -8,6 +8,7 @@ use DB;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
 use Mail;
 use Session;
 use Validator;
@@ -52,7 +53,7 @@ class AuthController extends Controller
         $data = $request->all();
         $this->create($data);
 
-        Mail::queue(['text' => 'emails.admin.new_registration'], $data, function ($message) use ($data) {
+        Mail::queue(['text' => 'emails.admin.new_registration'], $data, function (Message $message) use ($data) {
             $message->subject(sprintf("[%s] New User Registration", env('DOMAIN')));
             $message->to(env('OWNER_EMAIL'));
         });

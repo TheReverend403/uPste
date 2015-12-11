@@ -42,7 +42,7 @@ class Api
         }
 
         $apikey = Input::get('key');
-        $user = User::where('apikey', $apikey)->first();
+        $user = User::whereApikey($apikey)->first();
         if (!$user) {
             return response()->json(["error" => "Invalid API key", 'code' => 401]);
         }

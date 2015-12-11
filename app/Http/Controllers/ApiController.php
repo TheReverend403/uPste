@@ -24,7 +24,7 @@ class ApiController extends Controller
 
         // Check to see if we already have this file for this user.
         $fileHash = sha1_file($file);
-        $existing = Upload::where('hash', $fileHash)->where('user_id', Auth::user()->id)->first();
+        $existing = Upload::whereHash($fileHash)->whereUserId(Auth::user()->id)->first();
         if ($existing) {
             $result = [
                 'code' => 200,
