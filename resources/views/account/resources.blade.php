@@ -30,7 +30,7 @@ browser=true
 </pre>
         <div class="text-center">
             <p>Save this to any location in your <code>$PATH</code>.</p>
-                <p>(<a href="{{ route('account.resources.bash') }}">plaintext version</a>)</p>
+            <p>(<a href="{{ route('account.resources.bash') }}">plaintext version</a>)</p>
         </div>
         <pre>@include('account.resources.bash')</pre>
 @stop
