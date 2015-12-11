@@ -49,7 +49,7 @@ class AccountController extends Controller
             Storage::disk()->delete("uploads/" . $upload->name);
         }
         $upload->forceDelete();
-        Session::flash('info', $upload->name . ' has been deleted.');
+        Session::flash('info', $upload->original_name . ' has been deleted.');
         return redirect()->back();
     }
 
