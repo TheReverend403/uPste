@@ -24,7 +24,7 @@
             <div class="panel-body">
                 <p>While only members can upload files, all uploads are visible to the public if they know (or accidentally
                     find) the URL. Therefore, <b class="text-danger">DO NOT</b> upload anything you consider private as we will not accept any
-                    responsibility if it gets leaked.
+                    responsibility if it gets leaked. If you must upload private files, consider <a href="https://gnupg.org/">encrypting</a> them first.
                 </p>
             </div>
         </div>
