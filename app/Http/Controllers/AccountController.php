@@ -45,7 +45,7 @@ class AccountController extends Controller
     public function postResetKey()
     {
         Auth::user()->fill(['apikey' => str_random(64)])->save();
-        Session::flash('info', 'Your API key was reset.');
+        Session::flash('info', 'Your API key was reset. New API key: ' . Auth::user()->apikey);
         Mail::queue(['text' => 'emails.user.api_key_reset'], ['user' => Auth::user()], function($message)
         {
             $message->subject(sprintf("[%s] API Key Reset", env('DOMAIN')));
