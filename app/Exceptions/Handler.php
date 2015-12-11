@@ -9,6 +9,7 @@ use Illuminate\Session\TokenMismatchException;
 use Mail;
 use Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -19,6 +20,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         TokenMismatchException::class,
+        NotFoundHttpException::class,
         HttpException::class,
     ];
 
