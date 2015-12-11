@@ -11,7 +11,7 @@
         window.root = "{{ route('index') }}";
         window.api_key = "{{ Auth::user()->apikey }}";
     </script>
-    <div class="text-center">
+    <div class="container-sm text-center">
         @if($new)
             @include('account.new-member')
         @endif

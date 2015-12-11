@@ -1,26 +1,34 @@
-.upload {
-    margin-bottom: 20px;
-    margin-top: 20px;
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-    .upload-button {
-        background: rgba(202, 230, 190, 0.75);
-        border: 1px solid #B7D1A0;
-        border-radius: 4px;
-        width: 100%;
-        text-align: center;
-        color: #468847;
-        cursor: pointer;
-        display: inline-block;
-        font-size: 24px;
-        padding: 28px 48px;
-        text-shadow: 0 1px rgba(255, 255, 255, 0.5);
-        transition: background-color 0.25s, width 0.5s, height 0.5s;
-    }
+.upload {
+  margin-bottom: 20px;
+  margin-top: 20px;
+
+  .upload-button {
+    background: rgba(202, 230, 190, 0.75);
+    border: 1px solid #B7D1A0;
+    border-radius: 4px;
+    width: 100%;
+    text-align: center;
+    color: #468847;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 24px;
+    padding: 28px 48px;
+    text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+    transition: background-color 0.25s, width 0.5s, height 0.5s;
+  }
+}
+
+.container-sm {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .message-area {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
