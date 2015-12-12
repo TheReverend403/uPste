@@ -53,7 +53,7 @@
 <pre>curl \
 -F key={{ Auth::user()->apikey }} \
 -F file=@example.png \
-    {{ route('api.upload') }}</pre>
+{{ route('api.upload') }}</pre>
                 </div>
                 <div class="modal-footer">
                     <form action="{{ route('account.resetkey') }}" method="POST">
