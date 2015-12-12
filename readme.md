@@ -1,27 +1,64 @@
-## Laravel PHP Framework
+uPste
+==========
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+uPste is a private file hosting application with an emphasis on serving technology communities.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+It is released under the [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.html).
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+# Requirements
 
-## Official Documentation
+* The ability to install [Laravel](http://laravel.com/docs/5.1/installation).
+* Any database supported by [Eloquent](http://laravel.com/docs/5.1/database#configuration).
+* [Composer](http://getcomposer.org/).
+* Node.js (and npm).
+* A little bit of command line experience.
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+# Installation
 
-## Contributing
+We'll assume you already have a database, setting that up is beyond the scope of this readme.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+````bash
+git clone https://github.com/TheReverend403/uPste
+cd uPste
+composer install
+npm install -g gulp # You may need to run this as root, unless you follow the instructions at https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
+npm install
+gulp --production
+````
 
-## Security Vulnerabilities
+Open .env in the root directory of uPste and edit the settings within to suit your site. Make sure to read what each one does, and feel free to ask if you're not sure.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+````bash
+php artisan migrate
+````
 
-### License
+The last part is entirely dependant you and how you want to configure your webserver, 
+but you're basically going to want two domains (or subdomains). 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+One will be your site UI where users will register, login, and manage their uploads. The root for this host should be $upste_root/public/
+
+The other will be purely for serving the uploaded files. The root for this host should be $upste_root/storage/app/uploads
+
+That's it, you're done! Now just navigate to your site and register. 
+
+The first user registered will be automatically enabled and made an admin, so take measures to make sure this is you.
+
+# Upgrading
+
+Upgrading is easy. Just run the following commands, and make sure to check .env.example for any new config options you need to set.
+
+````bash
+cd /path/to/uPste
+php artisan down
+git pull
+php artisan migrate
+gulp
+php artisan clear-compiled
+php artisan cache:clear
+php artisan view:clear
+php artisan route:cache
+php artisan config:cache
+php artisan optimize
+````
+
+If everything went well and you didn't get any errors, you can now bring your site back online with `php artisan up`

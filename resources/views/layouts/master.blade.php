@@ -63,7 +63,7 @@
         <p>
             <small>Currently hosting {{ $site_stats['uploads'] }} file(s) for {{ $site_stats['users'] }} user(s).</small>
         </p>
-        <p><small>{{ env('IRC_CHANNEL') }} @ {{ env('IRC_SERVER') }}</small></p>
+        <p><small>Powered by <a href="https://github.com/TheReverend403/uPste">uPste</a></small></p>
     </div>
 </footer>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
