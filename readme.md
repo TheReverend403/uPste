@@ -12,6 +12,8 @@ The official demo of this site is available at https://u.pste.pw, although not v
 
 Interested in contributing, want some help or just have some questions? Join us on [irc.rizon.net in #leliana](https://qchat.rizon.net/?channels=leliana)
 
+![Preview](https://a.pste.pw/WAZs.png)
+
 # Requirements
 
 * The ability to install [Laravel](http://laravel.com/docs/5.1/installation).
