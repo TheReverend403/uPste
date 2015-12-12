@@ -65,18 +65,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'u'], function () {
         Route::get('/', [
             'as' => 'account.uploads', 'uses' => 'AccountController@getUploads']);
 
-        Route::get('{upload}/delete', [
-            'as' => 'account.uploads.delete', 'uses' => 'Controller@getNotAllowed']);
-
         Route::post('{upload}/delete', [
             'as' => 'account.uploads.delete', 'uses' => 'AccountController@postUploadsDelete']);
     });
 
     Route::post('resetkey', [
         'as' => 'account.resetkey', 'uses' => 'AccountController@postResetKey']);
-
-    Route::get('resetkey', [
-        'as' => 'account.resetkey', 'uses' => 'AccountController@getNotAllowed']);
 });
 
 /*
@@ -123,7 +117,4 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     Route::post('upload', [
         'as' => 'api.upload', 'uses' => 'ApiController@postUpload']);
-
-    Route::get('upload', [
-        'as' => 'api.upload', 'uses' => 'Controller@getNotAllowed']);
 });

@@ -29,10 +29,4 @@ abstract class Controller extends BaseController
 
         View::share('site_stats', $this->site_stats);
     }
-
-    public function getNotAllowed()
-    {
-        flash()->warning('That URL is for POST requests only.');
-        return redirect()->route('account');
-    }
 }

@@ -8,8 +8,11 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Mail\Message;
 use Illuminate\Session\TokenMismatchException;
 use Mail;
+use Request;
 use Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
 class Handler extends ExceptionHandler
 {
@@ -59,9 +62,14 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if ($e instanceof TokenMismatchException) {
-            Session::flash('alert', 'CSRF verification failed, try logging in again.');
+            flash()->error('CSRF verification failed, try logging in again.')->important();
             Auth::logout();
             return redirect()->route('login');
+        }
+
+        if ($e instanceof MethodNotAllowedHttpException && $request->getMethod() == 'GET') {
+            flash()->error('That URL is for POST requests only.');
+            return redirect()->route('account');
         }
 
         return parent::render($request, $e);
