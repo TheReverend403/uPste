@@ -9,12 +9,4 @@
     @if (Auth::user()->admin)
         <li><a href="{{ route('admin') }}"><i class="fa fa-cog"></i>&nbsp; Admin</a></li>
     @endif
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-           role="button" aria-haspopup="true" aria-expanded="false">
-            {{ Auth::user()->name }} &nbsp;<i class="fa fa-caret-down"></i></a>
-        <ul class="dropdown-menu">
-            <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out fa-fw"></i>&nbsp; Logout</a></li>
-        </ul>
-    </li>
 @stop

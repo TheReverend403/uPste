@@ -43,7 +43,7 @@ class AccountController extends Controller
     public function postUploadsDelete(Upload $upload)
     {
         if (Auth::user()->id != $upload->user_id) {
-            Session::flash('alert', 'That file is not yours, you cannot delete it!');
+            flash()->error('That file is not yours, you cannot delete it!');
             return redirect()->back();
         }
 
@@ -52,14 +52,14 @@ class AccountController extends Controller
         }
 
         $upload->forceDelete();
-        Session::flash('info', $upload->original_name . ' has been deleted.');
+        flash()->success($upload->original_name . ' has been deleted.')->important();
         return redirect()->back();
     }
 
     public function postResetKey()
     {
         Auth::user()->fill(['apikey' => str_random(64)])->save();
-        Session::flash('info', 'Your API key was reset. New API key: ' . Auth::user()->apikey);
+        flash()->info('Your API key was reset. New API key: ' . Auth::user()->apikey);
         Mail::queue(['text' => 'emails.user.api_key_reset'], ['user' => Auth::user()], function (Message $message) {
             $message->subject(sprintf("[%s] API Key Reset", env('DOMAIN')));
             $message->to(Auth::user()->email);

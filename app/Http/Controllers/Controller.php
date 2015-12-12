@@ -32,7 +32,7 @@ abstract class Controller extends BaseController
 
     public function getNotAllowed()
     {
-        Session::flash('warning', 'That URL is for POST requests only.');
+        flash()->warning('That URL is for POST requests only.');
         return redirect()->route('account');
     }
 }

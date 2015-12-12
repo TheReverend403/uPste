@@ -14,13 +14,15 @@
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav"
-                    aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+            @if(Auth::check())
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav"
+                        aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            @endif
             <a class="navbar-brand" href="{{ route('index') }}">{{ env('DOMAIN') }}</a>
         </div>
 
@@ -30,24 +32,23 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @yield('nav-right')
+                @if(Auth::check())
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">
+                            {{ Auth::user()->name }} &nbsp;<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out fa-fw"></i>&nbsp; Logout</a></li>
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
 </nav>
 <div class="container">
     <div class="message-area">
-        @if(Session::has('info'))
-            <div class="alert alert-success">{{ Session::get('info') }}</div>
-        @endif
-        @if(Session::has('status'))
-            <div class="alert alert-info">{{ Session::get('status') }}</div>
-        @endif
-        @if(Session::has('warning'))
-            <div class="alert alert-warning">{{ Session::get('warning') }}</div>
-        @endif
-        @if(Session::has('alert'))
-            <div class="alert alert-danger">{{ Session::get('alert') }}</div>
-        @endif
+        @include('flash::message')
         @if (count($errors) > 0)
             @foreach ($errors->all() as $error)
                 <div class="alert alert-danger">{{ $error }}</div>
@@ -68,6 +69,10 @@
 </footer>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+    $('#flash-overlay-modal').modal();
+    $('div.alert-success').delay(4000).slideUp();
+</script>
 @yield('javascript')
 </body>
 </html>
