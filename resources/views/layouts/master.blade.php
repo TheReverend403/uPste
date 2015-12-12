@@ -68,14 +68,11 @@
     </div>
 </footer>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="{{ url('js/bootstrap.js') }}"></script>
 <script>
     $('#flash-overlay-modal').modal();
-    $('div.alert-success').delay(4000).slideUp();
+    $('div.alert').not('.alert-important').delay(3000).slideUp();
 </script>
 @yield('javascript')
-@if (Session::has('flash_notification.modal'))
-    @include('vendor.flash.modal')
-@endif
 </body>
 </html>

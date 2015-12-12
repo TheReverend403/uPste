@@ -40,22 +40,20 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                Session::flash('alert',
-                    'You must log in to access that page.');
+                flash()->error('You must log in to access that page.')->important();
                 return redirect()->route('login');
             }
         }
 
         if (!Auth::user()->enabled) {
-            Session::flash('alert',
-                'Your account has not been approved. You will be notified via email when your account status changes.');
+            flash()->error(
+                'Your account has not been approved. You will be notified via email when your account status changes.')->important();
             Auth::logout();
             return redirect()->route('login');
         }
 
         if (Auth::user()->banned) {
-            Session::flash('alert',
-                'You are banned. Contact an admin if you believe this is an error.');
+            flash()->error('You are banned. Contact an admin if you believe this is an error.')->important();
             Auth::logout();
             return redirect()->route('login');
         }

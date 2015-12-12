@@ -52,14 +52,14 @@ class AccountController extends Controller
         }
 
         $upload->forceDelete();
-        flash()->success($upload->original_name . ' has been deleted.')->important();
+        flash()->success($upload->original_name . ' has been deleted.');
         return redirect()->back();
     }
 
     public function postResetKey()
     {
         Auth::user()->fill(['apikey' => str_random(64)])->save();
-        flash()->info('Your API key was reset. New API key: ' . Auth::user()->apikey);
+        flash()->info('Your API key was reset. New API key: ' . Auth::user()->apikey)->important();
         Mail::queue(['text' => 'emails.user.api_key_reset'], ['user' => Auth::user()], function (Message $message) {
             $message->subject(sprintf("[%s] API Key Reset", env('DOMAIN')));
             $message->to(Auth::user()->email);

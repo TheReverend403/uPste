@@ -58,7 +58,8 @@ class AuthController extends Controller
             $message->to(env('OWNER_EMAIL'));
         });
         flash()->success(
-            'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.');
+            'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.')
+            ->important();
         return redirect()->route('index');
     }
 
