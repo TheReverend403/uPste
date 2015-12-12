@@ -48,7 +48,7 @@
 </nav>
 <div class="container">
     <div class="message-area">
-        @include('flash::message')
+        @include('vendor.flash.message')
         @if (count($errors) > 0)
             @foreach ($errors->all() as $error)
                 <div class="alert alert-danger">{{ $error }}</div>
@@ -74,5 +74,6 @@
     $('div.alert-success').delay(4000).slideUp();
 </script>
 @yield('javascript')
+@include('vendor.flash.modal')
 </body>
 </html>
