@@ -3,6 +3,8 @@ uPste
 
 uPste is a private file hosting application with an emphasis on serving technology communities.
 
+The official demo of this site is available at https://u.pste.pw, although not very useful without an account.
+
 It is released under the [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.html).
 
 # Requirements
@@ -32,7 +34,7 @@ Open .env in the root directory of uPste and edit the settings within to suit yo
 php artisan migrate
 ````
 
-The last part is entirely dependant you and how you want to configure your webserver, 
+The last part is entirely dependent you and how you want to configure your webserver, 
 but you're basically going to want two domains (or subdomains). 
 
 One will be your site UI where users will register, login, and manage their uploads. The root for this host should be $upste_root/public/
