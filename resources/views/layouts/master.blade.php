@@ -74,6 +74,8 @@
     $('div.alert-success').delay(4000).slideUp();
 </script>
 @yield('javascript')
-@include('vendor.flash.modal')
+@if (Session::has('flash_notification.modal'))
+    @include('vendor.flash.modal')
+@endif
 </body>
 </html>
