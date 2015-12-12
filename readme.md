@@ -1,7 +1,9 @@
 uPste
 ==========
 
-[![License](https://img.shields.io/badge/chat-IRC-green.svg?style=flat-square)](https://qchat.rizon.net/?channels=leliana)
+[![License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](https://www.gnu.org/licenses/agpl-3.0.en.html)
+
+[![IRC](https://img.shields.io/badge/chat-IRC-green.svg?style=flat-square)](https://qchat.rizon.net/?channels=leliana)
 
 uPste is a private file hosting application with an emphasis on serving technology communities.
 
