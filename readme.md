@@ -36,10 +36,10 @@ gulp --production
 Open .env in the root directory of uPste and edit the settings within to suit your site. Make sure to read what each one does, and feel free to ask if you're not sure.
 
 ````bash
-php artisan migrate
+php artisan migrate # Creates your database schema
 ````
 
-The last part is entirely dependent you and how you want to configure your webserver, 
+The next, and last part is entirely dependent you and how you want to configure your webserver, 
 but you're basically going to want two domains (or subdomains). 
 
 One will be your site UI where users will register, login, and manage their uploads. The root for this host should be $upste_root/public/
