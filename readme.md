@@ -29,10 +29,10 @@ We'll assume you already have a database, setting that up is beyond the scope of
 ````bash
 git clone https://github.com/TheReverend403/uPste
 cd uPste
-composer install
 npm install -g gulp # You may need to run this as root, unless you follow the instructions at https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
-npm install
-gulp --production
+composer install # Installs laravel, all dependencies, npm dependencies, and compiles assets.
+cp .env.example .env
+php artisan key:generate # VERY IMPORTANT, DO NOT MISS THIS
 ````
 
 Open .env in the root directory of uPste and edit the settings within to suit your site. Make sure to read what each one does, and feel free to ask if you're not sure.
@@ -60,14 +60,7 @@ Upgrading is easy. Just run the following commands, and make sure to check .env.
 cd /path/to/uPste
 php artisan down
 git pull
-php artisan migrate
-gulp
-php artisan clear-compiled
-php artisan cache:clear
-php artisan view:clear
-php artisan route:cache
-php artisan config:cache
-php artisan optimize
+composer update
 ````
 
 If everything went well and you didn't get any errors, you can now bring your site back online with `php artisan up`
