@@ -29,9 +29,8 @@
             </div>
         </div>
         <div class="upload">
-            <a class="upload-button" href="#">Drag and drop or click to upload files</a>
-        </div>
-        <div id="previews" class="dropzone">
+            <div id="previews" class="dropzone"></div>
+            <a id="upload-button" href="#">Drag and drop or click to upload files</a>
         </div>
         <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#api-modal">API Info
         </button>

@@ -3,7 +3,7 @@ $(function () {
     $(document.body).dropzone({
         url: window.api_upload_url,
         previewsContainer: "#previews",
-        clickable: ".upload-button",
+        clickable: "#upload-button",
         params: {'key': window.api_key},
         init: function () {
             this.on("success", function (file, responseText) {
