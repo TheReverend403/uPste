@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Do you know the way?')
+@section('title', 'uPste')
 
 @section('content')
     <div class="container-sm text-center jumbotron">
