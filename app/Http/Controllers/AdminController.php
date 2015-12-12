@@ -7,7 +7,6 @@ use App\Upload;
 use App\User;
 use Illuminate\Mail\Message;
 use Mail;
-use Session;
 use Storage;
 use View;
 

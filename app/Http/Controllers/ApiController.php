@@ -22,8 +22,10 @@ class ApiController extends Controller
             return response()->json(['invalid_file_upload'], 400);
         }
 
-        // Check to see if we already have this file for this user.
         $fileHash = sha1_file($file);
+        $original_name = $file->getClientOriginalName();
+
+        // Check to see if we already have this file for this user.
         $existing = Upload::whereHash($fileHash)->whereUserId(Auth::user()->id)->first();
         if ($existing) {
             $result = [
@@ -32,7 +34,9 @@ class ApiController extends Controller
                 'url' => env('UPLOAD_URL') . '/' . $existing->name
             ];
 
-            $existing->original_name = $file->getClientOriginalName();
+            $existing->original_name = $original_name;
+            // Force-update updated_at to move $existing to the top of /u/uploads
+            $existing->touch();
             $existing->save();
 
             $response = Response::make(json_encode($result, JSON_UNESCAPED_SLASHES), 200);
@@ -55,7 +59,7 @@ class ApiController extends Controller
             'hash' => $fileHash,
             'name' => $newName,
             'size' => $file->getSize(),
-            'original_name' => $file->getClientOriginalName()
+            'original_name' => $original_name
         ]);
 
         $upload->save();

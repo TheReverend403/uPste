@@ -7,7 +7,6 @@ use App\Upload;
 use Auth;
 use Illuminate\Mail\Message;
 use Mail;
-use Session;
 use Storage;
 
 class AccountController extends Controller
