@@ -41,7 +41,7 @@
         </div>
     @else
         <div class="message-area">
-            <div class="alert alert-info">There are no pending account requests.</div>
+            <div class="alert alert-info alert-important">There are no pending account requests.</div>
         </div>
     @endif
 @stop

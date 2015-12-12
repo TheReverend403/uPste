@@ -29,7 +29,10 @@ class AdminController extends Controller
 
     public function getRequests()
     {
-        $users = User::whereEnabled(false)->orderBy('created_at', 'asc')->paginate(15);
+        if (!$this->request_count) {
+            $users = User::whereEnabled(false)->orderBy('created_at', 'asc')->paginate(15);
+        }
+
         return view('admin.requests', compact('users'));
     }
 

@@ -37,7 +37,7 @@
         </div>
     @else
         <div class="message-area">
-            <div class="alert alert-warning">{{ $user->name }} doesn't have any uploads!</div>
+            <div class="alert alert-warning alert-important">{{ $user->name }} doesn't have any uploads!</div>
         </div>
     @endif
 @stop

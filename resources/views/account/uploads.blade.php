@@ -37,7 +37,7 @@
         </div>
     @else
         <div class="message-area">
-            <div class="text-center alert alert-warning">You don't have any uploads!</div>
+            <div class="text-center alert alert-warning alert-important">You don't have any uploads!</div>
         </div>
     @endif
 @stop
