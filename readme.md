@@ -1,11 +1,15 @@
 uPste
 ==========
 
+[![License](https://img.shields.io/badge/chat-IRC-green.svg?style=flat-square)](https://qchat.rizon.net/?channels=leliana)
+
 uPste is a private file hosting application with an emphasis on serving technology communities.
+
+It is released under the [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.html).
 
 The official demo of this site is available at https://u.pste.pw, although not very useful without an account.
 
-It is released under the [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.html).
+Interested in contributing, want some help or just have some questions? Join us on [irc.rizon.net in #leliana](https://qchat.rizon.net/?channels=leliana)
 
 # Requirements
 
