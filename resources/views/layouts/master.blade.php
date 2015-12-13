@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="{{ url('assets/img/favicon.png') }}">
     <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{ url('assets/css/global.css') }}">
+    <link rel="stylesheet" href="{{ elixir('assets/css/global.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     @yield('stylesheets')
 </head>
@@ -49,11 +49,6 @@
 <div class="container">
     <div class="message-area">
         @include('vendor.flash.message')
-        @if (count($errors) > 0)
-            @foreach ($errors->all() as $error)
-                <div class="alert alert-danger alert-important">{{ $error }}</div>
-            @endforeach
-        @endif
     </div>
     @yield('content')
 </div>
@@ -68,7 +63,7 @@
     </div>
 </footer>
 <script src="https://code.jquery.com/jquery-1.11.3.min.js" type="application/javascript"></script>
-<script src="{{ url('assets/js/global.js') }}" type="application/javascript"></script>
+<script src="{{ elixir('assets/js/global.js') }}" type="application/javascript"></script>
 @yield('javascript')
 </body>
 </html>

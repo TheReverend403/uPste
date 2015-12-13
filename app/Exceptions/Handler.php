@@ -36,7 +36,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        if ($this->shouldReport($e)) {
+        if ($this->shouldReport($e) && !config('app.debug')) {
             $data = [
                 'ip' => request()->getClientIp(),
                 'url' => request()->fullUrl(),

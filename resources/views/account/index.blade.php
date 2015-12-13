@@ -68,5 +68,5 @@
 
 @section('javascript')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js" type="application/javascript"></script>
-    <script src="{{ url('assets/js/dropzone.js') }}" type="application/javascript"></script>
+    <script src="{{ elixir('assets/js/dropzone.js') }}" type="application/javascript"></script>
 @stop

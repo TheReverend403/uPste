@@ -34,4 +34,11 @@ elixir(function(mix) {
         '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/alert.js',
         'global.js'
     ], 'public/assets/js/global.js');
+
+    mix.version([
+        "assets/css/global.css",
+        "assets/css/error.css",
+        "assets/js/global.js",
+        "assets/js/dropzone.js"
+    ]);
 });
