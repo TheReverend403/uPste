@@ -31,6 +31,7 @@ elixir(function(mix) {
     mix.scripts([
         '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/modal.js',
         '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
-        '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/alert.js'
+        '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/alert.js',
+        'global.js'
     ], 'public/assets/js/global.js');
 });

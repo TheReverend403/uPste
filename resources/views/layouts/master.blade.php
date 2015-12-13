@@ -69,10 +69,6 @@
 </footer>
 <script src="https://code.jquery.com/jquery-1.11.3.min.js" type="application/javascript"></script>
 <script src="{{ url('assets/js/global.js') }}" type="application/javascript"></script>
-<script type="application/javascript">
-    $('#flash-overlay-modal').modal();
-    $('div.alert').not('.alert-important').delay(3000).slideUp();
-</script>
 @yield('javascript')
 </body>
 </html>
