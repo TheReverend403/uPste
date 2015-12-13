@@ -23,7 +23,7 @@
                         <td>
                             <a href="{{ route('admin.users.uploads', ['id' => $user->id]) }}" title="{{ $user->name }}'s uploads">{{ $user->name }}</a>
                         </td>
-                        <td><a href="mailto:{{ $user->email }}" title="Email {{ $user->name }}">{{ $user->email }}</a></td>
+                        <td><a href="mailto:{{ $user->email }}" title="Send an email to {{ $user->name }}">{{ $user->email }}</a></td>
                         <td>{{ $user->created_at }}</td>
                         <td>{{ $user->updated_at }}</td>
                         <td>
