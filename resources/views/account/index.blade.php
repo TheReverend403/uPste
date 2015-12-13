@@ -47,8 +47,7 @@
                 <div class="modal-body">
                     <p>Your API key is:</p>
                     <pre class="apikey">{{ Auth::user()->apikey }}</pre>
-                    <p>This key allows anyone to upload to u.pste.pw as you. Do not lose it. Upload like
-                        so:</p>
+                    <p>This key allows anyone to upload to u.pste.pw as you. Do not lose it. Upload like so:</p>
 <pre>curl \
 -F key={{ Auth::user()->apikey }} \
 -F file=@example.png \
