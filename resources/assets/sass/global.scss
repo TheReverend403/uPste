@@ -36,3 +36,8 @@
 ul, ol .list-noborder {
   margin: 0;
 }
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}
