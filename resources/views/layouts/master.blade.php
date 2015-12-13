@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="{{ url('img/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ url('assets/img/favicon.png') }}">
     <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{ url('css/app.css') }}">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ url('assets/css/global.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     @yield('stylesheets')
 </head>
 <body>
@@ -67,9 +67,9 @@
         <p><small>Powered by <a href="https://github.com/TheReverend403/uPste">uPste</a></small></p>
     </div>
 </footer>
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="{{ url('js/bootstrap.js') }}"></script>
-<script>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js" type="application/javascript"></script>
+<script src="{{ url('assets/js/global.js') }}" type="application/javascript"></script>
+<script type="application/javascript">
     $('#flash-overlay-modal').modal();
     $('div.alert').not('.alert-important').delay(3000).slideUp();
 </script>

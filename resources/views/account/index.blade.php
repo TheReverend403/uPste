@@ -3,15 +3,15 @@
 @section('title', 'My Account')
 
 @section('stylesheets')
-    <link href="//cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/basic.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/basic.min.css" rel="stylesheet">
 @stop
 
 @section('content')
-    <script>
+    <script type="application/javascript">
         window.root = "{{ route('index') }}";
         window.api_key = "{{ Auth::user()->apikey }}";
         window.api_upload_url = "{{ route('api.upload') }}";
-        window.dropzone_thumbnail = "{{ url('img/thumbnail.png') }}";
+        window.dropzone_thumbnail = "{{ url('assets/img/thumbnail.png') }}";
     </script>
     <div class="container-sm text-center">
         @if($new)
@@ -68,7 +68,6 @@
 @stop
 
 @section('javascript')
-    <script src="//cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"
-            type="application/javascript"></script>
-    <script src="{{ url('js/dropzone.js') }}" type="application/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js" type="application/javascript"></script>
+    <script src="{{ url('assets/js/dropzone.js') }}" type="application/javascript"></script>
 @stop

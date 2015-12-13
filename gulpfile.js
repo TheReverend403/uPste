@@ -16,12 +16,21 @@ process.env.DISABLE_NOTIFIER = true;
 elixir.config.sourcemaps = false;
 
 elixir(function(mix) {
-    mix.sass('app.scss');
-    mix.sass("error.scss", 'public/css/error.css');
-    mix.scripts("dropzone.js", 'public/js/dropzone.js');
+    mix.sass([
+        'global.scss'
+    ], 'public/assets/css/global.css');
+
+    mix.sass([
+        'error.scss'
+    ], 'public/assets/css/error.css');
+
     mix.scripts([
-        "../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/modal.js",
-        "../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js",
-        "../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/alert.js"
-    ], 'public/js/bootstrap.js');
+        'dropzone.js'
+    ], 'public/assets/js/dropzone.js');
+
+    mix.scripts([
+        '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/modal.js',
+        '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
+        '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/alert.js'
+    ], 'public/assets/js/global.js');
 });
