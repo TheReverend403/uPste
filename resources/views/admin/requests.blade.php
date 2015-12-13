@@ -5,6 +5,7 @@
 @section('content')
     @if ($request_count)
         <table class="table table-bordered">
+            <thead>
             <tr>
                 <th>#</th>
                 <th>Name</th>
@@ -12,6 +13,8 @@
                 <th>Date</th>
                 <th>Actions</th>
             </tr>
+            </thead>
+            <tbody>
             @foreach($users as $user)
                 <tr>
                     <td>{{ $user->id }}</td>
@@ -19,25 +22,26 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->created_at }}</td>
                     <td>
-                        <div class="row">
-                            <div class="col-md-2">
+                        <ul class="list-unstyled list-inline list-noborder">
+                            <li>
                                 <form class="form" action="{{ route('admin.users.accept', ['id' => $user->id]) }}"
                                       method="POST">
                                     <button type="submit" class="btn btn-xs btn-success">Accept</button>
                                     {!! csrf_field() !!}
                                 </form>
-                            </div>
-                            <div class="col-md-2">
+                            </li>
+                            <li>
                                 <form class="form" action="{{ route('admin.users.reject', ['id' => $user->id]) }}"
                                       method="POST">
                                     <button type="submit" class="btn btn-xs btn-danger">Reject</button>
                                     {!! csrf_field() !!}
                                 </form>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
                     </td>
                 </tr>
             @endforeach
+            </tbody>
         </table>
         <div class="text-center">
             {!! $users->render() !!}

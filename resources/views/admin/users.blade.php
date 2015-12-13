@@ -5,6 +5,7 @@
 @section('content')
     @if (count($users))
         <table class="table table-bordered">
+            <thead>
             <tr>
                 <th>Name</th>
                 <th>Email</th>
@@ -12,6 +13,8 @@
                 <th>Updated</th>
                 <th>Actions</th>
             </tr>
+            </thead>
+            <tbody>
             @foreach($users as $user)
                 @if ($user->banned)
                     <tr class="danger">
@@ -21,44 +24,47 @@
                     <tr>
                         @endif
                         <td>
-                            <a href="{{ route('admin.users.uploads', ['id' => $user->id]) }}" title="{{ $user->name }}'s uploads">{{ $user->name }}</a>
+                            <a href="{{ route('admin.users.uploads', ['id' => $user->id]) }}"
+                               title="{{ $user->name }}'s uploads">{{ $user->name }}</a>
                         </td>
-                        <td><a href="mailto:{{ $user->email }}" title="Send an email to {{ $user->name }}">{{ $user->email }}</a></td>
+                        <td><a href="mailto:{{ $user->email }}"
+                               title="Send an email to {{ $user->name }}">{{ $user->email }}</a></td>
                         <td>{{ $user->created_at }}</td>
                         <td>{{ $user->updated_at }}</td>
                         <td>
-                            <div class="row">
+                            <ul class="list-unstyled list-inline list-noborder">
                                 @if (!$user->banned)
-                                    <div class="col-md-2">
+                                    <li>
                                         <form class="form"
                                               action="{{ route('admin.users.ban', ['id' => $user->id]) }}"
                                               method="POST">
                                             <button type="submit" class="btn btn-xs btn-warning">Ban</button>
                                             {!! csrf_field() !!}
                                         </form>
-                                    </div>
+                                    </li>
                                 @else
-                                    <div class="col-md-2">
+                                    <li>
                                         <form class="form"
                                               action="{{ route('admin.users.unban', ['id' => $user->id]) }}"
                                               method="POST">
                                             <button type="submit" class="btn btn-xs btn-success">Unban</button>
                                             {!! csrf_field() !!}
                                         </form>
-                                    </div>
+                                    </li>
                                 @endif
-                                <div class="col-md-2">
+                                <li>
                                     <form class="form"
                                           action="{{ route('admin.users.delete', ['id' => $user->id]) }}"
                                           method="POST">
                                         <button type="submit" class="btn btn-xs btn-danger">Delete</button>
                                         {!! csrf_field() !!}
                                     </form>
-                                </div>
-                            </div>
+                                <li/>
+                            </ul>
                         </td>
                     </tr>
                     @endforeach
+            </tbody>
         </table>
         <div class="text-center">
             {!! $users->render() !!}
