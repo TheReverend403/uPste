@@ -12,13 +12,13 @@
                 <input title="Password" type="password" name="password" class="form-control" id="password" placeholder="Password">
             </div>
             <div class="text-center">
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a href="{{ route('account.password.email') }}" class="btn btn-default">Forgot Password</a>
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="remember"> Remember Me
                     </label>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <a href="{{ route('account.password.email') }}" class="btn btn-default">Forgot Password</a>
             </div>
             {!! csrf_field() !!}
         </form>
