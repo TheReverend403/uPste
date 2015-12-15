@@ -85,11 +85,16 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $apiKey = str_random(64);
+        while (User::whereApikey($apiKey)->first()) {
+            $apiKey = str_random(64);
+        }
+
         $firstUser = DB::table('users')->count() == 0;
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'apikey' => str_random(64),
+            'apikey' => $apiKey,
             'password' => bcrypt($data['password']),
             // First user registered should be enabled and admin
             'admin' => $firstUser,
