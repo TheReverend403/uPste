@@ -139,7 +139,6 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
-        Matriphe\Format\FormatServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -180,7 +179,6 @@ return [
         'File'      => Illuminate\Support\Facades\File::class,
         'Flash'     => Laracasts\Flash\Flash::class,
         'Form'      => Illuminate\Html\FormFacade::class,
-        'Format'    => Matriphe\Format\Facades\FormatFacade::class,
         'Hash'      => Illuminate\Support\Facades\Hash::class,
         'HTML'      => Illuminate\Html\HtmlFacade::class,
         'Input'     => Illuminate\Support\Facades\Input::class,
