@@ -7,7 +7,6 @@ use App\Http\Requests;
 use App\Models\Upload;
 use Auth;
 use Input;
-use Response;
 use Storage;
 
 class ApiController extends Controller
@@ -30,7 +29,6 @@ class ApiController extends Controller
         $existing = Upload::whereHash($fileHash)->whereUserId(Auth::user()->id)->first();
         if ($existing) {
             $result = [
-                'code' => 200,
                 'hash' => $fileHash,
                 'url' => env('UPLOAD_URL') . '/' . $existing->name
             ];
@@ -40,9 +38,7 @@ class ApiController extends Controller
             $existing->touch();
             $existing->save();
 
-            $response = Response::make(json_encode($result, JSON_UNESCAPED_SLASHES), 200);
-            $response->header('Content-Type', 'application/json');
-            return $response;
+            return response()->json($result, 200, [], JSON_UNESCAPED_SLASHES);
         }
 
         $ext = $file->getClientOriginalExtension();
@@ -64,19 +60,15 @@ class ApiController extends Controller
         ]);
 
         $upload->save();
-
         Storage::disk()->put("uploads/$newName",
             file_get_contents($file->getRealPath())
         );
 
         $result = [
-            'code' => 200,
             'hash' => $upload->getAttribute('hash'),
             'url' => env('UPLOAD_URL') . '/' . $newName
         ];
 
-        $response = Response::make(json_encode($result, JSON_UNESCAPED_SLASHES), 200);
-        $response->header('Content-Type', 'application/json');
-        return $response;
+        return response()->json($result, 200, [], JSON_UNESCAPED_SLASHES);
     }
 }
