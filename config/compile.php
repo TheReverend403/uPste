@@ -14,15 +14,6 @@ return [
     */
 
     'files' => [
-        'app/Http/Controllers/Api/ApiController.php',
-        'app/Http/Controllers/Admin/AdminController.php',
-        'app/Http/Controllers/Account/AccountController.php',
-        'app/Http/Middleware/AdminAuthenticate.php',
-        'app/Http/Middleware/ApiAuthenticate.php',
-        'app/Http/Middleware/Authenticate.php',
-        'app/Http/Middleware/EncryptCookies.php',
-        'app/Models/Upload.php',
-        'app/Models/User.php'
     ],
 
     /*
