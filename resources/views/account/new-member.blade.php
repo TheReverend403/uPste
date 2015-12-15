@@ -4,7 +4,6 @@
             know.</h3>
     </div>
     <div class="panel-body">
-        <p><b>This message will disappear in {{ sprintf(ngettext("%d day", "%d days", $days_registered), $days_registered) }}.</b></p>
         <div class="text-left">
             <ul>
                 <li>For support, email <a href="mailto:{{ env('OWNER_EMAIL') }}" title="Send an email to {{ env('OWNER_NAME') }}">{{ env('OWNER_EMAIL') }}</a>.</li>
@@ -16,5 +15,8 @@
                 </li>
             </ul>
         </div>
+    </div>
+    <div class="panel-footer">
+        This message will disappear in {{ sprintf(ngettext("%d day", "%d days", $days_registered), $days_registered) }}.
     </div>
 </div>
