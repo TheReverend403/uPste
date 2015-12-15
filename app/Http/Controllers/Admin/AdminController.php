@@ -36,7 +36,7 @@ class AdminController extends Controller
     public function getUsers()
     {
         $users = User::whereEnabled(true)->paginate(15);
-        return view('admin.users', ['users' => $users]);
+        return view('admin.users', compact('users'));
     }
 
     public function postUserBan(User $user)

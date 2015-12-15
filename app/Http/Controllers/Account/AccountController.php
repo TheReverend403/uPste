@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
+use App\Models\User;
 use Auth;
 use Illuminate\Mail\Message;
 use Mail;
@@ -58,7 +59,12 @@ class AccountController extends Controller
 
     public function postResetKey()
     {
-        Auth::user()->fill(['apikey' => str_random(64)])->save();
+        $newKey = str_random(64);
+        while (User::whereApikey($newKey)->first()) {
+            $newKey = str_random(64);
+        }
+
+        Auth::user()->fill(['apikey' => $newKey])->save();
         flash()->success('Your API key was reset. New API key: ' . Auth::user()->apikey)->important();
         Mail::queue(['text' => 'emails.user.api_key_reset'], ['user' => Auth::user()], function (Message $message) {
             $message->subject(sprintf("[%s] API Key Reset", env('DOMAIN')));
