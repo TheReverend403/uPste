@@ -6,7 +6,7 @@ use Auth;
 use Closure;
 use Illuminate\Auth\Guard;
 
-class Admin
+class AdminAuthenticate
 {
     /**
      * The Guard implementation.

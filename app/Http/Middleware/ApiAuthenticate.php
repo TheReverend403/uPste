@@ -2,13 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use App\User;
+use App\Models\User;
 use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Input;
 
-class Api
+class ApiAuthenticate
 {
     /**
      * The Guard implementation.

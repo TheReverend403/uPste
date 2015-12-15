@@ -50,27 +50,27 @@ Route::group(['middleware' => 'guest'], function () {
  */
 Route::group(['middleware' => 'auth', 'prefix' => 'u'], function () {
     Route::get('/', [
-        'as' => 'account', 'uses' => 'AccountController@getindex']);
+        'as' => 'account', 'uses' => 'Account\AccountController@getindex']);
 
     Route::get('logout', [
         'as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
 
     Route::get('resources', [
-        'as' => 'account.resources', 'uses' => 'AccountController@getResources']);
+        'as' => 'account.resources', 'uses' => 'Account\AccountController@getResources']);
 
     Route::get('resources/scripts/bash', [
-        'as' => 'account.resources.bash', 'uses' => 'AccountController@getBashScript']);
+        'as' => 'account.resources.bash', 'uses' => 'Account\AccountController@getBashScript']);
 
     Route::group(['prefix' => 'uploads'], function () {
         Route::get('/', [
-            'as' => 'account.uploads', 'uses' => 'AccountController@getUploads']);
+            'as' => 'account.uploads', 'uses' => 'Account\AccountController@getUploads']);
 
         Route::post('{upload}/delete', [
-            'as' => 'account.uploads.delete', 'uses' => 'AccountController@postUploadsDelete']);
+            'as' => 'account.uploads.delete', 'uses' => 'Account\AccountController@postUploadsDelete']);
     });
 
     Route::post('resetkey', [
-        'as' => 'account.resetkey', 'uses' => 'AccountController@postResetKey']);
+        'as' => 'account.resetkey', 'uses' => 'Account\AccountController@postResetKey']);
 });
 
 /*
@@ -79,35 +79,35 @@ Route::group(['middleware' => 'auth', 'prefix' => 'u'], function () {
 Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
 
     Route::get('/', [
-        'as' => 'admin', 'uses' => 'AdminController@getIndex']);
+        'as' => 'admin', 'uses' => 'Admin\AdminController@getIndex']);
 
     Route::get('requests', [
-        'as' => 'admin.requests', 'uses' => 'AdminController@getRequests']);
+        'as' => 'admin.requests', 'uses' => 'Admin\AdminController@getRequests']);
 
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', [
-            'as' => 'admin.users', 'uses' => 'AdminController@getUsers']);
+            'as' => 'admin.users', 'uses' => 'Admin\AdminController@getUsers']);
 
         Route::post('{user}/ban', [
-            'as' => 'admin.users.ban', 'uses' => 'AdminController@postUserBan']);
+            'as' => 'admin.users.ban', 'uses' => 'Admin\AdminController@postUserBan']);
 
         Route::post('{user}/unban', [
-            'as' => 'admin.users.unban', 'uses' => 'AdminController@postUserUnban']);
+            'as' => 'admin.users.unban', 'uses' => 'Admin\AdminController@postUserUnban']);
 
         Route::get('{user}/uploads', [
-            'as' => 'admin.users.uploads', 'uses' => 'AdminController@getUploads']);
+            'as' => 'admin.users.uploads', 'uses' => 'Admin\AdminController@getUploads']);
 
         Route::post('uploads/{upload}/delete', [
-            'as' => 'admin.uploads.delete', 'uses' => 'AdminController@postUploadsDelete']);
+            'as' => 'admin.uploads.delete', 'uses' => 'Admin\AdminController@postUploadsDelete']);
 
         Route::post('{user}/delete', [
-            'as' => 'admin.users.delete', 'uses' => 'AdminController@postUserDelete']);
+            'as' => 'admin.users.delete', 'uses' => 'Admin\AdminController@postUserDelete']);
 
         Route::post('{user}/accept', [
-            'as' => 'admin.users.accept', 'uses' => 'AdminController@postUserAccept']);
+            'as' => 'admin.users.accept', 'uses' => 'Admin\AdminController@postUserAccept']);
 
         Route::post('{user}/reject', [
-            'as' => 'admin.users.reject', 'uses' => 'AdminController@postUserReject']);
+            'as' => 'admin.users.reject', 'uses' => 'Admin\AdminController@postUserReject']);
     });
 });
 
@@ -116,5 +116,5 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
  */
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     Route::post('upload', [
-        'as' => 'api.upload', 'uses' => 'ApiController@postUpload']);
+        'as' => 'api.upload', 'uses' => 'Api\ApiController@postUpload']);
 });

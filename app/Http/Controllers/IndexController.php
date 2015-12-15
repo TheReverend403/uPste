@@ -14,7 +14,7 @@ class IndexController extends Controller
      */
     public function getIndex()
     {
-        if (Auth::user()) {
+        if (Auth::check()) {
             return redirect()->route('account');
         }
         return view('index');

@@ -2,8 +2,8 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\Admin;
-use App\Http\Middleware\Api;
+use App\Http\Middleware\AdminAuthenticate;
+use App\Http\Middleware\ApiAuthenticate;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -37,8 +37,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'api' => Api::class,
-        'admin' => Admin::class,
+        'api' => ApiAuthenticate::class,
+        'admin' => AdminAuthenticate::class,
         'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
         'guest' => RedirectIfAuthenticated::class,

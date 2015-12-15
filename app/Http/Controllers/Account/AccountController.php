@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Account;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Upload;
+use App\Models\Upload;
 use Auth;
 use Illuminate\Mail\Message;
 use Mail;

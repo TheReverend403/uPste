@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Upload;
-use App\User;
+use App\Models\Upload;
+use App\Models\User;
 use Illuminate\Mail\Message;
 use Mail;
 use Storage;
