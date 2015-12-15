@@ -57,7 +57,7 @@
         <hr>
         @yield('footer')
         <p>
-            <small>Currently hosting {{ $site_stats['uploads'] }} file(s) for {{ $site_stats['users'] }} user(s).</small>
+            <small>Currently hosting {{ $site_stats['uploads'] }} file{{ $site_stats['uploads'] > 1 ? 's' : ''}} for {{ $site_stats['users'] }} user{{ $site_stats['users'] > 1 ? 's' : ''}}.</small>
         </p>
         <p><small>Powered by <a href="https://github.com/TheReverend403/uPste">uPste</a></small></p>
     </div>
