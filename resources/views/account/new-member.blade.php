@@ -4,7 +4,7 @@
             know.</h3>
     </div>
     <div class="panel-body">
-        <p><b>This message will disappear in {{ $days_registered }} day{{ $days_registered > 1 ? 's' : ''}}.</b></p>
+        <p><b>This message will disappear in {{ sprintf(ngettext("%d day", "%d days", $days_registered), $days_registered) }}.</b></p>
         <div class="text-left">
             <ul>
                 <li>For support, email <a href="mailto:{{ env('OWNER_EMAIL') }}" title="Send an email to {{ env('OWNER_NAME') }}">{{ env('OWNER_EMAIL') }}</a>.</li>

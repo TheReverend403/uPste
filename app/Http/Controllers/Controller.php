@@ -18,14 +18,14 @@ abstract class Controller extends BaseController
     public function __construct()
     {
         $cache_time = 5; // Minutes
-        $this->site_stats['users'] = Cache::remember('users', $cache_time, function () {
+        $user_count = Cache::remember('users', $cache_time, function () {
             return DB::table('users')->where('enabled', true)->count();
         });
 
-        $this->site_stats['uploads'] = Cache::remember('uploads', $cache_time, function () {
+        $upload_count = Cache::remember('uploads', $cache_time, function () {
             return DB::table('uploads')->count();
         });
 
-        View::share('site_stats', $this->site_stats);
+        View::share(compact('user_count', 'upload_count'));
     }
 }
