@@ -64,12 +64,15 @@ class AccountController extends Controller
             $newKey = str_random(64);
         }
 
-        Auth::user()->fill(['apikey' => $newKey])->save();
-        flash()->success('Your API key was reset. New API key: ' . Auth::user()->apikey)->important();
-        Mail::queue(['text' => 'emails.user.api_key_reset'], ['user' => Auth::user()], function (Message $message) {
+        $user = Auth::user();
+        $user->fill(['apikey' => $newKey])->save();
+        flash()->success('Your API key was reset. New API key: ' . $user->apikey)->important();
+
+        Mail::queue(['text' => 'emails.user.api_key_reset'], $user->toArray(), function (Message $message) use ($user) {
             $message->subject(sprintf("[%s] API Key Reset", env('DOMAIN')));
-            $message->to(Auth::user()->email);
+            $message->to($user->email);
         });
+
         return redirect()->route('account');
     }
 }

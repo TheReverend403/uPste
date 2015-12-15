@@ -1,4 +1,4 @@
-Hi {{ $user->name }},
+Hi {{ $name }},
 
 Unfortunately, your request for an account at {{ env('DOMAIN') }} was rejected.
 This is most likely because the site owner doesn't know you or wasn't expecting your request.
