@@ -20,7 +20,7 @@ class AccountController extends Controller
         $registered_date = strtotime(Auth::user()->created_at);
         $datediff = abs($now - $registered_date);
         $days_registered = 7 - round($datediff / (60 * 60 * 24));
-        $new = $days_registered <= 7;
+        $new = ($days_registered > 0 && $days_registered <= 7);
 
         return view('account.index', compact('new', 'days_registered'));
     }
