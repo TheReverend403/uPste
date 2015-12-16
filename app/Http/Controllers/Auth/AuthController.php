@@ -85,10 +85,9 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $apiKey = str_random(64);
-        while (User::whereApikey($apiKey)->first()) {
+        do {
             $apiKey = str_random(64);
-        }
+        } while (User::whereApikey($apiKey)->first());
 
         $firstUser = DB::table('users')->count() == 0;
         $user = User::create([
