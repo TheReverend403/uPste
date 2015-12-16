@@ -23,7 +23,7 @@ class ApiController extends Controller
         }
 
         $fileHash = sha1_file($file);
-        $original_name = $file->getClientOriginalName();
+        $originalName = $file->getClientOriginalName();
 
         // Check to see if we already have this file for this user.
         $existing = Upload::whereHash($fileHash)->whereUserId(Auth::user()->id)->first();
@@ -33,7 +33,7 @@ class ApiController extends Controller
                 'url' => env('UPLOAD_URL') . '/' . $existing->name
             ];
 
-            $existing->original_name = $original_name;
+            $existing->original_name = $originalName;
             // Force-update updated_at to move $existing to the top of /u/uploads
             $existing->touch();
             $existing->save();
@@ -42,7 +42,7 @@ class ApiController extends Controller
         }
 
         $ext = $file->getClientOriginalExtension();
-        if (!$ext) {
+        if (empty($ext)) {
             $ext = 'txt';
         }
 
@@ -56,7 +56,7 @@ class ApiController extends Controller
             'hash' => $fileHash,
             'name' => $newName,
             'size' => $file->getSize(),
-            'original_name' => $original_name
+            'original_name' => $originalName
         ]);
 
         $upload->save();
