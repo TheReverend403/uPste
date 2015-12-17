@@ -1,5 +1,3 @@
-var elixir = require('laravel-elixir');
-
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -13,6 +11,8 @@ var elixir = require('laravel-elixir');
 
 // Disable notify-send
 process.env.DISABLE_NOTIFIER = true;
+
+var elixir = require('laravel-elixir');
 elixir.config.sourcemaps = false;
 
 elixir(function(mix) {
