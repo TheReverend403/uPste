@@ -62,7 +62,7 @@
         <p><small>Powered by <a href="https://github.com/TheReverend403/uPste">uPste</a></small></p>
     </div>
 </footer>
-<script src="https://code.jquery.com/jquery-1.11.3.min.js" type="application/javascript"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js" type="application/javascript"></script>
 <script src="{{ elixir('assets/js/global.js') }}" type="application/javascript"></script>
 @yield('javascript')
 </body>
