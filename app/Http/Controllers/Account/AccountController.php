@@ -59,10 +59,9 @@ class AccountController extends Controller
 
     public function postResetKey()
     {
-        $newKey = str_random(64);
-        while (User::whereApikey($newKey)->first()) {
+        do {
             $newKey = str_random(64);
-        }
+        } while (User::whereApikey($newKey)->first());
 
         $user = Auth::user();
         $user->fill(['apikey' => $newKey])->save();

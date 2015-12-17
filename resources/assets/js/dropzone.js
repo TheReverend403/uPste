@@ -1,4 +1,4 @@
-$(function () {
+$(document).ready(function () {
     Dropzone.autoDiscover = false;
     $(document.body).dropzone({
         url: window.api_upload_url,
