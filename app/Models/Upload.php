@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Storage;
 
 /**
  * App\Models\Upload
@@ -47,5 +48,13 @@ class Upload extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'id', 'user_id');
+    }
+
+    public function forceDelete()
+    {
+        if (Storage::disk()->exists("uploads/" . $this->name)) {
+            Storage::disk()->delete("uploads/" . $this->name);
+        }
+        return parent::forceDelete();
     }
 }

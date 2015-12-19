@@ -81,9 +81,6 @@ class AdminController extends Controller
 
     public function postUploadsDelete(Upload $upload)
     {
-        if (Storage::disk()->exists("uploads/" . $upload->name)) {
-            Storage::disk()->delete("uploads/" . $upload->name);
-        }
         $upload->forceDelete();
         flash()->success($upload->name . ' has been deleted.');
         return redirect()->back();

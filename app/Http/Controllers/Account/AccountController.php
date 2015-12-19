@@ -9,7 +9,6 @@ use App\Models\User;
 use Auth;
 use Illuminate\Mail\Message;
 use Mail;
-use Storage;
 
 class AccountController extends Controller
 {
@@ -46,10 +45,6 @@ class AccountController extends Controller
         if (Auth::user()->id != $upload->user_id) {
             flash()->error('That file is not yours, you cannot delete it!');
             return redirect()->back();
-        }
-
-        if (Storage::disk()->exists("uploads/" . $upload->name)) {
-            Storage::disk()->delete("uploads/" . $upload->name);
         }
 
         $upload->forceDelete();
