@@ -9,7 +9,7 @@ uPste is a private file hosting application with an emphasis on serving technolo
 
 It is released under the [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.html).
 
-The official demo of this site is available at https://u.pste.pw, although not very useful without an account.
+The official demo of this project is available at https://u.pste.pw, although not very useful without an account.
 
 Interested in contributing, want some help or just have some questions? Join us on [irc.rizon.net in #leliana](https://qchat.rizon.net/?channels=leliana)
 
@@ -43,14 +43,11 @@ php artisan migrate # Creates your database schema
 ````
 
 The next, and last part is entirely dependent you and how you want to configure your webserver, 
-but you're basically going to want two domains (or subdomains). 
-
-One will be your site UI where users will register, login, and manage their uploads. The root for this host should be $upste_root/public/
-
+but you're basically going to want two domains (or subdomains).  
+One will be your site UI where users will register, login, and manage their uploads. The root for this host should be $upste_root/public/  
 The other will be purely for serving the uploaded files. The root for this host should be $upste_root/storage/app/uploads
 
-That's it, you're done! Now just navigate to your site and register. 
-
+That's it, you're done! Now just navigate to your site and register.  
 The first user registered will be automatically enabled and made an admin, so take measures to make sure this is you.
 
 # Upgrading
