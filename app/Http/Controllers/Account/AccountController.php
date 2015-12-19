@@ -16,12 +16,12 @@ class AccountController extends Controller
     {
         // Check if the user has been registered for 7 days or less
         $now = time();
-        $registered_date = strtotime(Auth::user()->created_at);
-        $datediff = abs($now - $registered_date);
-        $days_registered = 7 - round($datediff / (60 * 60 * 24));
-        $new = ($days_registered > 0 && $days_registered <= 7);
+        $registeredDate = strtotime(Auth::user()->created_at);
+        $dateDiff = abs($now - $registeredDate);
+        $daysRegistered = 7 - round($dateDiff / (60 * 60 * 24));
+        $new = ($daysRegistered > 0 && $daysRegistered <= 7);
 
-        return view('account.index', compact('new', 'days_registered'));
+        return view('account.index', compact('new', 'daysRegistered'));
     }
 
     public function getResources()
@@ -37,6 +37,7 @@ class AccountController extends Controller
     public function getUploads()
     {
         $uploads = Upload::whereUserId(Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(15);
+
         return view('account.uploads', compact('uploads'));
     }
 
@@ -44,11 +45,13 @@ class AccountController extends Controller
     {
         if (Auth::user()->id != $upload->user_id) {
             flash()->error('That file is not yours, you cannot delete it!');
+
             return redirect()->back();
         }
 
         $upload->forceDelete();
         flash()->success($upload->original_name . ' has been deleted.');
+
         return redirect()->back();
     }
 

@@ -40,13 +40,17 @@ class AdminAuthenticate
                 return response('Unauthorized.', 401);
             } else {
                 flash()->error('You must log in to access that page.');
+
                 return redirect()->route('login');
             }
         }
+
         if (!Auth::user()->admin) {
             flash()->error('You do not have permission to access that area.');
+
             return redirect()->back();
         }
+
         return $next($request);
     }
 }

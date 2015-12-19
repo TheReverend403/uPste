@@ -41,8 +41,8 @@ class ApiAuthenticate
             return response()->json(["error" => "Missing API key", 'code' => 401]);
         }
 
-        $apikey = Input::get('key');
-        $user = User::whereApikey($apikey)->first();
+        $apiKey = Input::get('key');
+        $user = User::whereApikey($apiKey)->first();
         if (!$user) {
             return response()->json(["error" => "Invalid API key", 'code' => 401]);
         }
@@ -56,6 +56,7 @@ class ApiAuthenticate
         }
 
         Auth::onceUsingId($user->id);
+
         return $next($request);
     }
 }

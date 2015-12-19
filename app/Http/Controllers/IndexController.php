@@ -17,6 +17,7 @@ class IndexController extends Controller
         if (Auth::check()) {
             return redirect()->route('account');
         }
+
         return view('index');
     }
 }

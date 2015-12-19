@@ -30,7 +30,7 @@ class ApiController extends Controller
         if ($existing) {
             $result = [
                 'hash' => $fileHash,
-                'url' => env('UPLOAD_URL') . '/' . $existing->name
+                'url'  => env('UPLOAD_URL') . '/' . $existing->name
             ];
 
             $existing->original_name = $originalName;
@@ -52,10 +52,10 @@ class ApiController extends Controller
         } while (Storage::disk()->exists("uploads/$newName"));
 
         $upload = Upload::create([
-            'user_id' => Auth::user()->id,
-            'hash' => $fileHash,
-            'name' => $newName,
-            'size' => $file->getSize(),
+            'user_id'       => Auth::user()->id,
+            'hash'          => $fileHash,
+            'name'          => $newName,
+            'size'          => $file->getSize(),
             'original_name' => $originalName
         ]);
 
@@ -66,7 +66,7 @@ class ApiController extends Controller
 
         $result = [
             'hash' => $upload->getAttribute('hash'),
-            'url' => env('UPLOAD_URL') . '/' . $newName
+            'url'  => env('UPLOAD_URL') . '/' . $newName
         ];
 
         return response()->json($result, 200, [], JSON_UNESCAPED_SLASHES);

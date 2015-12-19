@@ -40,6 +40,7 @@ class Authenticate
                 return response('Unauthorized.', 401);
             } else {
                 flash()->error('You must log in to access that page.')->important();
+
                 return redirect()->route('login');
             }
         }
@@ -48,14 +49,17 @@ class Authenticate
             flash()->error(
                 'Your account has not been approved. You will be notified via email when your account status changes.')->important();
             Auth::logout();
+
             return redirect()->route('login');
         }
 
         if (Auth::user()->banned) {
             flash()->error('You are banned. Contact an admin if you believe this is an error.')->important();
             Auth::logout();
+
             return redirect()->route('login');
         }
+
         return $next($request);
     }
 }

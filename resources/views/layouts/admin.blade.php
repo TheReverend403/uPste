@@ -4,7 +4,7 @@
     <li>
         <a href="{{ route('admin.requests') }}">
             <span class="badge">
-                {{ $request_count }}
+                {{ $requestCount }}
             </span>&nbsp; Pending Requests
         </a>
     </li>

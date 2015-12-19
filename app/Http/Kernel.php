@@ -37,10 +37,10 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'api' => ApiAuthenticate::class,
-        'admin' => AdminAuthenticate::class,
-        'auth' => Authenticate::class,
+        'api'        => ApiAuthenticate::class,
+        'admin'      => AdminAuthenticate::class,
+        'auth'       => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
-        'guest' => RedirectIfAuthenticated::class,
+        'guest'      => RedirectIfAuthenticated::class,
     ];
 }

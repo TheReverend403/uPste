@@ -36,8 +36,8 @@ class Handler extends ExceptionHandler
         if ($this->shouldReport($e)) {
 
             $data = [
-                'ip' => request()->getClientIp(),
-                'url' => request()->fullUrl(),
+                'ip'    => request()->getClientIp(),
+                'url'   => request()->fullUrl(),
                 'trace' => $e->getTraceAsString()
             ];
 
@@ -62,11 +62,13 @@ class Handler extends ExceptionHandler
         if ($e instanceof TokenMismatchException) {
             flash()->error('CSRF verification failed, try logging in again.')->important();
             Auth::logout();
+
             return redirect()->route('login');
         }
 
         if ($e instanceof MethodNotAllowedHttpException && $request->getMethod() == 'GET') {
             flash()->error('That URL is for POST requests only.');
+
             return redirect()->route('account');
         }
 

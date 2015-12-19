@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -11,8 +11,8 @@ return array(
     |
     */
 
-    'filename'  => '_ide_helper',
-    'format'    => 'php',
+    'filename' => '_ide_helper',
+    'format'   => 'php',
 
     /*
     |--------------------------------------------------------------------------
@@ -26,9 +26,9 @@ return array(
 
     'include_helpers' => false,
 
-    'helper_files' => array(
-        base_path().'/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
-    ),
+    'helper_files' => [
+        base_path() . '/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -40,9 +40,9 @@ return array(
     |
     */
 
-    'model_locations' => array(
+    'model_locations' => [
         'app',
-    ),
+    ],
 
 
     /*
@@ -54,13 +54,13 @@ return array(
     |
     */
 
-    'extra' => array(
-        'Eloquent' => array('Illuminate\Database\Eloquent\Builder', 'Illuminate\Database\Query\Builder'),
-        'Session' => array('Illuminate\Session\Store'),
-    ),
+    'extra' => [
+        'Eloquent' => ['Illuminate\Database\Eloquent\Builder', 'Illuminate\Database\Query\Builder'],
+        'Session'  => ['Illuminate\Session\Store'],
+    ],
 
-    'magic' => array(
-        'Log' => array(
+    'magic' => [
+        'Log' => [
             'debug'     => 'Monolog\Logger::addDebug',
             'info'      => 'Monolog\Logger::addInfo',
             'notice'    => 'Monolog\Logger::addNotice',
@@ -69,9 +69,9 @@ return array(
             'critical'  => 'Monolog\Logger::addCritical',
             'alert'     => 'Monolog\Logger::addAlert',
             'emergency' => 'Monolog\Logger::addEmergency',
-        )
-    ),
-    
+        ]
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Interface implementations
@@ -81,10 +81,10 @@ return array(
     | are detected by the helpers, others can be listed below.
     |
     */
-    
-    'interfaces' => array(
+
+    'interfaces'      => [
         '\Illuminate\Contracts\Auth\Authenticatable' => config('auth.model', 'App\User'),
-    ),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -112,8 +112,8 @@ return array(
     |  ),
     |
     */
-    'custom_db_types' => array(
+    'custom_db_types' => [
 
-    ),
+    ],
 
-);
+];

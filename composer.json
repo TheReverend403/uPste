@@ -50,6 +50,10 @@
     ],
     "post-update-cmd": [
       "gulp --production",
+      "php artisan cache:clear",
+      "php artisan config:cache",
+      "php artisan view:clear",
+      "php artisan route:cache",
       "php artisan optimize"
     ],
     "post-root-package-install": [

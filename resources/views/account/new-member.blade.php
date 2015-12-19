@@ -17,6 +17,6 @@
         </div>
     </div>
     <div class="panel-footer">
-        This message will disappear in {{ sprintf(ngettext("%d day", "%d days", $days_registered), $days_registered) }}.
+        This message will disappear in {{ sprintf(ngettext("%d day", "%d days", $daysRegistered), $daysRegistered) }}.
     </div>
 </div>

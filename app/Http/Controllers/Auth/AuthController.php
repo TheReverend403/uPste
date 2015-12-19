@@ -59,6 +59,7 @@ class AuthController extends Controller
         flash()->success(
             'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.')
             ->important();
+
         return redirect()->route('index');
     }
 
@@ -71,8 +72,8 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255|unique:users|alpha_num',
-            'email' => 'required|email|max:255|unique:users',
+            'name'     => 'required|max:255|unique:users|alpha_num',
+            'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
     }
@@ -91,13 +92,13 @@ class AuthController extends Controller
 
         $firstUser = DB::table('users')->count() == 0;
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'apikey' => $apiKey,
+            'name'     => $data['name'],
+            'email'    => $data['email'],
+            'apikey'   => $apiKey,
             'password' => bcrypt($data['password']),
             // First user registered should be enabled and admin
-            'admin' => $firstUser,
-            'enabled' => $firstUser
+            'admin'    => $firstUser,
+            'enabled'  => $firstUser
         ]);
 
         return $user;

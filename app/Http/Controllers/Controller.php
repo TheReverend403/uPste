@@ -13,19 +13,17 @@ abstract class Controller extends BaseController
 {
     use DispatchesJobs, ValidatesRequests;
 
-    protected $site_stats;
-
     public function __construct()
     {
-        $cache_time = 5; // Minutes
-        $user_count = Cache::remember('users', $cache_time, function () {
+        $cacheTime = 5; // Minutes
+        $userCount = Cache::remember('users', $cacheTime, function () {
             return DB::table('users')->where('enabled', true)->count();
         });
 
-        $upload_count = Cache::remember('uploads', $cache_time, function () {
+        $uploadCount = Cache::remember('uploads', $cacheTime, function () {
             return DB::table('uploads')->count();
         });
 
-        View::share(compact('user_count', 'upload_count'));
+        View::share(compact('userCount', 'uploadCount'));
     }
 }

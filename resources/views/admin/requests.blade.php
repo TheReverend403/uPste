@@ -3,7 +3,7 @@
 @section('title', 'AdminCP - Requests')
 
 @section('content')
-    @if ($request_count)
+    @if ($requestCount)
         <table class="table table-bordered">
             <thead>
             <tr>
