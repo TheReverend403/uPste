@@ -7,6 +7,11 @@
         </div>
     @endif
 @endif
+@if (Session::has('status'))
+    <div class="alert alert-success alert-important">
+        {{ Session::get('status') }}
+    </div>
+@endif
 @if (count($errors) > 0)
     @foreach ($errors->all() as $error)
         <div class="alert alert-danger alert-important">{{ $error }}</div>
