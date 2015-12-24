@@ -20,7 +20,7 @@ Interested in contributing, want some help or just have some questions? Join us 
 * The PHP GD extension.
 * The ability to install [Laravel](http://laravel.com/docs/5.1/installation).
 * Any database supported by [Eloquent](http://laravel.com/docs/5.1/database#configuration).
-* [Laravel Elixir](https://laravel.com/docs/5.1/elixir#installation)
+* [Laravel Elixir](https://laravel.com/docs/5.1/elixir#installation).
 * A little bit of command line experience.
 
 # Installation
