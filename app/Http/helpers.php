@@ -9,6 +9,11 @@ class Helpers
     const API_KEY_LENGTH = 64;
 
     // http://stackoverflow.com/questions/2510434/format-bytes-to-kilobytes-megabytes-gigabytes
+    /**
+     * @param $bytes
+     * @param int $precision
+     * @return string
+     */
     public static function formatBytes($bytes, $precision = 2)
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
@@ -21,11 +26,15 @@ class Helpers
         return round($bytes, $precision) . ' ' . $units[$pow];
     }
 
-    public static function canHaveExif($filename)
+    /**
+     * @param $file
+     * @return bool
+     */
+    public static function canHaveExif(SplFileInfo $file)
     {
         $hasExif = false;
         if (function_exists('exif_imagetype')) {
-            $hasExif = exif_imagetype($filename);
+            $hasExif = (exif_imagetype($file) != 0);
         }
 
         return $hasExif;
