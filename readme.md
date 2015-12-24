@@ -30,7 +30,6 @@ We'll assume you already have a database, setting that up is beyond the scope of
 ````bash
 git clone https://github.com/TheReverend403/uPste
 cd uPste
-npm install -g gulp # You may need to run this as root, unless you follow the instructions at https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
 composer install # Installs laravel, all dependencies, npm dependencies, and compiles assets.
 cp .env.example .env
 php artisan key:generate # VERY IMPORTANT, DO NOT MISS THIS
