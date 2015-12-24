@@ -17,6 +17,7 @@ Interested in contributing, want some help or just have some questions? Join us 
 
 # Requirements
 
+* The PHP GD extension (if you want EXIF tags stripped for uploads).
 * The ability to install [Laravel](http://laravel.com/docs/5.1/installation).
 * Any database supported by [Eloquent](http://laravel.com/docs/5.1/database#configuration).
 * [Composer](http://getcomposer.org/).
