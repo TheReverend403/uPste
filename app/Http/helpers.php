@@ -5,8 +5,9 @@ class Helpers
     const SUPERUSER_ID = 1;
     const PAGINATION_DEFAULT_ITEMS = 15;
     const UPLOAD_SLUG_INITIAL_LENGTH = 4;
-    const NEW_USER_DAYS = 7;
+    const NEW_USER_DAYS = 7; // How long is a user considered "new"
     const API_KEY_LENGTH = 64;
+    const DB_CACHE_TIME = 5; // Minutes
 
     // http://stackoverflow.com/questions/2510434/format-bytes-to-kilobytes-megabytes-gigabytes
     /**
