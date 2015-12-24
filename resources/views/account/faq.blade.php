@@ -10,7 +10,7 @@
                 <b>Why do my images have a different size and hash after I upload them?</b>
             </div>
             <div class="panel-body">
-                <p>We strip EXIF data from uploaded images to prevent accidental breaches of user privacy from EXIF tags such as geolocation. This results in a smaller file size, and obviously a different hash.</p>
+                <p>We strip EXIF data from uploaded images to prevent accidental breaches of user privacy from EXIF tags such as geolocation. This results in a different file size, and obviously a different hash.</p>
             </div>
         </div>
 
