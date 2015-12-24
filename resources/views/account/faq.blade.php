@@ -3,8 +3,9 @@
 @section('title', 'My Resources')
 
 @section('content')
-    {{--
+
     <div class="container-sm">
+        {{--
         <div class="panel panel-default">
             <div class="panel-heading">
                 <b>Why do my images have a different size and hash after I upload them?</b>
