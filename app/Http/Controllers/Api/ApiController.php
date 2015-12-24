@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use abeautifulsite\SimpleImage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
 use Auth;
+use Exception;
 use Input;
 use Storage;
 
@@ -20,6 +22,16 @@ class ApiController extends Controller
         $file = Input::file('file');
         if (!$file->isValid()) {
             return response()->json(['invalid_file_upload'], 400);
+        }
+
+        // Strip EXIF tags
+        if (shouldStripExif($file)) {
+            try {
+                $img = new SimpleImage($file->getRealPath());
+                $img->save();
+            } catch(Exception $e) {
+                return response()->json([$e->getMessage()], 500);
+            }
         }
 
         $fileHash = sha1_file($file);

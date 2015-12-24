@@ -29,6 +29,11 @@ class AccountController extends Controller
         return view('account.resources');
     }
 
+    public function getFaq()
+    {
+        return view('account.faq');
+    }
+
     public function getBashScript()
     {
         return response()->view('account.resources.bash')->header('Content-Type', 'text/plain');

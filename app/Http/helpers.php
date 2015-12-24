@@ -12,3 +12,13 @@ function format_bytes($bytes, $precision = 2)
 
     return round($bytes, $precision) . ' ' . $units[$pow];
 }
+
+function shouldStripExif($filename)
+{
+    $stripExif = false;
+    if (function_exists('exif_imagetype')) {
+        $stripExif = exif_imagetype($filename);
+    }
+
+    return $stripExif;
+}
