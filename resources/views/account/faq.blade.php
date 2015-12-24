@@ -5,7 +5,6 @@
 @section('content')
 
     <div class="container-sm">
-        {{--
         <div class="panel panel-default">
             <div class="panel-heading">
                 <b>Why do my images have a different size and hash after I upload them?</b>
@@ -14,7 +13,6 @@
                 <p>We strip EXIF data from uploaded images to prevent accidental breaches of user privacy from EXIF tags such as geolocation. This results in a smaller file size, and obviously a different hash.</p>
             </div>
         </div>
-        --}}
 
         <div class="panel panel-default">
             <div class="panel-heading">

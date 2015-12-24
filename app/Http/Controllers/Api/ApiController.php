@@ -24,16 +24,19 @@ class ApiController extends Controller
             return response()->json(['invalid_file_upload'], 400);
         }
 
+
+        $ext = $file->getClientOriginalExtension();
+        if (empty($ext)) {
+            $ext = 'txt';
+        }
+
         // Strip EXIF tags
-        // Not used for now since this function doesn't seem to work reliably.
-        if (false) {
-            if (shouldStripExif($file)) {
-                try {
-                    $img = new SimpleImage($file->getRealPath());
-                    $img->save();
-                } catch(Exception $e) {
-                    return response()->json([$e->getMessage()], 500);
-                }
+        if (canHaveExif($file) && in_array($ext, ['png', 'jpg', 'jpeg', 'gif'])) {
+            try {
+                $img = new SimpleImage($file->getRealPath());
+                $img->save($file->getRealPath(), 100, $ext);
+            } catch (Exception $e) {
+                return response()->json([$e->getMessage()], 500);
             }
         }
 
@@ -54,11 +57,6 @@ class ApiController extends Controller
             $existing->save();
 
             return response()->json($result, 200, [], JSON_UNESCAPED_SLASHES);
-        }
-
-        $ext = $file->getClientOriginalExtension();
-        if (empty($ext)) {
-            $ext = 'txt';
         }
 
         $randomLen = 4;
