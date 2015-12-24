@@ -3,7 +3,7 @@
 class Helpers
 {
     const SUPERUSER_ID = 1;
-    const PAGINATION_DEFAULT_ITEMS = 5;
+    const PAGINATION_DEFAULT_ITEMS = 15;
     const UPLOAD_SLUG_INITIAL_LENGTH = 4;
     const NEW_USER_DAYS = 7;
     const API_KEY_LENGTH = 64;
