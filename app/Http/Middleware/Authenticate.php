@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Teapot\StatusCode;
 
 class Authenticate
 {
@@ -37,7 +38,7 @@ class Authenticate
     {
         if ($this->auth->guest()) {
             if ($request->ajax()) {
-                return response('Unauthorized.', 401);
+                return response('Unauthorized.', StatusCode::UNAUTHORIZED);
             } else {
                 flash()->error('You must log in to access that page.')->important();
 

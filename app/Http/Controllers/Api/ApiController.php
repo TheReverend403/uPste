@@ -10,18 +10,19 @@ use Auth;
 use Exception;
 use Input;
 use Storage;
+use Teapot\StatusCode;
 
 class ApiController extends Controller
 {
     public function postUpload()
     {
         if (!Input::hasFile('file')) {
-            return response()->json(['upload_file_not_found'], 400);
+            return response()->json(['upload_file_not_found'], StatusCode::BAD_REQUEST);
         }
 
         $file = Input::file('file');
         if (!$file->isValid()) {
-            return response()->json(['invalid_file_upload'], 400);
+            return response()->json(['invalid_file_upload'], StatusCode::BAD_REQUEST);
         }
 
 
@@ -36,7 +37,7 @@ class ApiController extends Controller
                 $img = new SimpleImage($file->getRealPath());
                 $img->save($file->getRealPath(), 100, $ext);
             } catch (Exception $e) {
-                return response()->json([$e->getMessage()], 500);
+                return response()->json([$e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
             }
         }
 
@@ -56,7 +57,7 @@ class ApiController extends Controller
             $existing->touch();
             $existing->save();
 
-            return response()->json($result, 200, [], JSON_UNESCAPED_SLASHES);
+            return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
         }
 
         $randomLen = 4;
@@ -82,6 +83,6 @@ class ApiController extends Controller
             'url'  => env('UPLOAD_URL') . '/' . $newName
         ];
 
-        return response()->json($result, 200, [], JSON_UNESCAPED_SLASHES);
+        return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
     }
 }

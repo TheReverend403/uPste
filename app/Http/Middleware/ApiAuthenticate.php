@@ -7,6 +7,7 @@ use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Input;
+use Teapot\StatusCode;
 
 class ApiAuthenticate
 {
@@ -38,21 +39,21 @@ class ApiAuthenticate
     public function handle($request, Closure $next)
     {
         if (!Input::has('key')) {
-            return response()->json(["error" => "Missing API key", 'code' => 401]);
+            return response()->json(["error" => "missing_api_key"], StatusCode::UNAUTHORIZED);
         }
 
         $apiKey = Input::get('key');
         $user = User::whereApikey($apiKey)->first();
         if (!$user) {
-            return response()->json(["error" => "Invalid API key", 'code' => 401]);
+            return response()->json(["error" => "invalid_api_key"], StatusCode::UNAUTHORIZED);
         }
 
         if (!$user->enabled) {
-            return response()->json(["error" => "Your account has not been approved", 'code' => 401]);
+            return response()->json(["error" => "account_not_approved"], StatusCode::UNAUTHORIZED);
         }
 
         if ($user->banned) {
-            return response()->json(["error" => "You are banned", 'code' => 401]);
+            return response()->json(["error" => "user_banned"], StatusCode::UNAUTHORIZED);
         }
 
         Auth::onceUsingId($user->id);
