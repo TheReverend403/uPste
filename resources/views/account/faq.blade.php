@@ -14,6 +14,7 @@
                 <p>We strip EXIF data from uploaded images to prevent accidental breaches of user privacy from EXIF tags such as geolocation. This results in a smaller file size, and obviously a different hash.</p>
             </div>
         </div>
+        --}}
 
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -26,7 +27,6 @@
                 </blockquote>
             </div>
         </div>
-         --}}
 
         <div class="panel panel-default">
             <div class="panel-heading">
