@@ -23,7 +23,7 @@
                         <td>
                             <a href="{{ env('UPLOAD_URL') . '/' . $upload->name }}">{{ env('UPLOAD_URL') . '/' . $upload->name }}</a>
                         </td>
-                        <td>{{ Helpers::format_bytes($upload->size) }}</td>
+                        <td>{{ Helpers::formatBytes($upload->size) }}</td>
                         <td>{{ $upload->hash }}</td>
                         <td>{{ $upload->updated_at }}</td>
                         <td>

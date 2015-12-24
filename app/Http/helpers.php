@@ -9,7 +9,7 @@ class Helpers
     const API_KEY_LENGTH = 64;
 
     // http://stackoverflow.com/questions/2510434/format-bytes-to-kilobytes-megabytes-gigabytes
-    public static function format_bytes($bytes, $precision = 2)
+    public static function formatBytes($bytes, $precision = 2)
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
 
