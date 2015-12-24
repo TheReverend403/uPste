@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Models\Upload;
 use Auth;
 use Exception;
+use Helpers;
 use Input;
 use Storage;
 use Teapot\StatusCode;
@@ -32,7 +33,7 @@ class ApiController extends Controller
         }
 
         // Strip EXIF tags
-        if (canHaveExif($file) && in_array($ext, ['png', 'jpg', 'jpeg', 'gif'])) {
+        if (Helpers::canHaveExif($file) && in_array($ext, ['png', 'jpg', 'jpeg', 'gif'])) {
             try {
                 $img = new SimpleImage($file->getRealPath());
                 $img->save($file->getRealPath(), 100, $ext);
@@ -60,7 +61,7 @@ class ApiController extends Controller
             return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
         }
 
-        $randomLen = 4;
+        $randomLen = Helpers::UPLOAD_SLUG_INITIAL_LENGTH;
         do {
             $newName = str_random($randomLen++) . ".$ext";
         } while (Storage::disk()->exists("uploads/$newName"));

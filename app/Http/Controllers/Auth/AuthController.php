@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use DB;
+use Helpers;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
@@ -87,7 +88,7 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         do {
-            $apiKey = str_random(64);
+            $apiKey = str_random(Helpers::API_KEY_LENGTH);
         } while (User::whereApikey($apiKey)->first());
 
         $firstUser = DB::table('users')->count() == 0;

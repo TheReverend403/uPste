@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Models\Upload;
 use App\Models\User;
 use Auth;
+use Helpers;
 use Illuminate\Mail\Message;
 use Mail;
 
@@ -18,8 +19,8 @@ class AccountController extends Controller
         $now = time();
         $registeredDate = strtotime(Auth::user()->created_at);
         $dateDiff = abs($now - $registeredDate);
-        $daysRegistered = 7 - round($dateDiff / (60 * 60 * 24));
-        $new = ($daysRegistered > 0 && $daysRegistered <= 7);
+        $daysRegistered = Helpers::NEW_USER_DAYS - round($dateDiff / (60 * 60 * 24));
+        $new = ($daysRegistered > 0 && $daysRegistered <= Helpers::NEW_USER_DAYS);
 
         return view('account.index', compact('new', 'daysRegistered'));
     }
@@ -41,7 +42,7 @@ class AccountController extends Controller
 
     public function getUploads()
     {
-        $uploads = Upload::whereUserId(Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(15);
+        $uploads = Upload::whereUserId(Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
 
         return view('account.uploads', compact('uploads'));
     }
@@ -63,7 +64,7 @@ class AccountController extends Controller
     public function postResetKey()
     {
         do {
-            $newKey = str_random(64);
+            $newKey = str_random(Helpers::API_KEY_LENGTH);
         } while (User::whereApikey($newKey)->first());
 
         $user = Auth::user();

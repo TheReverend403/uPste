@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
 use App\Models\User;
+use Helpers;
 use Illuminate\Mail\Message;
 use Mail;
 use Storage;
@@ -27,21 +28,21 @@ class AdminController extends Controller
 
     public function getRequests()
     {
-        $users = User::whereEnabled(false)->orderBy('created_at', 'asc')->paginate(15);
+        $users = User::whereEnabled(false)->orderBy('created_at', 'asc')->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
 
         return view('admin.requests', compact('users'));
     }
 
     public function getUsers()
     {
-        $users = User::whereEnabled(true)->paginate(15);
+        $users = User::whereEnabled(true)->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
 
         return view('admin.users', compact('users'));
     }
 
     public function postUserBan(User $user)
     {
-        if ($user->id == 1) {
+        if ($user->id == Helpers::SUPERUSER_ID) {
             flash()->error('You cannot ban the superuser account.');
 
             return redirect()->back();
@@ -54,7 +55,7 @@ class AdminController extends Controller
 
     public function postUserDelete(User $user)
     {
-        if ($user->id == 1) {
+        if ($user->id == Helpers::SUPERUSER_ID) {
             flash()->error('You cannot delete the superuser account.');
 
             return redirect()->back();
@@ -82,7 +83,7 @@ class AdminController extends Controller
 
     public function getUploads(User $user)
     {
-        $uploads = Upload::whereUserId($user->id)->orderBy('created_at', 'desc')->paginate(15);
+        $uploads = Upload::whereUserId($user->id)->orderBy('created_at', 'desc')->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
 
         return view('admin.uploads', compact('uploads', 'user'));
     }
