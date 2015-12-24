@@ -3,6 +3,7 @@
 @section('title', 'My Resources')
 
 @section('content')
+    {{--
     <div class="container-sm">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -24,6 +25,7 @@
                 </blockquote>
             </div>
         </div>
+         --}}
 
         <div class="panel panel-default">
             <div class="panel-heading">

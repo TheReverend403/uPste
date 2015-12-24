@@ -25,12 +25,15 @@ class ApiController extends Controller
         }
 
         // Strip EXIF tags
-        if (shouldStripExif($file)) {
-            try {
-                $img = new SimpleImage($file->getRealPath());
-                $img->save();
-            } catch(Exception $e) {
-                return response()->json([$e->getMessage()], 500);
+        // Not used for now since this function doesn't seem to work reliably.
+        if (false) {
+            if (shouldStripExif($file)) {
+                try {
+                    $img = new SimpleImage($file->getRealPath());
+                    $img->save();
+                } catch(Exception $e) {
+                    return response()->json([$e->getMessage()], 500);
+                }
             }
         }
 
