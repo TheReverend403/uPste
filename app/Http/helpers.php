@@ -1,6 +1,7 @@
 <?php
 
-class Helpers {
+class Helpers
+{
     const SUPERUSER_ID = 1;
     const PAGINATION_DEFAULT_ITEMS = 5;
     const UPLOAD_SLUG_INITIAL_LENGTH = 4;
