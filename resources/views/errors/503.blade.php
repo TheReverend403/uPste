@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>We'll be right back.</title>
-    <link rel="icon" type="image/png" href="{{ url('assets/img/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ config('pste.favicon_url') }}">
     <link rel="stylesheet" href="{{ elixir('assets/css/error.css') }}">
 </head>
 <body>
