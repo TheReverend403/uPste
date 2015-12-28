@@ -72,7 +72,7 @@ class AccountController extends Controller
         flash()->success('Your API key was reset. New API key: ' . $user->apikey)->important();
 
         Mail::queue(['text' => 'emails.user.api_key_reset'], $user->toArray(), function (Message $message) use ($user) {
-            $message->subject(sprintf("[%s] API Key Reset", env('DOMAIN')));
+            $message->subject(sprintf("[%s] API Key Reset", config('pste.domain')));
             $message->to($user->email);
         });
 

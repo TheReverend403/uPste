@@ -50,7 +50,7 @@ class ApiController extends Controller
         if ($existing) {
             $result = [
                 'hash' => $fileHash,
-                'url'  => env('UPLOAD_URL') . '/' . $existing->name
+                'url'  => config('pste.upload_url') . $existing->name
             ];
 
             $existing->original_name = $originalName;
@@ -81,7 +81,7 @@ class ApiController extends Controller
 
         $result = [
             'hash' => $upload->getAttribute('hash'),
-            'url'  => env('UPLOAD_URL') . '/' . $newName
+            'url'  => config('pste.upload_url') . $newName
         ];
 
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);

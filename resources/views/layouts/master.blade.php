@@ -23,7 +23,7 @@
                     <span class="icon-bar"></span>
                 </button>
             @endif
-            <a class="navbar-brand" href="{{ route('index') }}">{{ env('DOMAIN') }}</a>
+            <a class="navbar-brand" href="{{ route('index') }}">{{ config('pste.domain') }}</a>
         </div>
 
         <div class="collapse navbar-collapse" id="main-nav">

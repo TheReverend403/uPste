@@ -6,10 +6,10 @@
     <div class="container-sm">
         <div class="text-center">
             <h3>Third Party Integrations</h3>
-            <p>If you make something neat, <a href="mailto:{{ env('OWNER_EMAIL') }}">let us know</a> and we'll feature it
+            <p>If you make something neat, <a href="mailto:{{ config('pste.owner_email') }}">let us know</a> and we'll feature it
                 here.</p>
             <h3>Bash script</h3>
-            <p>You can upload to {{ env('DOMAIN') }} with our bash script.</p>
+            <p>You can upload to {{ config('pste.domain') }} with our bash script.</p>
             <p>This script depends on <a href="https://github.com/naelstrof/slop">slop</a> and <a
                         href="https://github.com/naelstrof/maim">maim</a>.</p>
             <p>Save this to <code>~/.config/pstepw</code>:</p>
