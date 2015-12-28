@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Auth;
 use Exception;
+use Illuminate\Contracts\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Mail\Message;
 use Illuminate\Session\TokenMismatchException;
@@ -21,6 +23,8 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         TokenMismatchException::class,
         HttpException::class,
+        ValidationException::class,
+        ModelNotFoundException::class,
     ];
 
     /**
