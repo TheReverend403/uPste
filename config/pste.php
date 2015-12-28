@@ -2,7 +2,6 @@
 
 return [
     'site_name' => env('SITE_NAME', 'uPste'),
-    'favicon_url' => env('FAVICON_URL', url('assets/img/favicon.png')),
     'domain' => env('DOMAIN', 'example.com'),
     'upload_url' => str_finish(env('UPLOAD_URL', 'https://a.example.com'), '/'),
     'owner_name' => env('OWNER_NAME', 'Me'),
