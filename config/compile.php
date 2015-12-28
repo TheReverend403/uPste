@@ -14,7 +14,7 @@ return [
     */
 
     'files' => [
-        'app/helpers.php'
+        'app/Http/helpers.php'
     ],
 
     /*
