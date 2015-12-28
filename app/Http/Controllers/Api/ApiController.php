@@ -61,7 +61,7 @@ class ApiController extends Controller
             return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
         }
 
-        $randomLen = Helpers::UPLOAD_SLUG_INITIAL_LENGTH;
+        $randomLen = config('pste.upload_slug_length');
         do {
             $newName = str_random($randomLen++) . ".$ext";
         } while (Storage::disk()->exists("uploads/$newName"));
