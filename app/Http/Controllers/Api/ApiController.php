@@ -50,7 +50,7 @@ class ApiController extends Controller
         if ($existing) {
             $result = [
                 'hash' => $fileHash,
-                'url'  => config('pste.upload_url') . $existing->name
+                'url'  => config('upste.upload_url') . $existing->name
             ];
 
             $existing->original_name = $originalName;
@@ -61,7 +61,7 @@ class ApiController extends Controller
             return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
         }
 
-        $randomLen = config('pste.upload_slug_length');
+        $randomLen = config('upste.upload_slug_length');
         do {
             $newName = str_random($randomLen++) . ".$ext";
         } while (Storage::disk()->exists("uploads/$newName"));
@@ -81,7 +81,7 @@ class ApiController extends Controller
 
         $result = [
             'hash' => $upload->getAttribute('hash'),
-            'url'  => config('pste.upload_url') . $newName
+            'url'  => config('upste.upload_url') . $newName
         ];
 
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);

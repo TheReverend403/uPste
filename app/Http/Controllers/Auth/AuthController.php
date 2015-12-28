@@ -54,8 +54,8 @@ class AuthController extends Controller
         $this->create($data);
 
         Mail::queue(['text' => 'emails.admin.new_registration'], $data, function (Message $message) use ($data) {
-            $message->subject(sprintf("[%s] New User Registration", config('pste.domain')));
-            $message->to(config('pste.owner_email'));
+            $message->subject(sprintf("[%s] New User Registration", config('upste.domain')));
+            $message->to(config('upste.owner_email'));
         });
         flash()->success(
             'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.')

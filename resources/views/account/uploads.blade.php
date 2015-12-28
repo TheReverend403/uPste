@@ -21,7 +21,7 @@
                     <tr>
                         <td>{{ $upload->original_name }}</td>
                         <td>
-                            <a href="{{ config('pste.upload_url') . $upload->name }}">{{ config('pste.upload_url') . $upload->name }}</a>
+                            <a href="{{ config('upste.upload_url') . $upload->name }}">{{ config('upste.upload_url') . $upload->name }}</a>
                         </td>
                         <td>{{ Helpers::formatBytes($upload->size) }}</td>
                         <td>{{ $upload->hash }}</td>

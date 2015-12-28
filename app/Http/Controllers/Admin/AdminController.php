@@ -101,7 +101,7 @@ class AdminController extends Controller
         $user->fill(['enabled' => true])->save();
 
         Mail::queue(['text' => 'emails.user.account_accepted'], $user->toArray(), function (Message $message) use ($user) {
-            $message->subject(sprintf("[%s] Account Request Accepted", config('pste.domain')));
+            $message->subject(sprintf("[%s] Account Request Accepted", config('upste.domain')));
             $message->to($user->email);
         });
 
@@ -113,7 +113,7 @@ class AdminController extends Controller
     public function postUserReject(User $user)
     {
         Mail::queue(['text' => 'emails.user.account_rejected'], $user->toArray(), function (Message $message) use ($user) {
-            $message->subject(sprintf("[%s] Account Request Rejected", config('pste.domain')));
+            $message->subject(sprintf("[%s] Account Request Rejected", config('upste.domain')));
             $message->to($user->email);
         });
 

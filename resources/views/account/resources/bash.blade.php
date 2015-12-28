@@ -63,7 +63,7 @@ desktop() {
 
 # This function uploads the $file
 upload() {
-	url="$(curl --silent -F key="$key" -F file="@$uploadme" "{{ route('api.upload') }}" | grep -o -i "{{ config('pste.upload_url') }}*.[a-z0-9._-]*")"
+	url="$(curl --silent -F key="$key" -F file="@$uploadme" "{{ route('api.upload') }}" | grep -o -i "{{ config('upste.upload_url') }}*.[a-z0-9._-]*")"
 }
 
 # This function logs the url,  copies the url to the clipboard, and/or opens the url in your browser
