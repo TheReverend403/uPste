@@ -32,7 +32,11 @@ class Helpers
     public static function canHaveExif(SplFileInfo $file)
     {
         if (function_exists('exif_imagetype')) {
-            return exif_imagetype($file);
+            try {
+                return exif_imagetype($file);
+            } catch (Exception $ex) {
+                return false;
+            }
         }
 
         return false;
