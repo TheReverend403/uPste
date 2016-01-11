@@ -7,7 +7,6 @@ class Helpers
     const NEW_USER_DAYS = 7; // How long is a user considered "new"
     const API_KEY_LENGTH = 64;
     const DB_CACHE_TIME = 5; // Minutes
-
     // http://stackoverflow.com/questions/2510434/format-bytes-to-kilobytes-megabytes-gigabytes
     /**
      * @param $bytes
@@ -32,11 +31,10 @@ class Helpers
      */
     public static function canHaveExif(SplFileInfo $file)
     {
-        $hasExif = false;
         if (function_exists('exif_imagetype')) {
-            $hasExif = (exif_imagetype($file) != 0);
+            return exif_imagetype($file);
         }
 
-        return $hasExif;
+        return false;
     }
 }
