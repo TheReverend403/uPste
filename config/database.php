@@ -59,7 +59,7 @@ return [
             'username'  => env('DB_USERNAME', 'forge'),
             'password'  => env('DB_PASSWORD', ''),
             'charset'   => 'utf8',
-            'collation' => 'utf8_bin,
+            'collation' => 'utf8_bin',
             'prefix'    => '',
             'strict'    => false,
         ],
