@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use DB;
+use Hash;
 use Helpers;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -97,12 +98,20 @@ class AuthController extends Controller
             'name'     => $data['name'],
             'email'    => $data['email'],
             'apikey'   => $apiKey,
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
             // First user registered should be enabled and admin
             'admin'    => $firstUser,
             'enabled'  => $firstUser
         ]);
 
         return $user;
+    }
+
+    protected function authenticated(Request $request, User $user) {
+        if (Hash::needsRehash($user->password)) {
+            $user->password = Hash::make($request->input('password'));
+            $user->save();
+        }
+        return redirect($this->redirectPath());
     }
 }
