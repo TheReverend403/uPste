@@ -52,8 +52,8 @@ class Upload extends Model
 
     public function forceDelete()
     {
-        if (Storage::disk()->exists("uploads/" . $this->name)) {
-            Storage::disk()->delete("uploads/" . $this->name);
+        if (Storage::exists("uploads/" . $this->name)) {
+            Storage::delete("uploads/" . $this->name);
         }
 
         return parent::forceDelete();

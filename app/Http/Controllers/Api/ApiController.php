@@ -64,7 +64,7 @@ class ApiController extends Controller
         $randomLen = config('upste.upload_slug_length');
         do {
             $newName = str_random($randomLen++) . ".$ext";
-        } while (Storage::disk()->exists("uploads/$newName"));
+        } while (Storage::exists("uploads/$newName"));
 
         $upload = Upload::create([
             'user_id'       => Auth::user()->id,
@@ -75,7 +75,7 @@ class ApiController extends Controller
         ]);
 
         $upload->save();
-        Storage::disk()->put("uploads/$newName",
+        Storage::put("uploads/$newName",
             file_get_contents($file->getRealPath())
         );
 

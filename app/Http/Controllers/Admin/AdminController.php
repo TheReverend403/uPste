@@ -61,9 +61,10 @@ class AdminController extends Controller
             return redirect()->back();
         }
 
+        // Reimplemented here to allow CASCADE to do it's job, as opposed to using $upload->forceDelete()
         foreach ($user->uploads as $upload) {
-            if (Storage::disk()->exists("uploads/" . $upload->name)) {
-                Storage::disk()->delete("uploads/" . $upload->name);
+            if (Storage::exists("uploads/" . $upload->name)) {
+                Storage::delete("uploads/" . $upload->name);
             }
         }
 
