@@ -57,6 +57,7 @@ class AuthController extends Controller
             $message->subject(sprintf("[%s] New User Registration", config('upste.domain')));
             $message->to(config('upste.owner_email'));
         });
+
         flash()->success(
             'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.')
             ->important();
