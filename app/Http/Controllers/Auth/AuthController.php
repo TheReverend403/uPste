@@ -112,6 +112,7 @@ class AuthController extends Controller
             $user->password = Hash::make($request->input('password'));
             $user->save();
         }
-        return redirect($this->redirectPath());
+
+        return redirect()->intended($this->redirectPath());
     }
 }
