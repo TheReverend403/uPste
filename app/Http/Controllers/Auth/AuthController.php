@@ -38,7 +38,6 @@ class AuthController extends Controller
     {
         parent::__construct();
         $this->redirectPath = route('index');
-        $this->loginPath = route('login');
     }
 
     public function postRegister(Request $request)
