@@ -30,9 +30,7 @@ We'll assume you already have a database, setting that up is beyond the scope of
 ````bash
 git clone https://github.com/TheReverend403/uPste
 cd uPste
-composer install # Installs laravel, all dependencies, npm dependencies, and compiles assets.
-cp .env.example .env
-php artisan key:generate # VERY IMPORTANT, DO NOT MISS THIS
+composer install # Installs laravel, all dependencies, npm dependencies, compiles assets and generates your app key.
 ````
 
 Open .env in the root directory of uPste and edit the settings within to suit your site. Make sure to read what each one does, and feel free to ask if you're not sure.
