@@ -4,7 +4,7 @@ uPste
 ![Language](https://img.shields.io/badge/language-PHP-blue.svg?style=flat-square)
 [![License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](https://www.gnu.org/licenses/agpl-3.0.en.html)
 [![IRC](https://img.shields.io/badge/chat-IRC-green.svg?style=flat-square)](https://qchat.rizon.net/?channels=leliana)
-[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?fid=1y9dz1&url=https://github.com/TheReverend403/uPste&title=uPste&language=PHp&tags=github&category=software)
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=TheReverend403&url=https://github.com/TheReverend403/uPste&title=uPste&language=&tags=github&category=software)
 
 uPste is a private file hosting application with an emphasis on serving technology communities.
 
