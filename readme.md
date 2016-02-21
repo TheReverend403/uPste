@@ -53,7 +53,6 @@ Upgrading is easy. Just run the following commands, and make sure to check .env.
 
 ````bash
 cd /path/to/uPste
-php artisan down
 git pull
 composer update
 ````
