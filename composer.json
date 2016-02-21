@@ -50,6 +50,7 @@
       "php artisan optimize"
     ],
     "pre-update-cmd": [
+      "php artisan down",
       "php artisan clear-compiled"
     ],
     "post-update-cmd": [
@@ -58,7 +59,8 @@
       "php artisan config:cache",
       "php artisan view:clear",
       "php artisan route:cache",
-      "php artisan optimize"
+      "php artisan optimize",
+      "php artisan up"
     ],
     "post-root-package-install": [
       "php -r \"copy('.env.example', '.env');\""
