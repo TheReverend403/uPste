@@ -29,8 +29,12 @@ class Helpers
      * @param $file
      * @return bool
      */
-    public static function canHaveExif(SplFileInfo $file)
+    public static function shouldStripExif(SplFileInfo $file)
     {
+        if (!config('upste.strip_exif')) {
+            return false;
+        }
+
         if (!in_array($file->getClientOriginalExtension(), ['png', 'jpg', 'jpeg'])) {
             return false;
         }

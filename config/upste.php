@@ -11,4 +11,5 @@ return [
     'upload_limit'       => env('UPLOAD_LIMIT', '20 MB'),
     'irc_channel'        => env('IRC_CHANNEL', '#example'),
     'irc_server'         => env('IRC_SERVER', 'irc.example.com'),
+    'strip_exif'         => env('STRIP_EXIF', true),
 ];

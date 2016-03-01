@@ -4,14 +4,16 @@
 
 @section('content')
     <div class="container-sm">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <b>Why do my images have a different size and hash after I upload them?</b>
+        @if (config('upste.strip_exif'))
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <b>Why do my images have a different size and hash after I upload them?</b>
+                </div>
+                <div class="panel-body">
+                    <p>We strip EXIF data from uploaded images to prevent accidental breaches of user privacy from EXIF tags such as geolocation. This results in a different file size, and obviously a different hash.</p>
+                </div>
             </div>
-            <div class="panel-body">
-                <p>We strip EXIF data from uploaded images to prevent accidental breaches of user privacy from EXIF tags such as geolocation. This results in a different file size, and obviously a different hash.</p>
-            </div>
-        </div>
+        @endif
 
         <div class="panel panel-default">
             <div class="panel-heading">
