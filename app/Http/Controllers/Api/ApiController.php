@@ -33,7 +33,7 @@ class ApiController extends Controller
         }
 
         // Strip EXIF tags
-        if (Helpers::canHaveExif($file) && in_array($ext, ['png', 'jpg', 'jpeg', 'gif'])) {
+        if (Helpers::canHaveExif($file)) {
             try {
                 $img = new SimpleImage($file->getRealPath());
                 $img->save($file->getRealPath(), 100, $ext);

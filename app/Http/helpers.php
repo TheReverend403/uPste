@@ -31,6 +31,10 @@ class Helpers
      */
     public static function canHaveExif(SplFileInfo $file)
     {
+        if (!in_array($file->getClientOriginalExtension(), ['png', 'jpg', 'jpeg'])) {
+            return false;
+        }
+
         if (function_exists('exif_imagetype')) {
             try {
                 return exif_imagetype($file);
