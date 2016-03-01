@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'uPste')
+@section('title', config('upste.site_name'))
 
 @section('content')
     <div class="container-sm text-center jumbotron">
