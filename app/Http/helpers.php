@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\UploadedFile;
+
 class Helpers
 {
     const SUPERUSER_ID = 1;
@@ -29,7 +31,7 @@ class Helpers
      * @param $file
      * @return bool
      */
-    public static function shouldStripExif(SplFileInfo $file)
+    public static function shouldStripExif(UploadedFile $file)
     {
         if (!config('upste.strip_exif')) {
             return false;
