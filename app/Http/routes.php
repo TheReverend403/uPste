@@ -14,6 +14,10 @@
 /*
  * Routes only unauthenticated users can access
  */
+use App\Models\Upload;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Teapot\StatusCode;
+
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', [
         'as' => 'index', 'uses' => 'IndexController@getIndex']);
@@ -120,4 +124,12 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     Route::post('upload', [
         'as' => 'api.upload', 'uses' => 'Api\ApiController@postUpload']);
+});
+
+/*
+ * File downloads
+ */
+Route::group(['domain' => config('upste.upload_domain')], function () {
+    Route::get('/{upload}', [
+        'as' => 'files.file', 'uses' => 'FileController@index']);
 });
