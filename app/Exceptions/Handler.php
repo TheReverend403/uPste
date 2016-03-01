@@ -40,9 +40,10 @@ class Handler extends ExceptionHandler
         if ($this->shouldReport($e) && php_sapi_name() != 'cli') {
 
             $data = [
-                'ip'    => request()->getClientIp(),
-                'url'   => request()->fullUrl(),
-                'trace' => $e->getTraceAsString()
+                'ip'        => request()->getClientIp(),
+                'url'       => request()->fullUrl(),
+                'exception' => $e->getMessage(),
+                'trace'     => $e->getTraceAsString()
             ];
 
             Mail::queue(['text' => 'emails.admin.exception'], $data, function (Message $message) use ($data) {
