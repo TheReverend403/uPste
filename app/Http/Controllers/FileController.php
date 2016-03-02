@@ -11,10 +11,9 @@ use Teapot\StatusCode;
 
 class FileController extends Controller
 {
-    public function index(Upload $upload)
-    {
-        if (Storage::exists('uploads/' . $upload->name)) {
-            response()->make('', StatusCode::OK, ['X-SendFile' => Storage::getDriver()->getAdapter()->getPathPrefix() . '/' . $upload->name]);
+    public function index(Upload $upload) {
+        if (Storage::exists($upload->name)) {
+            response()->make('', StatusCode::OK, ['X-SendFile' => storage_path('app/uploads/') . $upload->name]);
         } else {
             throw new NotFoundHttpException();
         }
