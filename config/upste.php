@@ -12,5 +12,4 @@ return [
     'irc_channel'        => env('IRC_CHANNEL', '#example'),
     'irc_server'         => env('IRC_SERVER', 'irc.example.com'),
     'strip_exif'         => env('STRIP_EXIF', true),
-    'upload_domain'      => env('UPLOAD_DOMAIN', 'a.example.com')
 ];

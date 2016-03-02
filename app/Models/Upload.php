@@ -58,9 +58,4 @@ class Upload extends Model
 
         return parent::forceDelete();
     }
-
-    public function getRouteKeyName()
-    {
-        return 'name';
-    }
 }
