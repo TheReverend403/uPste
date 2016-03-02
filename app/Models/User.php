@@ -67,4 +67,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->hasMany('App\Models\Upload');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
 }
