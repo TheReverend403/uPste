@@ -25,6 +25,7 @@ use Storage;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereOriginalName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Upload extends Model
 {
