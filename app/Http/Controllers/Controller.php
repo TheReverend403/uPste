@@ -24,6 +24,10 @@ abstract class Controller extends BaseController
             return DB::table('uploads')->count();
         });
 
-        View::share(compact('userCount', 'uploadCount'));
+        $uploadTotalSize = Cache::remember('uploads_total_size', Helpers::DB_CACHE_TIME, function () {
+            return Helpers::formatBytes(DB::table('uploads')->sum('size'));
+        });
+
+        View::share(compact('userCount', 'uploadCount', 'uploadTotalSize'));
     }
 }

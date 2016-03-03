@@ -57,7 +57,7 @@
         <hr>
         @yield('footer')
         <p>
-            <small>Currently hosting {{ sprintf(ngettext("%d file", "%d files", $uploadCount), $uploadCount) }} for {{ sprintf(ngettext("%d user", "%d users", $userCount), $userCount) }}.</small>
+            <small>Currently hosting {{ sprintf(ngettext("%d file", "%d files", $uploadCount), $uploadCount) }} for {{ sprintf(ngettext("%d user", "%d users", $userCount), $userCount) }}, weighing in at {{ $uploadTotalSize }}.</small>
         </p>
         <p><small>Powered by <a href="https://github.com/TheReverend403/uPste">uPste</a></small></p>
     </div>
