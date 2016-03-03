@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\UploadedFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Helpers
 {
