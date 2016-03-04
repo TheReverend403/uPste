@@ -28,6 +28,8 @@ class Helpers
     }
 
     /**
+     * Checks whether or not it's safe to attempt to strip exif tags from a file
+     *
      * @param $file
      * @return bool
      */
