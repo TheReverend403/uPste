@@ -67,7 +67,7 @@ class Helpers
             try {
                 $imageType = exif_imagetype($file);
                 if ($imageType !== false) {
-                    return image_type_to_extension($imageType);
+                    return image_type_to_extension($imageType, false);
                 }
             } catch (Exception $ex) {
                 return $file->getClientOriginalExtension();
