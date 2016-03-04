@@ -62,7 +62,8 @@ class Helpers
      * @param UploadedFile $file
      * @return string
      */
-    public static function getImageType(UploadedFile $file) {
+    public static function getImageType(UploadedFile $file)
+    {
         if (function_exists('exif_imagetype')) {
             try {
                 $imageType = exif_imagetype($file);
