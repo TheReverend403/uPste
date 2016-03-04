@@ -51,7 +51,6 @@
     ],
     "pre-update-cmd": [
       "php artisan down",
-      "php artisan clear-compiled"
     ],
     "post-update-cmd": [
       "gulp --production",
@@ -59,6 +58,7 @@
       "php artisan config:cache",
       "php artisan view:clear",
       "php artisan route:cache",
+      "php artisan clear-compiled",
       "php artisan optimize",
       "php artisan up"
     ],
