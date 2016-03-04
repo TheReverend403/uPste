@@ -26,7 +26,6 @@ class ApiController extends Controller
             return response()->json(['invalid_file_upload'], StatusCode::BAD_REQUEST);
         }
 
-
         $ext = $file->getClientOriginalExtension();
         if (empty($ext)) {
             $ext = 'txt';
@@ -49,7 +48,6 @@ class ApiController extends Controller
         $existing = Upload::whereHash($fileHash)->whereUserId(Auth::user()->id)->first();
         if ($existing) {
             $result = [
-                'hash' => $fileHash,
                 'url'  => config('upste.upload_url') . $existing->name
             ];
 
