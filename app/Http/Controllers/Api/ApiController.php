@@ -36,7 +36,7 @@ class ApiController extends Controller
         if (Helpers::shouldStripExif($file)) {
             try {
                 $img = new SimpleImage($file->getRealPath());
-                $img->save($file->getRealPath(), 100, $ext);
+                $img->save($file->getRealPath(), 100, Helpers::getImageType($file));
             } catch (Exception $e) {
                 return response()->json([$e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
             }

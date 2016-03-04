@@ -37,18 +37,42 @@ class Helpers
             return false;
         }
 
-        if (!in_array($file->getClientOriginalExtension(), ['png', 'jpg', 'jpeg'])) {
-            return false;
-        }
-
         if (function_exists('exif_imagetype')) {
             try {
-                return exif_imagetype($file);
+                switch(exif_imagetype($file)) {
+                    case IMAGETYPE_JPEG:
+                    case IMAGETYPE_PNG:
+                        return true;
+                        break;
+                    default:
+                        return false;
+                        break;
+                }
             } catch (Exception $ex) {
                 return false;
             }
         }
 
         return false;
+    }
+
+    /**
+     * Determines the real file extension of an image via exif_imagetype
+     *
+     * @param UploadedFile $file
+     * @return string
+     */
+    public static function getImageType(UploadedFile $file) {
+        if (function_exists('exif_imagetype')) {
+            try {
+                $imageType = exif_imagetype($file);
+                if ($imageType !== false) {
+                    return image_type_to_extension($imageType);
+                }
+            } catch (Exception $ex) {
+                return $file->getClientOriginalExtension();
+            }
+        }
+        return $file->getClientOriginalExtension();
     }
 }
