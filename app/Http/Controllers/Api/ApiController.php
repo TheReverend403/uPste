@@ -78,7 +78,6 @@ class ApiController extends Controller
         );
 
         $result = [
-            'hash' => $upload->getAttribute('hash'),
             'url'  => config('upste.upload_url') . $newName
         ];
 
