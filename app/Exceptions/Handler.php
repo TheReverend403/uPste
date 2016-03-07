@@ -42,8 +42,7 @@ class Handler extends ExceptionHandler
             $data = [
                 'ip'        => request()->getClientIp(),
                 'url'       => request()->fullUrl(),
-                'exception' => $e->getMessage(),
-                'trace'     => $e->getTraceAsString()
+                'exception' => $e->__toString(),
             ];
 
             Mail::queue(['text' => 'emails.admin.exception'], $data, function (Message $message) use ($data) {
