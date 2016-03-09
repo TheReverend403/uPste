@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
 use App\Models\User;
+use Cache;
 use Helpers;
 use Illuminate\Mail\Message;
 use Mail;
@@ -35,7 +36,17 @@ class AdminController extends Controller
 
     public function getUsers()
     {
-        $users = User::whereEnabled(true)->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
+        $users = User::whereEnabled(true)->with('uploads')->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
+
+        foreach ($users as $user) {
+            Cache::rememberForever('uploads_count:' . $user->id, function () use ($user) {
+                return $user->uploads->count();
+            });
+
+           Cache::rememberForever('uploads_size:' . $user->id, function () use ($user) {
+                return $user->uploads->sum('size');
+            });
+        }
 
         return view('admin.users', compact('users'));
     }
