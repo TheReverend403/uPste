@@ -23,7 +23,7 @@ class AccountController extends Controller
         });
 
         $userUploadTotalSize = Cache::rememberForever('uploads_size:' . Auth::user()->id, function () {
-            return Helpers::formatBytes(Auth::user()->uploads->sum('size'));
+            return Auth::user()->uploads->sum('size');
         });
 
         view()->share(compact('userUploadCount', 'userUploadTotalSize'));
