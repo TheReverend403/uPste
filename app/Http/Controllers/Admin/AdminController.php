@@ -81,7 +81,6 @@ class AdminController extends Controller
 
         $user->forceDelete();
         flash()->success('Deleted user ' . $user->name);
-        Helpers::invalidateCache();
 
         return redirect()->back();
     }
@@ -105,7 +104,6 @@ class AdminController extends Controller
     {
         $upload->forceDelete();
         flash()->success($upload->name . ' has been deleted.');
-        Helpers::invalidateCache();
 
         return redirect()->back();
     }

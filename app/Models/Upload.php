@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Helpers;
 use Illuminate\Database\Eloquent\Model;
 use Storage;
 
@@ -51,11 +52,20 @@ class Upload extends Model
         return $this->belongsTo('App\Models\User', 'id', 'user_id');
     }
 
+    public static function create(array $attributes = [])
+    {
+        Helpers::invalidateCache();
+
+        return parent::create($attributes);
+    }
+
     public function forceDelete()
     {
         if (Storage::exists("uploads/" . $this->name)) {
             Storage::delete("uploads/" . $this->name);
         }
+
+        Helpers::invalidateCache();
 
         return parent::forceDelete();
     }

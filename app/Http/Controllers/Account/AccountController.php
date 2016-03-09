@@ -73,7 +73,6 @@ class AccountController extends Controller
 
         $upload->forceDelete();
         flash()->success($upload->original_name . ' has been deleted.');
-        Helpers::invalidateCache();
 
         return redirect()->back();
     }

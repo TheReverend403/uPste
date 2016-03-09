@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Helpers;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -67,5 +68,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function uploads()
     {
         return $this->hasMany('App\Models\Upload');
+    }
+
+    public function forceDelete()
+    {
+        Helpers::invalidateCache();
+
+        return parent::forceDelete();
     }
 }

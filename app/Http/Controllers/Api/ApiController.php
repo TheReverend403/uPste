@@ -82,7 +82,6 @@ class ApiController extends Controller
             'url'  => config('upste.upload_url') . $newName
         ];
 
-        Helpers::invalidateCache();
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
     }
 }
