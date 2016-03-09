@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Models\Upload;
 use App\Models\User;
 use Auth;
+use Carbon\Carbon;
 use Helpers;
 use Illuminate\Mail\Message;
 use Mail;
@@ -16,13 +17,13 @@ class AccountController extends Controller
     public function getIndex()
     {
         // Check if the user has been registered for 7 days or less
-        $now = time();
-        $registeredDate = strtotime(Auth::user()->created_at);
-        $dateDiff = abs($now - $registeredDate);
-        $daysRegistered = Helpers::NEW_USER_DAYS - round($dateDiff / (60 * 60 * 24));
-        $new = ($daysRegistered > 0 && $daysRegistered <= Helpers::NEW_USER_DAYS);
+        $registered = Carbon::parse(Auth::user()->created_at);
+        $dateNow = Carbon::now();
+        $daysRegistered = $registered->diffInDays($dateNow);
+        $newUser = $daysRegistered <= Helpers::NEW_USER_DAYS;
+        $daysUntilMessageHides = Helpers::NEW_USER_DAYS - round($daysRegistered / ($dateNow->diffInSeconds($dateNow->tomorrow())));
 
-        return view('account.index', compact('new', 'daysRegistered'));
+        return view('account.index', compact('newUser', 'daysUntilMessageHides'));
     }
 
     public function getResources()

@@ -15,7 +15,7 @@
         window.max_file_size = "{{ intval(preg_replace('/[^0-9]/', '', config('upste.upload_limit'))) }}";
     </script>
     <div class="container-sm text-center">
-        @if($new)
+        @if($newUser)
             @include('account.new-member')
         @endif
         <div class="panel panel-danger text-left">
