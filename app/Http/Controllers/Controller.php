@@ -19,7 +19,7 @@ abstract class Controller extends BaseController
             return DB::table('users')->where('enabled', true)->count();
         });
 
-        $uploadCount = Cache::remember('uploads', Helpers::DB_CACHE_TIME, function () {
+        $uploadCount = Cache::rememberForever('uploads', function () {
             return DB::table('uploads')->count();
         });
 
