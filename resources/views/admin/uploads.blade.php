@@ -1,9 +1,14 @@
 @extends('layouts.admin')
 
-@section('title', 'AdminCP - Uploads: '. $user->name)
+@section('title', 'AdminCP - Uploads')
 
 @section('content')
-    @if(count($uploads))
+    @if($uploads->count())
+        <div class="text-center">
+            <h2>{{ $user->name }}'{{ ends_with($user->name, 's') ?: 's' }} Uploads</h2>
+            <p>Total: {{ $uploads->count() }} ({{ Helpers::formatBytes($uploads->sum('size')) }})</p>
+        </div>
+        <hr>
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
