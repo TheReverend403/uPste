@@ -8,7 +8,6 @@ class Helpers
     const PAGINATION_DEFAULT_ITEMS = 15;
     const NEW_USER_DAYS = 7; // How long is a user considered "new"
     const API_KEY_LENGTH = 64;
-    const DB_CACHE_TIME = 5; // Minutes
 
     /**
      * Invalidates cache items like user counts, upload counts etc...
@@ -18,6 +17,7 @@ class Helpers
             Cache::forget('uploads_count:' . Auth::user()->id);
             Cache::forget('uploads_size:' . Auth::user()->id);
         }
+
         Cache::forget('users');
         Cache::forget('uploads');
         Cache::forget('uploads_total_size');

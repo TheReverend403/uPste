@@ -15,7 +15,7 @@ abstract class Controller extends BaseController
 
     public function __construct()
     {
-        $userCount = Cache::remember('users', Helpers::DB_CACHE_TIME, function () {
+        $userCount = Cache::rememberForever('users', function () {
             return DB::table('users')->where('enabled', true)->count();
         });
 
@@ -23,7 +23,7 @@ abstract class Controller extends BaseController
             return DB::table('uploads')->count();
         });
 
-        $uploadTotalSize = Cache::remember('uploads_total_size', Helpers::DB_CACHE_TIME, function () {
+        $uploadTotalSize = Cache::rememberForever('uploads_total_size', function () {
             return Helpers::formatBytes(DB::table('uploads')->sum('size'));
         });
 
