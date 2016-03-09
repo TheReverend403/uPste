@@ -10,7 +10,8 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Registered</th>
-                <th>Updated</th>
+                <th>Uploads</th>
+                <th>Uploads Size</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -30,7 +31,8 @@
                         <td><a href="mailto:{{ $user->email }}"
                                title="Send an email to {{ $user->name }}">{{ $user->email }}</a></td>
                         <td>{{ $user->created_at }}</td>
-                        <td>{{ $user->updated_at }}</td>
+                        <td>{{ count($user->uploads) }}</td>
+                        <td>{{ Helpers::formatBytes($user->uploads->sum('size')) }}</td>
                         <td>
                             <ul class="list-unstyled list-inline list-noborder">
                                 @if (!$user->banned)

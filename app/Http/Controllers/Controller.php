@@ -8,7 +8,6 @@ use Helpers;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use View;
 
 abstract class Controller extends BaseController
 {
@@ -28,6 +27,6 @@ abstract class Controller extends BaseController
             return Helpers::formatBytes(DB::table('uploads')->sum('size'));
         });
 
-        View::share(compact('userCount', 'uploadCount', 'uploadTotalSize'));
+        view()->share(compact('userCount', 'uploadCount', 'uploadTotalSize'));
     }
 }

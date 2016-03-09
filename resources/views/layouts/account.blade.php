@@ -7,6 +7,8 @@
 @stop
 
 @section('nav-right')
+    <p class="navbar-text">Uploads: {{ $userUploadCount }}</p>
+    <p class="navbar-text">Storage Used: {{ $userUploadTotalSize }}</p>
     @if (Auth::user()->admin)
         <li><a href="{{ route('admin') }}"><i class="fa fa-cog"></i>&nbsp; Admin</a></li>
     @endif

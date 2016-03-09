@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
 use Auth;
+use Cache;
 use Exception;
 use Helpers;
 use Input;
@@ -81,6 +82,7 @@ class ApiController extends Controller
             'url'  => config('upste.upload_url') . $newName
         ];
 
+        Helpers::invalidateCache();
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
     }
 }

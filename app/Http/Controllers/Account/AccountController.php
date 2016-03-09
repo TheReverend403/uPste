@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Models\Upload;
 use App\Models\User;
 use Auth;
+use Cache;
 use Carbon\Carbon;
 use Helpers;
 use Illuminate\Mail\Message;
@@ -14,6 +15,20 @@ use Mail;
 
 class AccountController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $userUploadCount = Cache::rememberForever('uploads_count:' . Auth::user()->id, function () {
+            return Auth::user()->uploads->count();
+        });
+
+        $userUploadTotalSize = Cache::rememberForever('uploads_size:' . Auth::user()->id, function () {
+            return Helpers::formatBytes(Auth::user()->uploads->sum('size'));
+        });
+
+        view()->share(compact('userUploadCount', 'userUploadTotalSize'));
+    }
+
     public function getIndex()
     {
         // Check if the user has been registered for 7 days or less
@@ -58,6 +73,7 @@ class AccountController extends Controller
 
         $upload->forceDelete();
         flash()->success($upload->original_name . ' has been deleted.');
+        Helpers::invalidateCache();
 
         return redirect()->back();
     }
