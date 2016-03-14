@@ -12,7 +12,7 @@
 <h3>API Methods</h3>
 <p>All API methods require your API key as a parameter named <code>key</code>, either as a form field for POSTs or a GET parameter for GET requests.</p>
 <hr>
-<h4 class="text-info">{{ route('api.upload') }}</h4>
+<h4 class="text-info">POST {{ route('api.upload') }}</h4>
 <p class="text-muted">Upload a file to your account and get a link to the file for sharing.</p>
 <table class="table table-bordered">
     <thead>
@@ -34,7 +34,7 @@
 <pre>curl \
 -F key={{ Auth::user()->apikey }} \
 -F file=@example.png \
-    {{ route('api.upload') }}</pre>
+{{ route('api.upload') }}</pre>
 <hr>
 <h4 class="text-info">GET {{ route('api.upload') }}</h4>
 <p class="text-muted">Returns a JSON array of your uploads.</p>
