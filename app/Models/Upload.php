@@ -42,7 +42,7 @@ class Upload extends Model
      *
      * @var array
      */
-    protected $hidden = [];
+    protected $hidden = ['user_id', 'id'];
 
     /**
      * Get the user that owns the upload.

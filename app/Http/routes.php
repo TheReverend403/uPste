@@ -120,4 +120,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     Route::post('upload', [
         'as' => 'api.upload', 'uses' => 'Api\ApiController@postUpload']);
+
+    Route::get('upload', [
+        'as' => 'api.upload', 'uses' => 'Api\ApiController@getUpload']);
 });

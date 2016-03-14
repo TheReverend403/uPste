@@ -84,4 +84,14 @@ class ApiController extends Controller
 
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
     }
+
+    public function getUpload() {
+        $user = Auth::user();
+
+        if (Cache::get('uploads_count:' . $user->id) !== 0) {
+            $uploads = $user->uploads->slice(0, Input::get('limit', $user->uploads->count()));
+            return response()->json($uploads, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
+        }
+        return response()->json(['error' => 'no_uploads'], StatusCode::NOT_FOUND, [], JSON_UNESCAPED_SLASHES);
+    }
 }
