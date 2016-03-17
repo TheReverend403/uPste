@@ -74,7 +74,8 @@ class ApiController extends Controller
         ]);
 
         $upload->save();
-        Storage::put("uploads/$newName",
+        Storage::put(
+            "uploads/$newName",
             file_get_contents($file->getRealPath())
         );
 
@@ -85,7 +86,8 @@ class ApiController extends Controller
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
     }
 
-    public function getUpload() {
+    public function getUpload()
+    {
         $user = Auth::user();
 
         if (Cache::get('uploads_count:' . $user->id) !== 0) {

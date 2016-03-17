@@ -12,7 +12,8 @@ class Helpers
     /**
      * Invalidates cache items like user counts, upload counts etc...
      */
-    public static function invalidateCache() {
+    public static function invalidateCache()
+    {
         if (Auth::user()) {
             Cache::forget('uploads_count:' . Auth::user()->id);
             Cache::forget('uploads_size:' . Auth::user()->id);
@@ -55,7 +56,7 @@ class Helpers
 
         if (function_exists('exif_imagetype')) {
             try {
-                switch(exif_imagetype($file)) {
+                switch (exif_imagetype($file)) {
                     case IMAGETYPE_JPEG:
                     case IMAGETYPE_PNG:
                         return true;

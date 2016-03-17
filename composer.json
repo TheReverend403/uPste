@@ -65,7 +65,9 @@
     "post-root-package-install": [
       "php -r \"copy('.env.example', '.env');\"",
       "php artisan key:generate"
-    ]
+    ],
+    "cs": "phpcs --standard=PSR2 app/ || true",
+    "cbf": "phpcbf --standard=PSR2 app/ || true"
   },
   "config": {
     "preferred-install": "dist"

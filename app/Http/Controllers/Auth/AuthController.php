@@ -46,7 +46,8 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             $this->throwValidationException(
-                $request, $validator
+                $request,
+                $validator
             );
         }
 
@@ -59,7 +60,8 @@ class AuthController extends Controller
         });
 
         flash()->success(
-            'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.')
+            'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.'
+        )
             ->important();
 
         return redirect()->route('index');
@@ -106,7 +108,8 @@ class AuthController extends Controller
         return $user;
     }
 
-    protected function authenticated(Request $request, User $user) {
+    protected function authenticated(Request $request, User $user)
+    {
         if (Hash::needsRehash($user->password)) {
             $user->password = Hash::make($request->input('password'));
             $user->save();

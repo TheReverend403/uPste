@@ -43,7 +43,7 @@ class AdminController extends Controller
                 return $user->uploads->count();
             });
 
-           Cache::rememberForever('uploads_size:' . $user->id, function () use ($user) {
+            Cache::rememberForever('uploads_size:' . $user->id, function () use ($user) {
                 return $user->uploads->sum('size');
             });
         }

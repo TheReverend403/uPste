@@ -48,7 +48,8 @@ class Authenticate
 
         if (!Auth::user()->enabled) {
             flash()->error(
-                'Your account has not been approved. You will be notified via email when your account status changes.')->important();
+                'Your account has not been approved. You will be notified via email when your account status changes.'
+            )->important();
             Auth::logout();
 
             return redirect()->route('login');
