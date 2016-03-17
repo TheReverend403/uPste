@@ -19,12 +19,22 @@ class ApiController extends Controller
     public function postUpload()
     {
         if (!Input::hasFile('file')) {
-            return response()->json(['upload_file_not_found'], StatusCode::BAD_REQUEST);
+            return response()->json([trans('errors.upload_file_not_found')], StatusCode::BAD_REQUEST);
         }
 
         $file = Input::file('file');
         if (!$file->isValid()) {
-            return response()->json(['invalid_file_upload'], StatusCode::BAD_REQUEST);
+            return response()->json([trans('errors.invalid_file_upload')], StatusCode::BAD_REQUEST);
+        }
+
+        if ($file->getSize() >= config('upste.upload_limit')) {
+            return response()->json([trans('errors.upload_too_large')], StatusCode::REQUEST_ENTITY_TOO_LARGE);
+        }
+
+        // If this upload would hit the quota defined in .env, reject it.
+        if (config('upste.user_storage_quota') > 0 /* && !Auth::user()->admin */ &&
+            (Cache::get('uploads_size:' . Auth::user()->id) + $file->getSize()) >= config('upste.user_storage_quota')) {
+            return response()->json([trans('errors.reached_upload_limit')], StatusCode::BAD_REQUEST);
         }
 
         $ext = $file->getClientOriginalExtension();

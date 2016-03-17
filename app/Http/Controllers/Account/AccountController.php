@@ -26,11 +26,17 @@ class AccountController extends Controller
             return Auth::user()->uploads->sum('size');
         });
 
-        view()->share(compact('userUploadCount', 'userUploadTotalSize'));
+        $userStorageQuota = Helpers::formatBytes(Cache::get('uploads_size:' . Auth::user()->id));
+        if (config('upste.user_storage_quota') > 0 /* && !Auth::user()->admin */) {
+            $userStorageQuota = sprintf("%s / %s", $userStorageQuota, Helpers::formatBytes(config('upste.user_storage_quota')));
+        }
+
+        view()->share(compact('userUploadCount', 'userUploadTotalSize', 'userStorageQuota'));
     }
 
     public function getIndex()
     {
+        /*
         // Check if the user has been registered for 7 days or less
         $registered = Carbon::parse(Auth::user()->created_at);
         $dateNow = Carbon::now();
@@ -39,6 +45,9 @@ class AccountController extends Controller
         $daysUntilMessageHides = Helpers::NEW_USER_DAYS - round($daysRegistered / ($dateNow->diffInSeconds($dateNow->tomorrow())));
 
         return view('account.index', compact('newUser', 'daysUntilMessageHides'));
+        */
+
+        return view('account.index');
     }
 
     public function getResources()

@@ -15,6 +15,7 @@
             </div>
         @endif
 
+        @if(!config('upste.user_storage_quota'))
         <div class="panel panel-default">
             <div class="panel-heading">
                 <b>How much storage do I have?</b>
@@ -26,6 +27,7 @@
                 </blockquote>
             </div>
         </div>
+        @endif
 
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -42,7 +44,7 @@
             </div>
             <div class="panel-body">
                 <p>Email
-                    <a href="mailto:{{ config('upste.owner_email') }}" title="Send an email to {{ config('upste.owner_name') }}">{{ config('upste.owner_email') }}</a> (<a href="{{ config('upste.owner_gpg') }}">GPG</a>).
+                    <a href="mailto:{{ config('upste.owner_email') }}" title="Send an email to {{ config('upste.owner_name') }}">{{ config('upste.owner_email') }}</a>{{ config('upste.owner_gpg') ? sprintf(' (<a href="%s">GPG</a>)', config('upste.owner_gpg')) : '' }}.
                 </p>
                 <p>Please do not attempt to abuse bugs in the site's security for any purpose beyond reporting the bug as you will be instantly banned for life. Be responsible when other people's security is at risk. Don't be <b>that</b> guy. Nobody likes that guy.</p>
             </div>

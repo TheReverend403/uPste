@@ -7,9 +7,10 @@ return [
     'upload_slug_length' => env('UPLOAD_SLUG_LENGTH', 3),
     'owner_name'         => env('OWNER_NAME', 'Me'),
     'owner_email'        => env('OWNER_EMAIL', 'me@example.com'),
-    'owner_gpg'          => env('OWNER_GPG', 'https://example.com/gpg/key.asc'),
-    'upload_limit'       => env('UPLOAD_LIMIT', '20 MB'),
-    'irc_channel'        => env('IRC_CHANNEL', '#example'),
-    'irc_server'         => env('IRC_SERVER', 'irc.example.com'),
+    'owner_gpg'          => env('OWNER_GPG', null),
+    'upload_limit'       => env('PER_UPLOAD_LIMIT', 20) * 1000000,
+    'irc_channel'        => env('IRC_CHANNEL', null),
+    'irc_server'         => env('IRC_SERVER', null),
     'strip_exif'         => env('STRIP_EXIF', true),
+    'user_storage_quota' => env('USER_STORAGE_QUOTA', 0) * 1000000, // Megabytes to bytes
 ];

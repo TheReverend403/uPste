@@ -15,28 +15,47 @@
         window.max_file_size = "{{ intval(preg_replace('/[^0-9]/', '', config('upste.upload_limit'))) }}";
     </script>
     <div class="container-sm text-center">
-        @if($newUser)
-            @include('account.new-member')
-        @endif
-        <div class="panel panel-danger text-left">
-            <div class="panel-heading text-center">
-                <h3 class="panel-title">WARNING</h3>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Welcome to {{ config('upste.domain') }}, {{ Auth::user()->name }}. Here's everything you need to
+                    know.</h3>
             </div>
             <div class="panel-body">
-                <p>While only members can upload files, all uploads are visible to the public if they know (or accidentally
-                    find) the URL. Therefore, <b class="text-danger">DO NOT</b> upload anything you consider private as we will not accept any
-                    responsibility if it gets leaked. If you must upload private files, consider <a href="https://gnupg.org/">encrypting</a> them first.
-                </p>
+                <div class="text-left">
+                    <ul>
+                        <li>For support, email <a href="mailto:{{ config('upste.owner_email') }}" title="Send an email to {{ config('upste.owner_name') }}">{{ config('upste.owner_email') }}</a>.</li>
+                        @if (config('upste.irc_server') && config('upste.irc_channel'))
+                            <li>For support or social, hang out in {{ config('upste.irc_channel') }} on {{ config('upste.irc_server') }}.</li>
+                        @endif
+                        <li>Max file size per upload is {{ Helpers::formatBytes(config('upste.upload_limit')) }}.</li>
+                        <li>Do not upload child porn or malware, you'll be banned without mercy.</li>
+                        <li>Scripts and third-party integrations are provided for members,
+                            <a href="{{ route('account.resources') }}">{{ route('account.resources') }}</a>.
+                        </li>
+                    </ul>
+                </div>
+                <hr>
+                <div class="panel panel-danger text-left">
+                    <div class="panel-heading text-center">
+                        <h3 class="panel-title">WARNING</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>While only members can upload files, all uploads are visible to the public if they know (or accidentally
+                            find) the URL. Therefore, <b class="text-danger">DO NOT</b> upload anything you consider private as we will not accept any
+                            responsibility if it gets leaked. If you must upload private files, consider <a href="https://gnupg.org/">encrypting</a> them first.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="upload">
             <div id="previews" class="dropzone"></div>
             <a id="upload-button" href="#">Drag and drop or click to upload files</a>
         </div>
-            <hr>
-            <div class="text-left">
-                @include('account.api')
-            </div>
+        <hr>
+        <div class="text-left">
+            @include('account.api')
+        </div>
     </div>
 @stop
 
