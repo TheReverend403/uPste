@@ -52,8 +52,11 @@
             <div id="previews" class="dropzone"></div>
             <a id="upload-button" href="#">Drag and drop or click to upload files</a>
         </div>
-        <hr>
-        <div class="text-left">
+        <button class="btn btn-block btn-primary" type="button" data-toggle="collapse" data-target="#collapseApiInfo" aria-expanded="false" aria-controls="collapseApiInfo">
+            Toggle API Info
+        </button>
+        <div id="collapseApiInfo" class="text-left collapse">
+            <hr>
             @include('account.api')
         </div>
     </div>

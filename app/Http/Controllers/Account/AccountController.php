@@ -27,7 +27,7 @@ class AccountController extends Controller
         });
 
         $userStorageQuota = Helpers::formatBytes(Cache::get('uploads_size:' . Auth::user()->id));
-        if (config('upste.user_storage_quota') > 0 /* && !Auth::user()->admin */) {
+        if (config('upste.user_storage_quota') > 0 && !Auth::user()->admin) {
             $userStorageQuota = sprintf("%s / %s", $userStorageQuota, Helpers::formatBytes(config('upste.user_storage_quota')));
         }
 
