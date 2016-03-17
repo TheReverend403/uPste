@@ -34,7 +34,7 @@ elixir(function(mix) {
     ], 'public/assets/js/dropzone.js');
 
     mix.scripts([
-        '../../../node_modules/jquery/jquery.js',
+        '../../../node_modules/jquery/dist/jquery.js',
         '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/modal.js',
         '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
         '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
