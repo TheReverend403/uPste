@@ -24,12 +24,19 @@ elixir(function(mix) {
         'error.scss'
     ], 'public/assets/css/error.css');
 
+    mix.sass([
+        '../../../node_modules/dropzone/dist/basic.css'
+    ], 'public/assets/css/dropzone.css');
+
     mix.scripts([
+        '../../../node_modules/dropzone/dist/dropzone.js',
         'dropzone.js'
     ], 'public/assets/js/dropzone.js');
 
     mix.scripts([
+        '../../../node_modules/jquery/jquery.js',
         '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/modal.js',
+        '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
         '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
         '../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap/alert.js',
         'global.js'
@@ -38,6 +45,7 @@ elixir(function(mix) {
     mix.version([
         "assets/css/global.css",
         "assets/css/error.css",
+        "assets/css/dropzone.css",
         "assets/js/global.js",
         "assets/js/dropzone.js"
     ]);
