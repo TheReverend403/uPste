@@ -104,6 +104,6 @@ class ApiController extends Controller
             $uploads = $user->uploads->slice(0, Input::get('limit', $user->uploads->count()));
             return response()->json($uploads, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
         }
-        return response()->json(['error' => 'no_uploads'], StatusCode::NOT_FOUND, [], JSON_UNESCAPED_SLASHES);
+        return response()->json([trans('errors.no_uploads_found')], StatusCode::NOT_FOUND, [], JSON_UNESCAPED_SLASHES);
     }
 }
