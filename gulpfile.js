@@ -47,6 +47,8 @@ elixir(function(mix) {
         "assets/css/error.css",
         "assets/css/dropzone.css",
         "assets/js/global.js",
-        "assets/js/dropzone.js"
+        "assets/js/dropzone.js",
+        'assets/img/favicon.png',
+        'assets/img/thumbnail.png'
     ]);
 });

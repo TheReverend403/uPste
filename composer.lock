@@ -1401,16 +1401,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "ff76e1a660669bb56ba74ba0583fd8d41417bf39"
+                "reference": "7088908cca6bad27b3105c86b1fb013f1e383f6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/ff76e1a660669bb56ba74ba0583fd8d41417bf39",
-                "reference": "ff76e1a660669bb56ba74ba0583fd8d41417bf39",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/7088908cca6bad27b3105c86b1fb013f1e383f6f",
+                "reference": "7088908cca6bad27b3105c86b1fb013f1e383f6f",
                 "shasum": ""
             },
             "require": {
@@ -1445,7 +1445,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-03-17 16:11:57"
+            "time": "2016-03-18 15:57:52"
         },
         {
             "name": "phpdocumentor/reflection-docblock",

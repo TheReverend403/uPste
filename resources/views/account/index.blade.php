@@ -11,7 +11,7 @@
         window.root = "{{ route('index') }}";
         window.api_key = "{{ Auth::user()->apikey }}";
         window.api_upload_url = "{{ route('api.upload') }}";
-        window.dropzone_thumbnail = "{{ url('assets/img/thumbnail.png') }}";
+        window.dropzone_thumbnail = "{{ elixir('assets/img/thumbnail.png') }}";
         window.max_file_size = "{{ intval(preg_replace('/[^0-9]/', '', config('upste.upload_limit'))) }}";
     </script>
     <div class="container-sm text-center">
