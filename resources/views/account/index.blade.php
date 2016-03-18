@@ -35,7 +35,7 @@
                     </ul>
                 </div>
                 <hr>
-                <div class="panel panel-danger text-left">
+                <div class="panel panel-danger panel-no-margin text-left">
                     <div class="panel-heading text-center">
                         <h3 class="panel-title">WARNING</h3>
                     </div>
