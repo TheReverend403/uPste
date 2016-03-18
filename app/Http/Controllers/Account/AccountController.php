@@ -36,17 +36,6 @@ class AccountController extends Controller
 
     public function getIndex()
     {
-        /*
-        // Check if the user has been registered for 7 days or less
-        $registered = Carbon::parse(Auth::user()->created_at);
-        $dateNow = Carbon::now();
-        $daysRegistered = $registered->diffInDays($dateNow);
-        $newUser = $daysRegistered <= Helpers::NEW_USER_DAYS;
-        $daysUntilMessageHides = Helpers::NEW_USER_DAYS - round($daysRegistered / ($dateNow->diffInSeconds($dateNow->tomorrow())));
-
-        return view('account.index', compact('newUser', 'daysUntilMessageHides'));
-        */
-
         return view('account.index');
     }
 
@@ -75,13 +64,13 @@ class AccountController extends Controller
     public function postUploadsDelete(Upload $upload)
     {
         if (Auth::user()->id != $upload->user_id) {
-            flash()->error('That file is not yours, you cannot delete it!');
+            flash()->error(trans('messages.file_not_yours'));
 
             return redirect()->back();
         }
 
         $upload->forceDelete();
-        flash()->success($upload->original_name . ' has been deleted.');
+        flash()->success(trans('messages.file_deleted', ['name' => $upload->original_name]));
 
         return redirect()->back();
     }
@@ -94,7 +83,7 @@ class AccountController extends Controller
 
         $user = Auth::user();
         $user->fill(['apikey' => $newKey])->save();
-        flash()->success('Your API key was reset. New API key: ' . $user->apikey)->important();
+        flash()->success(trans('messages.api_key_changed', ['api_key' => $newKey]))->important();
 
         Mail::queue(['text' => 'emails.user.api_key_reset'], $user->toArray(), function (Message $message) use ($user) {
             $message->subject(sprintf("[%s] API Key Reset", config('upste.domain')));

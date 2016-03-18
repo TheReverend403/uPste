@@ -52,7 +52,7 @@
         </div>
     @else
         <div class="message-area">
-            <div class="alert alert-warning alert-important">{{ $user->name }} doesn't have any uploads!</div>
+            <div class="alert alert-warning alert-important">{{ trans('messages.admin.no_uploads_found', ['name' => $user->name]) }}</div>
         </div>
     @endif
 @stop

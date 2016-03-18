@@ -54,12 +54,12 @@ class AdminController extends Controller
     public function postUserBan(User $user)
     {
         if ($user->id == Helpers::SUPERUSER_ID) {
-            flash()->error('You cannot ban the superuser account.');
+            flash()->error(trans('messages.admin.failed_superuser_action', ['type' => 'ban']));
 
             return redirect()->back();
         }
         $user->fill(['banned' => true])->save();
-        flash()->success('Banned user ' . $user->name);
+        flash()->success(trans('messages.admin.banned_user', ['user' => $user->name]));
 
         return redirect()->back();
     }
@@ -67,7 +67,7 @@ class AdminController extends Controller
     public function postUserDelete(User $user)
     {
         if ($user->id == Helpers::SUPERUSER_ID) {
-            flash()->error('You cannot delete the superuser account.');
+            flash()->error(trans('messages.admin.failed_superuser_action', ['type' => 'delete']));
 
             return redirect()->back();
         }
@@ -80,7 +80,7 @@ class AdminController extends Controller
         }
 
         $user->forceDelete();
-        flash()->success('Deleted user ' . $user->name);
+        flash()->success('messages.admin.deleted_user', ['user' => $user->name]);
 
         return redirect()->back();
     }
@@ -88,7 +88,7 @@ class AdminController extends Controller
     public function postUserUnban(User $user)
     {
         $user->fill(['banned' => false])->save();
-        flash()->success('Unbanned user ' . $user->name);
+        flash()->success(trans('messages.admin.unbanned_user', ['user' => $user->name]));
 
         return redirect()->back();
     }
@@ -103,7 +103,7 @@ class AdminController extends Controller
     public function postUploadsDelete(Upload $upload)
     {
         $upload->forceDelete();
-        flash()->success($upload->name . ' has been deleted.');
+        flash()->success(trans('messages.file_deleted', ['name' => $upload->original_name]));
 
         return redirect()->back();
     }
@@ -117,7 +117,7 @@ class AdminController extends Controller
             $message->to($user->email);
         });
 
-        flash()->success('Approved user ' . $user->name);
+        flash()->success(trans('messages.admin.account_accepted', ['name' => $user->name]));
         Helpers::invalidateCache();
 
         return redirect()->back();
@@ -131,7 +131,7 @@ class AdminController extends Controller
         });
 
         $user->forceDelete();
-        flash()->success('Rejected user ' . $user->name);
+        flash()->success(trans('messages.admin.account_rejected', ['name' => $user->name]));
 
         return redirect()->back();
     }

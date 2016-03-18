@@ -19,22 +19,22 @@ class ApiController extends Controller
     public function postUpload()
     {
         if (!Input::hasFile('file')) {
-            return response()->json([trans('errors.upload_file_not_found')], StatusCode::BAD_REQUEST);
+            return response()->json([trans('messages.upload_file_not_found')], StatusCode::BAD_REQUEST);
         }
 
         $file = Input::file('file');
         if (!$file->isValid()) {
-            return response()->json([trans('errors.invalid_file_upload')], StatusCode::BAD_REQUEST);
+            return response()->json([trans('messages.invalid_file_upload')], StatusCode::BAD_REQUEST);
         }
 
         if ($file->getSize() >= config('upste.upload_limit')) {
-            return response()->json([trans('errors.upload_too_large')], StatusCode::REQUEST_ENTITY_TOO_LARGE);
+            return response()->json([trans('messages.upload_too_large')], StatusCode::REQUEST_ENTITY_TOO_LARGE);
         }
 
         // If this upload would hit the quota defined in .env, reject it.
         if (config('upste.user_storage_quota') > 0 && !Auth::user()->admin &&
             (Cache::get('uploads_size:' . Auth::user()->id) + $file->getSize()) >= config('upste.user_storage_quota')) {
-            return response()->json([trans('errors.reached_upload_limit')], StatusCode::FORBIDDEN);
+            return response()->json([trans('messages.reached_upload_limit')], StatusCode::FORBIDDEN);
         }
 
         $ext = $file->getClientOriginalExtension();
@@ -104,6 +104,6 @@ class ApiController extends Controller
             $uploads = $user->uploads->slice(0, Input::get('limit', $user->uploads->count()));
             return response()->json($uploads, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
         }
-        return response()->json([trans('errors.no_uploads_found')], StatusCode::NOT_FOUND, [], JSON_UNESCAPED_SLASHES);
+        return response()->json([trans('messages.no_uploads_found')], StatusCode::NOT_FOUND, [], JSON_UNESCAPED_SLASHES);
     }
 }
