@@ -9,44 +9,39 @@
             <p>Total: {{ $uploads->count() }} ({{ Helpers::formatBytes($uploads->sum('size')) }})</p>
         </div>
         <hr>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>URL</th>
-                    <th>Size</th>
-                    <th>SHA1</th>
-                    <th>Uploaded</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($uploads as $upload)
-                    <tr>
-                        <td>{{ $upload->original_name }}</td>
-                        <td>
-                            <a href="{{ config('upste.upload_url') . $upload->name }}">{{ config('upste.upload_url') . $upload->name }}</a>
-                        </td>
-                        <td>{{ Helpers::formatBytes($upload->size) }}</td>
-                        <td>{{ $upload->hash }}</td>
-                        <td>{{ $upload->updated_at }}</td>
-                        <td>
-                            <ul class="list-unstyled list-inline list-noborder">
-                                <li>
-                                    <form action="{{ route('admin.uploads.delete', ['id' => $upload->id]) }}"
-                                          method="POST">
-                                        <button type="submit" class="btn btn-xs btn-danger">Delete</button>
-                                        {!! csrf_field() !!}
-                                    </form>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
+        @foreach ($uploads->chunk(3) as $chunk)
+            <div class="row">
+                @foreach ($chunk as $upload)
+                    <div class="col-xs-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="{{ config('upste.upload_url') . $upload->name }}">
+                                            @if(ends_with($upload->name, ['.png', '.jpg', '.jpeg', '.gif']))
+                                                <img class="media-object" src="{{ config('upste.upload_url') . $upload->name }}" alt="{{ $upload->name }}">
+                                            @else
+                                                <img class="media-object" src="{{ elixir('assets/img/thumbnail.png') }}" alt="{{ $upload->name }}">
+                                            @endif
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">{{ str_limit($upload->original_name, 25) }}</h4>
+                                        <h5><b>Size:</b> {{ Helpers::formatBytes($upload->size) }}</h5>
+                                        <h5><b>Uploaded:</b><br>{{ $upload->updated_at }}</h5>
+                                        <form action="{{ route('admin.uploads.delete', ['id' => $upload->id]) }}"
+                                              method="POST">
+                                            <button type="submit" class="btn btn-block btn-danger">Delete</button>
+                                            {!! csrf_field() !!}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
-                </tbody>
-            </table>
-        </div>
+            </div>
+        @endforeach
         <div class="text-center">
             {!! $uploads->render() !!}
         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Auth;
 use Closure;
+use Helpers;
 use Illuminate\Contracts\Auth\Guard;
 use Teapot\StatusCode;
 
@@ -46,7 +47,7 @@ class AdminAuthenticate
             }
         }
 
-        if (!Auth::user()->admin) {
+        if (!Auth::user()->admin && !Auth::user()->id === Helpers::SUPERUSER_ID) {
             flash()->error('You do not have permission to access that area.');
 
             return redirect()->back();
