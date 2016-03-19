@@ -94,7 +94,7 @@ class AuthController extends Controller
             $apiKey = str_random(Helpers::API_KEY_LENGTH);
         } while (User::whereApikey($apiKey)->first());
 
-        $firstUser = User::count() == 0;
+        $firstUser = DB::table('users')->count() == 0;
         $user = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
