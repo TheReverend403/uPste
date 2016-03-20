@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class Helpers
 {
     const SUPERUSER_ID = 1;
-    const PAGINATION_DEFAULT_ITEMS = 9;
+    const PAGINATION_DEFAULT_ITEMS = 12;
     const NEW_USER_DAYS = 7; // How long is a user considered "new"
     const API_KEY_LENGTH = 64;
 
