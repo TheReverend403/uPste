@@ -1,12 +1,23 @@
 {
-  "name": "laravel/laravel",
-  "description": "The Laravel Framework.",
-  "keywords": [
-    "framework",
-    "laravel"
-  ],
-  "license": "MIT",
+  "name": "thereverend403/upste",
+  "version": "1.0.0",
+  "description": "A private file hosting application with an emphasis on serving technology communities.",
+  "license": "AGPL-3.0",
   "type": "project",
+  "homepage": "https://github.com/TheReverend403/uPste",
+  "authors": [
+    {
+      "name": "Lee Watson",
+      "email": "rev@revthefox.co.uk",
+      "homepage": "https://revthefox.co.uk",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "irc": "irc://irc.rizon.net/leliana",
+    "issues": "https://github.com/TheReverend403/uPste/issues",
+    "source": "https://github.com/TheReverend403/uPste"
+  },
   "require": {
     "php": ">=5.5.9",
     "laravel/framework": "5.2.*",
