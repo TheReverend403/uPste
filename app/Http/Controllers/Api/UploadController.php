@@ -10,13 +10,14 @@ use Auth;
 use Cache;
 use Exception;
 use Helpers;
+use Image;
 use Input;
 use Storage;
 use Teapot\StatusCode;
 
-class ApiController extends Controller
+class UploadController extends Controller
 {
-    public function postUpload()
+    public function post()
     {
         if (!Input::hasFile('file')) {
             return response()->json([trans('messages.upload_file_not_found')], StatusCode::BAD_REQUEST);
@@ -42,21 +43,11 @@ class ApiController extends Controller
             $ext = 'txt';
         }
 
-        // Strip EXIF tags
-        if (Helpers::shouldStripExif($file)) {
-            try {
-                $img = new SimpleImage($file->getRealPath());
-                $img->save($file->getRealPath(), 100, Helpers::getImageType($file));
-            } catch (Exception $e) {
-                return response()->json([$e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        $fileHash = sha1_file($file);
+        $originalHash = sha1_file($file);
         $originalName = $file->getClientOriginalName();
 
         // Check to see if we already have this file for this user.
-        $existing = Upload::whereHash($fileHash)->whereUserId(Auth::user()->id)->first();
+        $existing = Upload::whereOriginalHash($originalHash)->whereUserId(Auth::user()->id)->first();
         if ($existing) {
             $result = [
                 'url'  => config('upste.upload_url') . $existing->name
@@ -75,12 +66,29 @@ class ApiController extends Controller
             $newName = str_random($randomLen++) . ".$ext";
         } while (Storage::exists("uploads/$newName"));
 
+        if (Helpers::isImage($file)) {
+            $img = Image::make($file->getRealPath());
+            $img->backup();
+            $img->resize(128, 128)->save(storage_path('app/thumbnails/' . $newName));
+            $img->reset();
+
+            if (Helpers::shouldStripExif($file)) {
+                try {
+                    $img->save($file->getRealPath(), 100);
+            } catch (Exception $e) {
+                    return response()->json([$e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
+                }
+            }
+            $img->destroy();
+        }
+
         $upload = Upload::create([
             'user_id'       => Auth::user()->id,
-            'hash'          => $fileHash,
+            'hash'          => sha1_file($file),
             'name'          => $newName,
             'size'          => $file->getSize(),
-            'original_name' => $originalName
+            'original_name' => $originalName,
+            'original_hash' => $originalHash
         ]);
 
         $upload->save();
@@ -96,7 +104,7 @@ class ApiController extends Controller
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
     }
 
-    public function getUpload()
+    public function get()
     {
         $user = Auth::user();
 

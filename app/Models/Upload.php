@@ -27,6 +27,8 @@ use Storage;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $original_hash
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereOriginalHash($value)
  */
 class Upload extends Model
 {
@@ -35,7 +37,7 @@ class Upload extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'hash', 'size', 'user_id', 'original_name'];
+    protected $fillable = ['name', 'hash', 'size', 'user_id', 'original_name', 'original_hash'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -65,8 +67,19 @@ class Upload extends Model
             Storage::delete("uploads/" . $this->name);
         }
 
+        if (Storage::exists("thumbnails/" . $this->name)) {
+            Storage::delete("thumbnails/" . $this->name);
+        }
+
         Helpers::invalidateCache();
 
         return parent::forceDelete();
+    }
+
+    public function getThumbnail() {
+        if (Storage::exists("thumbnails/" . $this->name)) {
+            return route('account.uploads.thumbnail', ['id' => $this->id]);
+        }
+        return elixir('assets/img/thumbnail.png');
     }
 }

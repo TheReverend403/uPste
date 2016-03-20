@@ -138,6 +138,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -178,6 +179,7 @@ return [
         'File'      => Illuminate\Support\Facades\File::class,
         'Flash'     => Laracasts\Flash\Flash::class,
         'Hash'      => Illuminate\Support\Facades\Hash::class,
+        'Image'     => Intervention\Image\Facades\Image::class,
         'Input'     => Illuminate\Support\Facades\Input::class,
         'Inspiring' => Illuminate\Foundation\Inspiring::class,
         'Lang'      => Illuminate\Support\Facades\Lang::class,

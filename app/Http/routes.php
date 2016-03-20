@@ -70,6 +70,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'u'], function () {
 
         Route::post('{upload}/delete', [
             'as' => 'account.uploads.delete', 'uses' => 'Account\AccountController@postUploadsDelete']);
+
+        Route::get('{upload}/thumbnail', [
+            'as' => 'account.uploads.thumbnail', 'uses' => 'Account\AccountController@getThumbnail']);
     });
 
     Route::post('resetkey', [
@@ -100,9 +103,6 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
         Route::get('{user}/uploads', [
             'as' => 'admin.users.uploads', 'uses' => 'Admin\AdminController@getUploads']);
 
-        Route::post('uploads/{upload}/delete', [
-            'as' => 'admin.uploads.delete', 'uses' => 'Admin\AdminController@postUploadsDelete']);
-
         Route::post('{user}/delete', [
             'as' => 'admin.users.delete', 'uses' => 'Admin\AdminController@postUserDelete']);
 
@@ -119,8 +119,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
  */
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     Route::post('upload', [
-        'as' => 'api.upload', 'uses' => 'Api\ApiController@postUpload']);
+        'as' => 'api.upload', 'uses' => 'Api\UploadController@post']);
 
     Route::get('upload', [
-        'as' => 'api.upload', 'uses' => 'Api\ApiController@getUpload']);
+        'as' => 'api.upload', 'uses' => 'Api\UploadController@get']);
 });

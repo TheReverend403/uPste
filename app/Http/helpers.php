@@ -73,6 +73,29 @@ class Helpers
         return false;
     }
 
+    public static function isImage(UploadedFile $file) {
+        if (function_exists('exif_imagetype')) {
+            try {
+                switch (exif_imagetype($file)) {
+                    case IMAGETYPE_JPEG:
+                    case IMAGETYPE_PNG:
+                    case IMAGETYPE_BMP:
+                    case IMAGETYPE_GIF:
+                    case IMAGETYPE_ICO:
+                        return true;
+                        break;
+                    default:
+                        return false;
+                        break;
+                }
+            } catch (Exception $ex) {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Determines the real file extension of an image via exif_imagetype
      *

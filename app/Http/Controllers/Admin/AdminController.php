@@ -77,6 +77,10 @@ class AdminController extends Controller
             if (Storage::exists("uploads/" . $upload->name)) {
                 Storage::delete("uploads/" . $upload->name);
             }
+
+            if (Storage::exists("thumbnails/" . $upload->name)) {
+                Storage::delete("thumbnails/" . $upload->name);
+            }
         }
 
         $user->forceDelete();
@@ -98,14 +102,6 @@ class AdminController extends Controller
         $uploads = $user->uploads()->orderBy('created_at', 'desc')->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
 
         return view('admin.uploads', compact('uploads', 'user'));
-    }
-
-    public function postUploadsDelete(Upload $upload)
-    {
-        $upload->forceDelete();
-        flash()->success(trans('messages.file_deleted', ['name' => $upload->original_name]));
-
-        return redirect()->back();
     }
 
     public function postUserAccept(User $user)
