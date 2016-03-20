@@ -14,8 +14,8 @@ return [
         'unbanned_user'           => 'Unbanned :name.',
         'banned_user'             => 'Banned :name.',
         'deleted_user'            => 'Deleted :name.',
-        'accepted_user'           => 'Accepted :name',
-        'rejected_user'           => 'Rejected :name.',
+        'account_accepted'        => 'Accepted :name',
+        'account_rejected'        => 'Rejected :name.',
         'failed_superuser_action' => 'You cannot :type the superuser account!',
     ],
 ];
