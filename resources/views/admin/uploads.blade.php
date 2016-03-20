@@ -18,7 +18,7 @@
                                 <div class="media">
                                     <div class="media-left">
                                         <a href="{{ config('upste.upload_url') . $upload->name }}">
-                                            <img src="{{ $upload->getThumbnail() }}">
+                                            <img src="{{ $upload->getThumbnail() }}" class="img-thumbnail" alt="{{ $upload->original_name }}">
                                         </a>
                                     </div>
                                     <div class="media-body">
