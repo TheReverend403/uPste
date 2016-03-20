@@ -12,6 +12,8 @@ use Exception;
 use Helpers;
 use Image;
 use Input;
+use Intervention\Image\Exception\NotReadableException;
+use Intervention\Image\Exception\NotWritableException;
 use Storage;
 use Teapot\StatusCode;
 
@@ -67,7 +69,12 @@ class UploadController extends Controller
         } while (Storage::exists("uploads/$newName"));
 
         if (Helpers::isImage($file)) {
-            $img = Image::make($file->getRealPath());
+            try {
+                $img = Image::make($file->getRealPath());
+            } catch (NotReadableException $ex) {
+                return response()->json([$ex->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
+            }
+
             $img->backup();
             $img->resize(128, 128)->save(storage_path('app/thumbnails/' . $newName));
             $img->reset();
@@ -75,8 +82,8 @@ class UploadController extends Controller
             if (Helpers::shouldStripExif($file)) {
                 try {
                     $img->save($file->getRealPath(), 100);
-            } catch (Exception $e) {
-                    return response()->json([$e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
+            } catch (NotWritableException $ex) {
+                    return response()->json([trans('messages.could_not_encode_image')], StatusCode::INTERNAL_SERVER_ERROR);
                 }
             }
             $img->destroy();
