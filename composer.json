@@ -56,6 +56,7 @@
     "post-update-cmd": [
       "npm install",
       "gulp --production",
+      "php artisan migrate",
       "php artisan optimize",
       "php artisan cache:clear",
       "php artisan config:cache",
