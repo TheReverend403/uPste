@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use abeautifulsite\SimpleImage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
 use Auth;
 use Cache;
-use Exception;
 use Helpers;
 use Image;
 use Input;

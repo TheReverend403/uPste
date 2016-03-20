@@ -67,8 +67,9 @@ class Upload extends Model
             Storage::delete("uploads/" . $this->name);
         }
 
-        if (Storage::exists("thumbnails/" . $this->name)) {
-            Storage::delete("thumbnails/" . $this->name);
+        $file = 'thumbnails/' . $this->name;
+        if (Storage::exists($file)) {
+            Storage::delete($file);
         }
 
         Helpers::invalidateCache();
@@ -77,7 +78,7 @@ class Upload extends Model
     }
 
     public function getThumbnail() {
-        if (Storage::exists("thumbnails/" . $this->name)) {
+        if (Storage::exists('thumbnails/' . $this->name)) {
             return route('account.uploads.thumbnail', ['id' => $this->id]);
         }
         return elixir('assets/img/thumbnail.png');

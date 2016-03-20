@@ -100,7 +100,6 @@ class AccountController extends Controller
             return redirect()->back();
         }
 
-        $file = storage_path('app/thumbnails/' . $upload->name);
-        return response()->download($file);
+        return response()->download(storage_path('app/thumbnails/' . $upload->name));
     }
 }
