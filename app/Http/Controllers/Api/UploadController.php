@@ -66,7 +66,7 @@ class UploadController extends Controller
             $newName = str_random($randomLen++) . ".$ext";
         } while (Storage::exists("uploads/$newName"));
 
-        if (Helpers::isImage($file)) {
+        if (Helpers::shouldThumbnail($file)) {
             try {
                 $img = Image::make($file->getRealPath());
             } catch (NotReadableException $ex) {
