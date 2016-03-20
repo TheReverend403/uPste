@@ -63,7 +63,7 @@ class AccountController extends Controller
 
     public function postUploadsDelete(Upload $upload)
     {
-        if (Auth::user()->id != $upload->user_id && !Auth::user()->id === Helpers::SUPERUSER_ID) {
+        if (Auth::user()->id != $upload->user_id && !Auth::user()->id === Helpers::SUPERUSER_ID && !Auth::user()->admin) {
             flash()->error(trans('messages.file_not_yours'));
 
             return redirect()->back();
@@ -94,7 +94,7 @@ class AccountController extends Controller
     }
 
     public function getThumbnail(Upload $upload) {
-        if (Auth::user()->id !== $upload->user_id && !Auth::user()->id === Helpers::SUPERUSER_ID) {
+        if (Auth::user()->id !== $upload->user_id && !Auth::user()->id === Helpers::SUPERUSER_ID && !Auth::user()->admin) {
             flash()->error(trans('messages.file_not_yours'));
 
             return redirect()->back();
