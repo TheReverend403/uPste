@@ -22,7 +22,7 @@
                                         </a>
                                     </div>
                                     <div class="media-body">
-                                        <h4 class="media-heading">{{ str_limit($upload->original_name, 20) }}</h4>
+                                        <h4 class="media-heading">{{ str_limit($upload->original_name, 10) }}</h4>
                                         <h5><b>Size:</b> {{ Helpers::formatBytes($upload->size) }}</h5>
                                         <h5><b>Uploaded:</b><br>{{ $upload->updated_at }}</h5>
                                         <form action="{{ route('account.uploads.delete', ['id' => $upload->id]) }}"
