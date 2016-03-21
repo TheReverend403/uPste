@@ -16,7 +16,7 @@
                 <input title="Confirm Password" type="password" name="password_confirmation" class="form-control" placeholder="Confirm password">
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Reset</button>
+                <button type="submit" class="btn text-right btn-primary">Reset</button>
             </div>
             <input type="hidden" name="token" value="{{ $token }}">
             {!! csrf_field() !!}

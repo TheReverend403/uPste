@@ -14,6 +14,8 @@
 @endif
 @if (count($errors) > 0)
     @foreach ($errors->all() as $error)
-        <div class="alert alert-danger alert-important">{{ $error }}</div>
+        @if (!str_contains($error, 'g-recaptcha-response'))
+            <div class="alert alert-danger alert-important">{{ $error }}</div>
+        @endif
     @endforeach
 @endif

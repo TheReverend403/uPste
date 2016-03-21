@@ -18,7 +18,12 @@
             <div class="form-group">
                 <input title="Confirm Password" type="password" name="password_confirmation" class="form-control" placeholder="Confirm password">
             </div>
-            <div class="text-center">
+            @if(config('upste.recaptcha_enabled'))
+                <div class="form-group">
+                    {!! Recaptcha::render() !!}
+                </div>
+            @endif
+            <div class="text-right">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
             {!! csrf_field() !!}

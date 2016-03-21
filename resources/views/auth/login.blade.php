@@ -11,14 +11,14 @@
             <div class="form-group">
                 <input title="Password" type="password" name="password" class="form-control" id="password" placeholder="Password">
             </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Login</button>
-                <a href="{{ route('account.password.email') }}" class="btn btn-default">Forgot Password</a>
+            <div class="text-right">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="remember"> Remember Me
                     </label>
                 </div>
+                <a href="{{ route('account.password.email') }}" class="btn btn-default">Forgot Password</a>
+                <button type="submit" class="btn btn-primary">Login</button>
             </div>
             {!! csrf_field() !!}
         </form>

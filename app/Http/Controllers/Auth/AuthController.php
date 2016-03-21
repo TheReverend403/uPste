@@ -75,11 +75,17 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name'     => 'required|max:255|unique:users|alpha_num',
-            'email'    => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
+        $validationRules = [
+            'name'                 => 'required|max:255|unique:users|alpha_num',
+            'email'                => 'required|email|max:255|unique:users',
+            'password'             => 'required|confirmed|min:6',
+        ];
+
+        if (config('upste.recaptcha_enabled')) {
+            $validationRules['g-recaptcha-response'] = 'required|recaptcha';
+        }
+
+        return Validator::make($data, $validationRules);
     }
 
     /**
