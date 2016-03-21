@@ -66,6 +66,7 @@ class Helpers
                         break;
                 }
             } catch (Exception $ex) {
+                Log::error($ex->getMessage());
                 return false;
             }
         }
@@ -79,9 +80,7 @@ class Helpers
                 switch (exif_imagetype($file)) {
                     case IMAGETYPE_JPEG:
                     case IMAGETYPE_PNG:
-                    case IMAGETYPE_BMP:
                     case IMAGETYPE_GIF:
-                    case IMAGETYPE_ICO:
                         return true;
                         break;
                     default:
@@ -89,6 +88,7 @@ class Helpers
                         break;
                 }
             } catch (Exception $ex) {
+                Log::error($ex);
                 return false;
             }
         }
@@ -111,6 +111,7 @@ class Helpers
                     return image_type_to_extension($imageType, false);
                 }
             } catch (Exception $ex) {
+                Log::error($ex);
                 return $file->getClientOriginalExtension();
             }
         }
