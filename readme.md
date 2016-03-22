@@ -14,7 +14,7 @@ The official demo of this project is available at https://u.pste.pw, although no
 
 Interested in contributing, want some help or just have some questions? Join us on [irc.rizon.net in #leliana](https://qchat.rizon.net/?channels=leliana)
 
-![Preview](https://a.pste.pw/WAZs.png)
+![Preview](https://a.pste.pw/2Z1.png)
 
 # Requirements
 
