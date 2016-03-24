@@ -74,7 +74,8 @@ class Helpers
         return false;
     }
 
-    public static function shouldThumbnail(UploadedFile $file) {
+    public static function shouldThumbnail(UploadedFile $file)
+    {
         if (function_exists('exif_imagetype')) {
             try {
                 switch (exif_imagetype($file)) {

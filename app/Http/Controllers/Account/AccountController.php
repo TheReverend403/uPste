@@ -93,7 +93,8 @@ class AccountController extends Controller
         return redirect()->route('account');
     }
 
-    public function getThumbnail(Upload $upload) {
+    public function getThumbnail(Upload $upload)
+    {
         if (Auth::user()->id !== $upload->user_id && !Auth::user()->id === Helpers::SUPERUSER_ID && !Auth::user()->admin) {
             flash()->error(trans('messages.file_not_yours'));
 
