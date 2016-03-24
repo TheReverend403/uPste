@@ -86,7 +86,7 @@ class UploadController extends Controller
             if (Helpers::shouldStripExif($file)) {
                 try {
                     $img->save($file, 100);
-            } catch (NotWritableException $ex) {
+                } catch (NotWritableException $ex) {
                     Log::error($ex);
                     return response()->json([trans('messages.could_not_write_image')], StatusCode::INTERNAL_SERVER_ERROR);
                 }

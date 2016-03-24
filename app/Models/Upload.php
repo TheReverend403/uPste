@@ -77,7 +77,8 @@ class Upload extends Model
         return parent::forceDelete();
     }
 
-    public function getThumbnail() {
+    public function getThumbnail()
+    {
         if (Storage::exists('thumbnails/' . $this->name)) {
             return route('account.uploads.thumbnail', ['id' => $this->id]);
         }
