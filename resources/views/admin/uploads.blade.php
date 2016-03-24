@@ -6,7 +6,7 @@
     @if($uploads->count())
         <div class="text-center">
             <h2>{{ $user->name }}'{{ ends_with($user->name, 's') ?: 's' }} Uploads</h2>
-            <p>Total: {{ $uploads->count() }} ({{ Helpers::formatBytes($uploads->sum('size')) }})</p>
+            <p>Total: {{ $uploads->count() }} ({{ App\Helpers::formatBytes($uploads->sum('size')) }})</p>
         </div>
         <hr>
         @foreach ($uploads->chunk(3) as $chunk)
@@ -23,7 +23,7 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="media-heading">{{ str_limit($upload->original_name, 15) }}</h4>
-                                        <h5><b>Size:</b> {{ Helpers::formatBytes($upload->size) }}</h5>
+                                        <h5><b>Size:</b> {{ App\Helpers::formatBytes($upload->size) }}</h5>
                                         <h5><b>Uploaded:</b><br>{{ $upload->updated_at }}</h5>
                                         <form action="{{ route('account.uploads.delete', ['id' => $upload->id]) }}"
                                               method="POST">

@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers;
+
 return [
     'file_deleted'          => 'Deleted :name.',
     'file_not_yours'        => 'That file does not belong to you.',

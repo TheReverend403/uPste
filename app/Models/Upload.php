@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Helpers;
+use App\Helpers;
 use Illuminate\Database\Eloquent\Model;
 use Storage;
 

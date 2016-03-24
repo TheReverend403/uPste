@@ -7,13 +7,13 @@ use App\Http\Requests;
 use App\Models\Upload;
 use Auth;
 use Cache;
-use Helpers;
+use App\Helpers;
 use Image;
-use Input;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\Exception\NotWritableException;
 use Log;
+use Request;
 use Storage;
 use Teapot\StatusCode;
 
@@ -21,11 +21,11 @@ class UploadController extends Controller
 {
     public function post()
     {
-        if (!Input::hasFile('file')) {
+        if (!Request::hasFile('file')) {
             return response()->json([trans('messages.upload_file_not_found')], StatusCode::BAD_REQUEST);
         }
 
-        $file = Input::file('file');
+        $file = Request::file('file');
         if (!$file->isValid()) {
             return response()->json([trans('messages.invalid_file_upload')], StatusCode::BAD_REQUEST);
         }
@@ -121,7 +121,7 @@ class UploadController extends Controller
         $user = Auth::user();
 
         if (Cache::get('uploads_count:' . $user->id) !== 0) {
-            $uploads = $user->uploads->slice(0, Input::get('limit', $user->uploads->count()));
+            $uploads = $user->uploads->slice(0, Request::input('limit', $user->uploads->count()));
             return response()->json($uploads, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
         }
         return response()->json([trans('messages.no_uploads_found')], StatusCode::NOT_FOUND, [], JSON_UNESCAPED_SLASHES);

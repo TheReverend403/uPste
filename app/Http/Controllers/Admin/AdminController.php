@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Models\Upload;
 use App\Models\User;
 use Cache;
-use Helpers;
+use App\Helpers;
 use Illuminate\Mail\Message;
 use Mail;
 use Storage;

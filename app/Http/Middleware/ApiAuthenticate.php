@@ -7,6 +7,7 @@ use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Input;
+use Request;
 use Teapot\StatusCode;
 
 class ApiAuthenticate
@@ -38,11 +39,11 @@ class ApiAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        if (!Input::has('key')) {
+        if (!Request::has('key')) {
             return response()->json(["error" => "missing_api_key"], StatusCode::UNAUTHORIZED);
         }
 
-        $apiKey = Input::get('key');
+        $apiKey = Request::input('key');
         $user = User::whereApikey($apiKey)->first();
         if (!$user) {
             return response()->json(["error" => "invalid_api_key"], StatusCode::UNAUTHORIZED);

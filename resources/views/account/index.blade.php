@@ -27,7 +27,7 @@
                         @if (config('upste.irc_server') && config('upste.irc_channel'))
                             <li>For support or social, hang out in {{ config('upste.irc_channel') }} on {{ config('upste.irc_server') }}.</li>
                         @endif
-                        <li>Max file size per upload is {{ Helpers::formatBytes(config('upste.upload_limit')) }}.</li>
+                        <li>Max file size per upload is {{ App\Helpers::formatBytes(config('upste.upload_limit')) }}.</li>
                         <li>Do not upload child porn or malware, you'll be banned without mercy.</li>
                         <li>Scripts and third-party integrations are provided for members,
                             <a href="{{ route('account.resources') }}">{{ route('account.resources') }}</a>.

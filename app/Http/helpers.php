@@ -1,5 +1,11 @@
 <?php
 
+namespace App;
+
+use Auth;
+use Cache;
+use Exception;
+use Log;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Helpers
