@@ -59,7 +59,7 @@ class AdminController extends Controller
         }
 
         $user->fill(['banned' => true])->save();
-        flash()->success(trans('messages.admin.banned_user', ['user' => $user->name]));
+        flash()->success(trans('messages.admin.banned_user', ['name' => $user->name]));
 
         return redirect()->back();
     }
@@ -84,7 +84,7 @@ class AdminController extends Controller
         }
 
         $user->forceDelete();
-        flash()->success('messages.admin.deleted_user', ['user' => $user->name]);
+        flash()->success('messages.admin.deleted_user', ['name' => $user->name]);
 
         return redirect()->back();
     }
@@ -92,7 +92,7 @@ class AdminController extends Controller
     public function postUserUnban(User $user)
     {
         $user->fill(['banned' => false])->save();
-        flash()->success(trans('messages.admin.unbanned_user', ['user' => $user->name]));
+        flash()->success(trans('messages.admin.unbanned_user', ['name' => $user->name]));
 
         return redirect()->back();
     }
