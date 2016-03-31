@@ -11,6 +11,7 @@ use Cache;
 use App\Helpers;
 use Illuminate\Mail\Message;
 use Mail;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AccountController extends Controller
 {
@@ -26,7 +27,7 @@ class AccountController extends Controller
         });
 
         $userStorageQuota = Helpers::formatBytes(Cache::get('uploads_size:' . Auth::user()->id));
-        if (config('upste.user_storage_quota') > 0 && !Auth::user()->admin) {
+        if (config('upste.user_storage_quota') > 0 && !Auth::user()->isPrivilegedUser()) {
             $userStorageQuota = sprintf("%s / %s", $userStorageQuota, Helpers::formatBytes(config('upste.user_storage_quota')));
         }
 
@@ -63,9 +64,7 @@ class AccountController extends Controller
     public function postUploadsDelete(Upload $upload)
     {
         if (Auth::user()->id != $upload->user_id && !Auth::user()->isPrivilegedUser()) {
-            flash()->error(trans('messages.file_not_yours'));
-
-            return redirect()->back();
+            throw new NotFoundHttpException;
         }
 
         $upload->forceDelete();
@@ -95,9 +94,7 @@ class AccountController extends Controller
     public function getThumbnail(Upload $upload)
     {
         if (Auth::user()->id !== $upload->user_id && !Auth::user()->isPrivilegedUser()) {
-            flash()->error(trans('messages.file_not_yours'));
-
-            return redirect()->back();
+            throw new NotFoundHttpException;
         }
 
         return response()->download(storage_path('app/thumbnails/' . $upload->name));

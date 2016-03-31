@@ -4,7 +4,6 @@ use App\Helpers;
 
 return [
     'file_deleted'          => 'Deleted :name.',
-    'file_not_yours'        => 'That file does not belong to you.',
     'api_key_changed'       => 'Your API key was reset. New API key: :api_key',
     'invalid_file_upload'   => 'The file you uploaded is not a valid form upload.',
     'upload_file_not_found' => 'You didn\'t supply a file to upload.',
