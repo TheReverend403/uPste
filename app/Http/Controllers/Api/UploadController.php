@@ -35,7 +35,7 @@ class UploadController extends Controller
         }
 
         // If this upload would hit the quota defined in .env, reject it.
-        if (config('upste.user_storage_quota') > 0 && !Auth::user()->admin &&
+        if (config('upste.user_storage_quota') > 0 && !Auth::user()->isPrivilegedUser() &&
             (Cache::get('uploads_size:' . Auth::user()->id) + $file->getSize()) >= config('upste.user_storage_quota')) {
             return response()->json([trans('messages.reached_upload_limit')], StatusCode::FORBIDDEN);
         }

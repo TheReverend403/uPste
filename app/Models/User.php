@@ -40,21 +40,18 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
-
     /**
      * The database table used by the model.
      *
      * @var string
      */
     protected $table = 'users';
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = ['name', 'email', 'apikey', 'password', 'enabled', 'banned', 'admin'];
-
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -75,5 +72,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         Helpers::invalidateCache();
 
         return parent::forceDelete();
+    }
+
+    public function isPrivilegedUser()
+    {
+        return $this->admin || $this->isSuperUser();
+    }
+
+    public function isSuperUser()
+    {
+        return $this->id === 1;
     }
 }

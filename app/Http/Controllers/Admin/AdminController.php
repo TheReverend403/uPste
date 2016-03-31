@@ -52,11 +52,12 @@ class AdminController extends Controller
 
     public function postUserBan(User $user)
     {
-        if ($user->id == Helpers::SUPERUSER_ID) {
+        if ($user->isSuperUser()) {
             flash()->error(trans('messages.admin.failed_superuser_action', ['type' => 'ban']));
 
             return redirect()->back();
         }
+
         $user->fill(['banned' => true])->save();
         flash()->success(trans('messages.admin.banned_user', ['user' => $user->name]));
 
@@ -65,7 +66,7 @@ class AdminController extends Controller
 
     public function postUserDelete(User $user)
     {
-        if ($user->id == Helpers::SUPERUSER_ID) {
+        if ($user->isSuperUser()) {
             flash()->error(trans('messages.admin.failed_superuser_action', ['type' => 'delete']));
 
             return redirect()->back();
