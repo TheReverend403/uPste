@@ -18,15 +18,15 @@ class AccountController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $userUploadCount = Cache::rememberForever('uploads_count:' . Auth::user()->id, function () {
+        $userUploadCount = Cache::rememberForever('uploads_count:' . Auth::id(), function () {
             return Auth::user()->uploads->count();
         });
 
-        $userUploadTotalSize = Cache::rememberForever('uploads_size:' . Auth::user()->id, function () {
+        $userUploadTotalSize = Cache::rememberForever('uploads_size:' . Auth::id(), function () {
             return Auth::user()->uploads->sum('size');
         });
 
-        $userStorageQuota = Helpers::formatBytes(Cache::get('uploads_size:' . Auth::user()->id));
+        $userStorageQuota = Helpers::formatBytes(Cache::get('uploads_size:' . Auth::id()));
         if (config('upste.user_storage_quota') > 0 && !Auth::user()->isPrivilegedUser()) {
             $userStorageQuota = sprintf("%s / %s", $userStorageQuota, Helpers::formatBytes(config('upste.user_storage_quota')));
         }
@@ -63,7 +63,7 @@ class AccountController extends Controller
 
     public function postUploadsDelete(Upload $upload)
     {
-        if (Auth::user()->id != $upload->user_id && !Auth::user()->isPrivilegedUser()) {
+        if (Auth::id() !== $upload->user_id && !Auth::user()->isPrivilegedUser()) {
             throw new NotFoundHttpException;
         }
 
@@ -93,7 +93,7 @@ class AccountController extends Controller
 
     public function getThumbnail(Upload $upload)
     {
-        if (Auth::user()->id !== $upload->user_id && !Auth::user()->isPrivilegedUser()) {
+        if (Auth::id() !== $upload->user_id && !Auth::user()->isPrivilegedUser()) {
             throw new NotFoundHttpException;
         }
 

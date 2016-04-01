@@ -18,9 +18,9 @@ class Helpers
      */
     public static function invalidateCache()
     {
-        if (Auth::user()) {
-            Cache::forget('uploads_count:' . Auth::user()->id);
-            Cache::forget('uploads_size:' . Auth::user()->id);
+        if (Auth::check()) {
+            Cache::forget('uploads_count:' . Auth::id());
+            Cache::forget('uploads_size:' . Auth::id());
         }
 
         Cache::forget('users');

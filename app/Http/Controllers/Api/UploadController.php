@@ -39,7 +39,7 @@ class UploadController extends Controller
 
         // If this upload would hit the quota defined in .env, reject it.
         if (config('upste.user_storage_quota') > 0 && !Auth::user()->isPrivilegedUser() &&
-            (Cache::get('uploads_size:' . Auth::user()->id) + $file->getSize()) >= config('upste.user_storage_quota')) {
+            (Cache::get('uploads_size:' . Auth::id()) + $file->getSize()) >= config('upste.user_storage_quota')) {
             return response()->json([trans(
                 'messages.reached_upload_limit',
                 ['limit' => Helpers::formatBytes(config('upste.user_storage_quota'))]
@@ -55,7 +55,7 @@ class UploadController extends Controller
         $originalName = $file->getClientOriginalName();
 
         // Check to see if we already have this file for this user.
-        $existing = Upload::whereOriginalHash($originalHash)->whereUserId(Auth::user()->id)->first();
+        $existing = Upload::whereOriginalHash($originalHash)->whereUserId(Auth::id())->first();
         if ($existing) {
             $result = [
                 'url'  => route('files.get', $existing)
@@ -101,7 +101,7 @@ class UploadController extends Controller
         }
 
         $upload = Upload::create([
-            'user_id'       => Auth::user()->id,
+            'user_id'       => Auth::id(),
             'hash'          => sha1_file($file),
             'name'          => $newName,
             'size'          => $file->getSize(),

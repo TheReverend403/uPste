@@ -46,7 +46,7 @@ class AdminAuthenticate
             }
         }
 
-        if (!Auth::user()->admin) {
+        if (!Auth::user()->isPrivilegedUser()) {
             flash()->error('You do not have permission to access that area.');
 
             return redirect()->back();
