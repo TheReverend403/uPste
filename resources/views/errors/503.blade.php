@@ -11,7 +11,7 @@
 <body>
 <div class="container">
     <div class="content">
-        <p>We'll be right back.</p>
+        <p>{{ $exception->getMessage() ?: 'Down for maintenance, we\'ll be right back.' }}</p>
     </div>
 </div>
 </body>

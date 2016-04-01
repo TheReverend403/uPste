@@ -12,7 +12,7 @@
 <body>
 <div class="container">
     <div class="content">
-        <p>We couldn't find the page you were looking for.</p>
+        <p>{{ $exception->getMessage() ?: 'Page Not Found' }}</p>
     </div>
 </div>
 </body>

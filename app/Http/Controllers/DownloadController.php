@@ -13,7 +13,7 @@ class DownloadController extends Controller
 {
     public function get(Upload $upload)
     {
-        if (Storage::exists('uploads/' . $upload->name)) {
+        if (Storage::exists('uploads/' . $upload->name) && !$upload->user->banned) {
             if (!Auth::check() || Auth::id() !== $upload->user_id) {
                 $upload->views = $upload->views + 1;
                 $upload->save();
@@ -21,6 +21,6 @@ class DownloadController extends Controller
 
             return response()->make()->header('X-Accel-Redirect', '/uploads/' . $upload->name)->header('Content-Type', '');
         }
-        throw new NotFoundHttpException;
+        return abort(404);
     }
 }
