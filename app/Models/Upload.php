@@ -37,7 +37,7 @@ class Upload extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'hash', 'size', 'user_id', 'original_name', 'original_hash'];
+    protected $fillable = ['name', 'hash', 'size', 'user_id', 'original_name', 'original_hash', 'downloads'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -80,8 +80,13 @@ class Upload extends Model
     public function getThumbnail()
     {
         if (Storage::exists('thumbnails/' . $this->name)) {
-            return route('account.uploads.thumbnail', ['id' => $this->id]);
+            return route('account.uploads.thumbnail', ['name' => $this->name]);
         }
         return elixir('assets/img/thumbnail.png');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'name';
     }
 }

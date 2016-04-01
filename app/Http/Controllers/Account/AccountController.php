@@ -56,7 +56,7 @@ class AccountController extends Controller
 
     public function getUploads()
     {
-        $uploads = Auth::user()->uploads()->orderBy('updated_at', 'desc')->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
+        $uploads = Auth::user()->uploads()->orderBy('created_at', 'desc')->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
 
         return view('account.uploads', compact('uploads'));
     }

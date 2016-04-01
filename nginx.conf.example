@@ -1,0 +1,76 @@
+server {
+    listen 127.0.0.1:80;
+    server_name u.localhost;
+    root /home/rev/src/pste.pw/upload/public;
+    index index.php;
+
+    client_max_body_size 100M;
+
+    location ~ \.php$ {
+        include         fastcgi_params;
+        try_files       $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass    unix:/var/run/php7-fpm.sock;
+        fastcgi_index   index.php;
+        fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ /robots.txt {
+        allow all;
+        log_not_found off;
+        access_log off;
+    }
+}
+
+server {
+    listen 127.0.0.1:80;
+    server_name a.localhost;
+    root /path/to/pste/public;
+    index index.php;
+
+    client_max_body_size 100M;
+
+    include mime.types;
+    types {
+        text/plain txt ini html htm shtml sh desktop;
+        text/plain pl go py cs c java fish php;
+        text/plain rb rs lua ls hy asm S conf vim;
+        text/plain moon log tcl tk md coffee;
+        text/plain scss ts less d hs;
+    }
+
+    gzip on;
+    expires modified +1h;
+
+    location ~ \.php$ {
+        include         fastcgi_params;
+        try_files       $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass    unix:/var/run/php7-fpm.sock;
+        fastcgi_index   index.php;
+        fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location = / {
+        return 302 http://u.localhost;
+    }
+
+    location /uploads {
+        internal;
+        alias /path/to/pste/storage/app/uploads;
+    }
+
+    location ~ /robots.txt {
+        allow all;
+        log_not_found off;
+        access_log off;
+    }
+}

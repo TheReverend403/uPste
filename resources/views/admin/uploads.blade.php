@@ -24,8 +24,8 @@
                                     <div class="media-body">
                                         <h4 class="media-heading">{{ str_limit($upload->original_name, 15) }}</h4>
                                         <h5><b>Size:</b> {{ App\Helpers::formatBytes($upload->size) }}</h5>
-                                        <h5><b>Uploaded:</b><br>{{ $upload->updated_at }}</h5>
-                                        <form action="{{ route('account.uploads.delete', ['id' => $upload->id]) }}"
+                                        <h5><b>Downloads:</b> {{ $upload->downloads }}</h5>
+                                        <form action="{{ route('account.uploads.delete', ['name' => $upload->name]) }}"
                                               method="POST">
                                             <button type="submit" class="btn btn-block btn-danger">Delete</button>
                                             {!! csrf_field() !!}

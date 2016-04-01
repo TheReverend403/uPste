@@ -27,6 +27,7 @@ Interested in contributing, want some help or just have some questions? Join us 
 * Any database supported by [Eloquent](http://laravel.com/docs/5.1/database#configuration).
 * [Laravel Elixir](https://laravel.com/docs/5.1/elixir#installation).
 * A little bit of command line experience.
+* A web server that understands X-Accel-Redirect
 
 # Installation
 
@@ -46,8 +47,9 @@ php artisan migrate # Creates your database schema
 
 The next, and last part is entirely dependent you and how you want to configure your webserver, 
 but you're basically going to want two domains (or subdomains).  
-One will be your site UI where users will register, login, and manage their uploads. The root for this host should be $upste_root/public/  
-The other will be purely for serving the uploaded files. The root for this host should be $upste_root/storage/app/uploads
+
+There is an example nginx config in the root of this repository.  
+Feel free to adapt it to your server, but you MUST keep the /uploads location intact for x-accel to work.
 
 That's it, you're done! Now just navigate to your site and register.  
 The first user registered will be automatically enabled and made an admin, so take measures to make sure this is you.
