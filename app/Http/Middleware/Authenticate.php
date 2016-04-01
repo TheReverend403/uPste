@@ -36,7 +36,8 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->guest()) {
+        if (!Auth::check()) {
+            Auth::logout();
             if ($request->ajax()) {
                 return response('Unauthorized.', StatusCode::UNAUTHORIZED);
             } else {
