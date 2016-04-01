@@ -32,8 +32,6 @@ server {
     root /path/to/pste/public;
     index index.php;
 
-    client_max_body_size 100M;
-
     include mime.types;
     types {
         text/plain txt ini html htm shtml sh desktop;
