@@ -24,7 +24,7 @@
                     <tr>
                         @endif
                         <td>
-                            <a href="{{ route('admin.users.uploads', ['id' => $user->id]) }}"
+                            <a href="{{ route('admin.users.uploads', $user) }}"
                                title="{{ $user->name }}'s uploads">{{ $user->name }}</a>
                         </td>
                         <td><a href="mailto:{{ $user->email }}"
@@ -36,7 +36,7 @@
                                 @if (!$user->banned)
                                     <li>
                                         <form class="form"
-                                              action="{{ route('admin.users.ban', ['id' => $user->id]) }}"
+                                              action="{{ route('admin.users.ban', $user) }}"
                                               method="POST">
                                             <button type="submit" class="btn btn-xs btn-warning">Ban</button>
                                             {!! csrf_field() !!}
@@ -45,7 +45,7 @@
                                 @else
                                     <li>
                                         <form class="form"
-                                              action="{{ route('admin.users.unban', ['id' => $user->id]) }}"
+                                              action="{{ route('admin.users.unban', $user) }}"
                                               method="POST">
                                             <button type="submit" class="btn btn-xs btn-success">Unban</button>
                                             {!! csrf_field() !!}
@@ -54,7 +54,7 @@
                                 @endif
                                 <li>
                                     <form class="form"
-                                          action="{{ route('admin.users.delete', ['id' => $user->id]) }}"
+                                          action="{{ route('admin.users.delete', $user) }}"
                                           method="POST">
                                         <button type="submit" class="btn btn-xs btn-danger">Delete</button>
                                         {!! csrf_field() !!}

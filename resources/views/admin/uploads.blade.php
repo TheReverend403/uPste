@@ -17,7 +17,7 @@
                             <div class="panel-body">
                                 <div class="media">
                                     <div class="media-left">
-                                        <a href="{{ config('upste.upload_url') . $upload->name }}">
+                                        <a href="{{ route('files.get', $upload) }}">
                                             <img src="{{ $upload->getThumbnail() }}" class="img-thumbnail" alt="{{ $upload->original_name }}">
                                         </a>
                                     </div>
@@ -25,7 +25,7 @@
                                         <h4 class="media-heading">{{ str_limit($upload->original_name, 15) }}</h4>
                                         <h5><b>Size:</b> {{ App\Helpers::formatBytes($upload->size) }}</h5>
                                         <h5><b>Views:</b> {{ $upload->views }}</h5>
-                                        <form action="{{ route('account.uploads.delete', ['name' => $upload->name]) }}"
+                                        <form action="{{ route('account.uploads.delete', $upload) }}"
                                               method="POST">
                                             <button type="submit" class="btn btn-block btn-danger">Delete</button>
                                             {!! csrf_field() !!}

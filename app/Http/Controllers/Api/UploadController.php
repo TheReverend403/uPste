@@ -58,7 +58,7 @@ class UploadController extends Controller
         $existing = Upload::whereOriginalHash($originalHash)->whereUserId(Auth::user()->id)->first();
         if ($existing) {
             $result = [
-                'url'  => config('upste.upload_url') . $existing->name
+                'url'  => route('files.get', $existing)
             ];
 
             $existing->original_name = $originalName;
@@ -116,7 +116,7 @@ class UploadController extends Controller
         );
 
         $result = [
-            'url'  => config('upste.upload_url') . $newName
+            'url'  => route('files.get', $upload)
         ];
 
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);

@@ -80,7 +80,7 @@ class Upload extends Model
     public function getThumbnail()
     {
         if (Storage::exists('thumbnails/' . $this->name)) {
-            return route('account.uploads.thumbnail', ['name' => $this->name]);
+            return route('account.uploads.thumbnail', $this);
         }
         return elixir('assets/img/thumbnail.png');
     }

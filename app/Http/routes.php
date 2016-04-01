@@ -125,7 +125,10 @@ Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
         'as' => 'api.upload', 'uses' => 'Api\UploadController@get']);
 });
 
+/*
+ * Uploads
+ */
 Route::group(['domain' => config('upste.upload_domain')], function () {
-    Route::get('/{upload}', [
+    Route::get('{upload}', [
         'as' => 'files.get', 'uses' => 'DownloadController@get']);
 });
