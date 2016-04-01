@@ -13,7 +13,7 @@ class DownloadController extends Controller
     public function get(Upload $upload)
     {
         if (Storage::exists('uploads/' . $upload->name)) {
-            $upload->downloads = $upload->downloads + 1;
+            $upload->views = $upload->views + 1;
             $upload->save();
             return response()->make()->header('X-Accel-Redirect', '/uploads/' . $upload->name)->header('Content-Type', '');
         }
