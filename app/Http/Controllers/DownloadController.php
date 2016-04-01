@@ -13,7 +13,7 @@ class DownloadController extends Controller
 {
     public function get(Upload $upload)
     {
-        if (Storage::exists('uploads/' . $upload->name) && !$upload->user->banned) {
+        if (Storage::exists('uploads/' . $upload->name) && !$upload->user->first()->banned) {
             if (!Auth::check() || Auth::id() !== $upload->user_id) {
                 $upload->views = $upload->views + 1;
                 $upload->save();
