@@ -29,6 +29,12 @@ class Helpers
         Cache::forget('uploads_total_size');
     }
 
+    /**
+     * Handle sending a file, preferably by offloading to the webserver.
+     *
+     * @param Upload $upload
+     * @return mixed
+     */
     public static function sendFile(Upload $upload)
     {
         switch (config('upste.sendfile_method')) {

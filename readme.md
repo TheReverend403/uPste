@@ -27,7 +27,6 @@ Interested in contributing, want some help or just have some questions? Join us 
 * Any database supported by [Eloquent](http://laravel.com/docs/5.1/database#configuration).
 * [Laravel Elixir](https://laravel.com/docs/5.1/elixir#installation).
 * A little bit of command line experience.
-* A web server that understands X-Accel-Redirect
 
 # Installation
 
@@ -49,7 +48,7 @@ The next, and last part is entirely dependent you and how you want to configure 
 but you're basically going to want two domains (or subdomains).  
 
 There is an example nginx config in the root of this repository.  
-Feel free to adapt it to your server, but you MUST keep the /uploads location intact for x-accel to work.
+Feel free to adapt it to your server software, but you MUST keep the /uploads location intact for x-accel/x-sendfile to work if you intend to use them.
 
 That's it, you're done! Now just navigate to your site and register.  
 The first user registered will be automatically enabled and made an admin, so take measures to make sure this is you.
