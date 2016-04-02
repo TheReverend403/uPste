@@ -15,4 +15,5 @@ return [
     'strip_exif'         => env('STRIP_EXIF', true),
     'user_storage_quota' => env('USER_STORAGE_QUOTA', 0) * 1000000, // Megabytes to bytes
     'recaptcha_enabled'  => env('RECAPTCHA_PUBLIC_KEY', null) && env('RECAPTCHA_PUBLIC_KEY', null),
+    'sendfile_method'      => env('SENDFILE_METHOD', null),
 ];

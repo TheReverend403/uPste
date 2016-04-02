@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers;
 use App\Models\Upload;
 use App\Http\Requests;
 use Auth;
 use Log;
 use Storage;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Teapot\StatusCode;
 
 class DownloadController extends Controller
@@ -25,7 +25,7 @@ class DownloadController extends Controller
                 $upload->save();
             }
 
-            return response()->make()->header('X-Accel-Redirect', '/uploads/' . $upload->name)->header('Content-Type', '');
+            return Helpers::sendFile($upload);
         }
 
         return abort(StatusCode::NOT_FOUND);

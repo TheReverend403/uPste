@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Upload;
 use Auth;
 use Cache;
 use Exception;
@@ -26,6 +27,20 @@ class Helpers
         Cache::forget('users');
         Cache::forget('uploads');
         Cache::forget('uploads_total_size');
+    }
+
+    public static function sendFile(Upload $upload)
+    {
+        switch (config('upste.sendfile_method')) {
+            case 'x-accel':
+                return response()->make()->header('X-Accel-Redirect', '/uploads/' . $upload->name)->header('Content-Type', '');
+                break;
+            case 'x-sendfile':
+                return response()->make()->header('X-Sendfile', storage_path('app/uploads/' . $upload->name)->header('Content-Type', ''));
+                break;
+            default:
+                return response()->download(storage_path('app/uploads/' . $upload->name));
+        }
     }
 
     // http://stackoverflow.com/questions/2510434/format-bytes-to-kilobytes-megabytes-gigabytes
@@ -71,6 +86,7 @@ class Helpers
                 }
             } catch (Exception $ex) {
                 Log::error($ex->getMessage());
+
                 return false;
             }
         }
@@ -94,6 +110,7 @@ class Helpers
                 }
             } catch (Exception $ex) {
                 Log::error($ex);
+
                 return false;
             }
         }
@@ -117,9 +134,11 @@ class Helpers
                 }
             } catch (Exception $ex) {
                 Log::error($ex);
+
                 return $file->getClientOriginalExtension();
             }
         }
+
         return $file->getClientOriginalExtension();
     }
 }
