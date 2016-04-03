@@ -13,6 +13,7 @@ return [
     'could_not_write_image' => 'Error occurred while saving file.',
     'could_not_read_image'  => 'Error occurred while reading file.',
     'unsupported_image'     => 'Unsupported image type.',
+    'preferences_saved'     => 'Preferences updated!',
     'admin'                 => [
         'no_uploads_found'        => ':name has no uploads.',
         'unbanned_user'           => 'Unbanned :name.',

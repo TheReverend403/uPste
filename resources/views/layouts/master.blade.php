@@ -38,6 +38,7 @@
                            role="button" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->name }} &nbsp;<span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li><a href="{{ route('account.preferences') }}"><i class="fa fa-gears"></i>&nbsp; Preferences</a></li>
                             <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out fa-fw"></i>&nbsp; Logout</a></li>
                         </ul>
                     </li>

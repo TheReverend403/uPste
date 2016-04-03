@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\User;
+use Auth;
 use Cache;
 use App\Helpers;
 use Illuminate\Mail\Message;
@@ -28,14 +29,14 @@ class AdminController extends Controller
 
     public function getRequests()
     {
-        $users = User::whereEnabled(false)->orderBy('created_at', 'asc')->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
+        $users = User::whereEnabled(false)->orderBy('created_at', 'asc')->paginate(Auth::user()->preferences->pagination_items);
 
         return view('admin.requests', compact('users'));
     }
 
     public function getUsers()
     {
-        $users = User::whereEnabled(true)->with('uploads')->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
+        $users = User::whereEnabled(true)->with('uploads')->paginate(Auth::user()->preferences->pagination_items);
 
         foreach ($users as $user) {
             Cache::rememberForever('uploads_count:' . $user->id, function () use ($user) {
@@ -99,7 +100,7 @@ class AdminController extends Controller
 
     public function getUploads(User $user)
     {
-        $uploads = $user->uploads()->orderBy('created_at', 'desc')->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
+        $uploads = $user->uploads()->orderBy('created_at', 'desc')->paginate(Auth::user()->preferences->pagination_items);
 
         return view('admin.uploads', compact('uploads', 'user'));
     }

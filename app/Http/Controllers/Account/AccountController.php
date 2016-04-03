@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
 use App\Models\User;
+use App\Models\UserPreferences;
 use Auth;
 use Cache;
 use App\Helpers;
 use Illuminate\Mail\Message;
 use Mail;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Teapot\StatusCode;
 
 class AccountController extends Controller
 {
@@ -29,6 +31,10 @@ class AccountController extends Controller
         $userStorageQuota = Helpers::formatBytes(Cache::get('uploads_size:' . Auth::id()));
         if (config('upste.user_storage_quota') > 0 && !Auth::user()->isPrivilegedUser()) {
             $userStorageQuota = sprintf("%s / %s", $userStorageQuota, Helpers::formatBytes(config('upste.user_storage_quota')));
+        }
+
+        if (!Auth::user()->preferences) {
+            UserPreferences::create(['user_id' => Auth::id()])->save();
         }
 
         view()->share(compact('userUploadCount', 'userUploadTotalSize', 'userStorageQuota'));
@@ -56,7 +62,7 @@ class AccountController extends Controller
 
     public function getUploads()
     {
-        $uploads = Auth::user()->uploads()->orderBy('created_at', 'desc')->paginate(Helpers::PAGINATION_DEFAULT_ITEMS);
+        $uploads = Auth::user()->uploads()->orderBy('created_at', 'desc')->paginate(Auth::user()->preferences->pagination_items);
 
         return view('account.uploads', compact('uploads'));
     }
@@ -64,7 +70,7 @@ class AccountController extends Controller
     public function postUploadsDelete(Upload $upload)
     {
         if (Auth::id() !== $upload->user_id && !Auth::user()->isPrivilegedUser()) {
-            throw new NotFoundHttpException;
+            return abort(StatusCode::NOT_FOUND);
         }
 
         $upload->forceDelete();
@@ -94,7 +100,7 @@ class AccountController extends Controller
     public function getThumbnail(Upload $upload)
     {
         if (Auth::id() !== $upload->user_id && !Auth::user()->isPrivilegedUser()) {
-            throw new NotFoundHttpException;
+            return abort(StatusCode::NOT_FOUND);
         }
 
         return response()->download(storage_path('app/thumbnails/' . $upload->name));

@@ -18,8 +18,9 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="media-heading">{{ str_limit($upload->original_name, 15) }}</h4>
-                                        <h5><b>Size:</b> {{ App\Helpers::formatBytes($upload->size) }}</h5>
-                                        <h5><b>Views:</b> {{ $upload->views }}</h5>
+                                        <p><b>Size:</b> {{ App\Helpers::formatBytes($upload->size) }}</p>
+                                        <p><b>Views:</b> {{ $upload->views }}</p>
+                                        <p><b>Uploaded:</b> {{ $upload->created_at->copy()->tz(Auth::user()->preferences->timezone) }}</p>
                                         <form action="{{ route('account.uploads.delete', $upload) }}"
                                               method="POST">
                                             <button type="submit" class="btn btn-block btn-danger">Delete</button>

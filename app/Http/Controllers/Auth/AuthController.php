@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserPreferences;
 use DB;
 use Hash;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -76,9 +77,9 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         $validationRules = [
-            'name'                 => 'required|max:255|unique:users|alpha_num',
-            'email'                => 'required|email|max:255|unique:users',
-            'password'             => 'required|confirmed|min:6',
+            'name'     => 'required|max:255|unique:users|alpha_num',
+            'email'    => 'required|email|max:255|unique:users',
+            'password' => 'required|confirmed|min:6',
         ];
 
         if (config('upste.recaptcha_enabled')) {

@@ -21,8 +21,7 @@ class DownloadController extends Controller
             }
 
             if (!Auth::check() || Auth::id() !== $upload->user_id) {
-                $upload->views = $upload->views + 1;
-                $upload->save();
+                $upload->fill(['views' => $upload->views + 1])->save();
             }
 
             return Helpers::sendFile($upload);

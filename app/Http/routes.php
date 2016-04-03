@@ -64,6 +64,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'u'], function () {
     Route::get('faq', [
         'as' => 'account.faq', 'uses' => 'Account\AccountController@getFaq']);
 
+    Route::get('preferences', [
+        'as' => 'account.preferences', 'uses' => 'Account\PreferencesController@get']);
+
+    Route::post('preferences', [
+        'as' => 'account.preferences', 'uses' => 'Account\PreferencesController@post']);
+
     Route::group(['prefix' => 'uploads'], function () {
         Route::get('/', [
             'as' => 'account.uploads', 'uses' => 'Account\AccountController@getUploads']);

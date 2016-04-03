@@ -67,6 +67,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('App\Models\Upload');
     }
 
+    public function preferences()
+    {
+        return $this->hasOne('App\Models\UserPreferences');
+    }
+
     public function forceDelete()
     {
         Helpers::invalidateCache();
