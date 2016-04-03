@@ -24,7 +24,7 @@
             </div>
 
             <div class="form-group text-right">
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success">Save</button>
             </div>
 
             {{ csrf_field() }}
