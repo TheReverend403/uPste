@@ -29,6 +29,8 @@ use Storage;
  * @mixin \Eloquent
  * @property string $original_hash
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereOriginalHash($value)
+ * @property integer $views
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereViews($value)
  */
 class Upload extends Model
 {

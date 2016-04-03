@@ -4,10 +4,10 @@
 
 @section('content')
     @if(count($uploads))
-        @foreach ($uploads->chunk(3) as $chunk)
+        @foreach ($uploads->chunk(2) as $chunk)
             <div class="row">
                 @foreach ($chunk as $upload)
-                    <div class="col-xs-4">
+                    <div class="col-xs-6">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="media">
@@ -16,16 +16,21 @@
                                             <img src="{{ $upload->getThumbnail() }}" class="img-thumbnail" alt="{{ $upload->original_name }}">
                                         </a>
                                     </div>
-                                    <div class="media-body">
-                                        <h4 class="media-heading">{{ str_limit($upload->original_name, 15) }}</h4>
-                                        <p><b>Size:</b> {{ App\Helpers::formatBytes($upload->size) }}</p>
-                                        <p><b>Views:</b> {{ $upload->views }}</p>
-                                        <p><b>Uploaded:</b> {{ $upload->created_at->copy()->tz(Auth::user()->preferences->timezone) }}</p>
-                                        <form action="{{ route('account.uploads.delete', $upload) }}"
-                                              method="POST">
-                                            <button type="submit" class="btn btn-block btn-danger">Delete</button>
-                                            {!! csrf_field() !!}
-                                        </form>
+                                    <div class="media-body hidden-xs">
+                                        <div class="col-lg-10">
+                                            <h4 class="media-heading">{{ str_limit($upload->original_name, 20) }}</h4>
+                                            <h5><b>Size:</b> {{ App\Helpers::formatBytes($upload->size) }}</h5>
+                                            <h5><b>Views:</b> {{ $upload->views }}</h5>
+                                            <h5><b>Uploaded:</b> {{ $upload->created_at->copy()->tz(Auth::user()->preferences->timezone) }}</h5>
+                                            <h5><b>Updated:</b> {{ $upload->updated_at->copy()->tz(Auth::user()->preferences->timezone) }}</h5>
+                                        </div>
+
+                                        <div class="col-lg-2">
+                                            <form action="{{ route('account.uploads.delete', $upload) }}" method="POST">
+                                                <button type="submit" class="btn btn-danger" title="Delete"><i class="fa fa-remove"></i></button>
+                                                {!! csrf_field() !!}
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
