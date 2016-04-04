@@ -31,7 +31,6 @@
                                             <h5><b>Size:</b> {{ App\Helpers::formatBytes($upload->size) }}</h5>
                                             <h5><b>Views:</b> {{ $upload->views }}</h5>
                                             <h5><b>Uploaded:</b> {{ $upload->created_at->copy()->tz(Auth::user()->preferences->timezone) }}</h5>
-                                            <h5><b>Updated:</b> {{ $upload->updated_at->copy()->tz(Auth::user()->preferences->timezone) }}</h5>
                                         </div>
 
                                         <div class="col-lg-2">
