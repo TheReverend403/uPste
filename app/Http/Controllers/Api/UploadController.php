@@ -8,24 +8,24 @@ use App\Models\Upload;
 use Auth;
 use Cache;
 use App\Helpers;
+use Illuminate\Http\Request;
 use Image;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\Exception\NotWritableException;
 use Log;
-use Request;
 use Storage;
 use Teapot\StatusCode;
 
 class UploadController extends Controller
 {
-    public function post()
+    public function post(Request $request)
     {
-        if (!Request::hasFile('file')) {
+        if (!$request->hasFile('file')) {
             return response()->json([trans('messages.upload_file_not_found')], StatusCode::BAD_REQUEST);
         }
 
-        $file = Request::file('file');
+        $file = $request->file('file');
         if (!$file->isValid()) {
             return response()->json([trans('messages.invalid_file_upload')], StatusCode::BAD_REQUEST);
         }
@@ -107,13 +107,10 @@ class UploadController extends Controller
             'size'          => $file->getSize(),
             'original_name' => $originalName,
             'original_hash' => $originalHash
-        ]);
+        ])->save();
 
-        $upload->save();
-        Storage::put(
-            "uploads/$newName",
-            file_get_contents($file)
-        );
+        $uploadFileHandle = fopen($file->getRealPath(), 'r');
+        Storage::put("uploads/$newName", $uploadFileHandle);
 
         $result = [
             'url'  => route('files.get', $upload)
@@ -122,12 +119,12 @@ class UploadController extends Controller
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
     }
 
-    public function get()
+    public function get(Request $request)
     {
         $user = Auth::user();
 
         if (Cache::get('uploads_count:' . $user->id) !== 0) {
-            $uploads = $user->uploads->slice(0, Request::input('limit', $user->uploads->count()));
+            $uploads = $user->uploads->slice(0, $request->input('limit', $user->uploads->count()));
             return response()->json($uploads, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
         }
         return response()->json([trans('messages.no_uploads_found')], StatusCode::NOT_FOUND, [], JSON_UNESCAPED_SLASHES);
