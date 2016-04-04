@@ -33,10 +33,6 @@ class AccountController extends Controller
             $userStorageQuota = sprintf("%s / %s", $userStorageQuota, Helpers::formatBytes(config('upste.user_storage_quota')));
         }
 
-        if (!Auth::user()->preferences) {
-            UserPreferences::create(['user_id' => Auth::id()])->save();
-        }
-
         view()->share(compact('userUploadCount', 'userUploadTotalSize', 'userStorageQuota'));
     }
 
