@@ -47,7 +47,7 @@ class Authenticate
             }
         }
 
-        if (!Auth::user()->enabled) {
+        if (config('upste.require_user_approval') && !Auth::user()->enabled) {
             flash()->error(
                 'Your account has not been approved. You will be notified via email when your account status changes.'
             )->important();

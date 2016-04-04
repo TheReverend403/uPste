@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Request Account')
+@section('title', config('upste.require_user_approval') ? 'Request Account' : 'Register Account')
 
 @section('content')
     <div class="container-sm jumbotron">

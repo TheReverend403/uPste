@@ -93,9 +93,6 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
     Route::get('/', [
         'as' => 'admin', 'uses' => 'Admin\AdminController@getIndex']);
 
-    Route::get('requests', [
-        'as' => 'admin.requests', 'uses' => 'Admin\AdminController@getRequests']);
-
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', [
             'as' => 'admin.users', 'uses' => 'Admin\AdminController@getUsers']);
@@ -111,12 +108,17 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
 
         Route::post('{user}/delete', [
             'as' => 'admin.users.delete', 'uses' => 'Admin\AdminController@postUserDelete']);
+        
+        if (config('upste.require_user_approval')) {
+            Route::get('requests', [
+                'as' => 'admin.requests', 'uses' => 'Admin\AdminController@getRequests']);
 
-        Route::post('{user}/accept', [
-            'as' => 'admin.users.accept', 'uses' => 'Admin\AdminController@postUserAccept']);
+            Route::post('{user}/accept', [
+                'as' => 'admin.users.accept', 'uses' => 'Admin\AdminController@postUserAccept']);
 
-        Route::post('{user}/reject', [
-            'as' => 'admin.users.reject', 'uses' => 'Admin\AdminController@postUserReject']);
+            Route::post('{user}/reject', [
+                'as' => 'admin.users.reject', 'uses' => 'Admin\AdminController@postUserReject']);
+        }
     });
 });
 

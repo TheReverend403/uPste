@@ -18,13 +18,19 @@ class AdminController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $requestCount = User::whereEnabled(false)->count();
-        View::share('requestCount', $requestCount);
+        if (config('upste.require_user_approval')) {
+            $requestCount = User::whereEnabled(false)->count();
+            View::share('requestCount', $requestCount);
+        }
     }
 
     public function getIndex()
     {
-        return redirect()->route('admin.requests');
+        if (config('upste.require_user_approval')) {
+            return redirect()->route('admin.requests');
+        } else {
+            return redirect()->route('admin.users');
+        }
     }
 
     public function getRequests()

@@ -6,6 +6,7 @@ use App\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserPreferences;
+use Auth;
 use DB;
 use Hash;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -53,19 +54,22 @@ class AuthController extends Controller
         }
 
         $data = $request->all();
-        $this->create($data);
+        $user = $this->create($data);
 
         Mail::queue(['text' => 'emails.admin.new_registration'], $data, function (Message $message) use ($data) {
             $message->subject(sprintf("[%s] New User Registration", config('upste.domain')));
             $message->to(config('upste.owner_email'));
         });
 
-        flash()->success(
-            'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.'
-        )
-            ->important();
+        if (config('upste.require_user_approval')) {
+            flash()->success(
+                'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.')
+                ->important();
+        } else {
+            Auth::login($user);
+        }
 
-        return redirect()->route('index');
+        return redirect($this->redirectPath());
     }
 
     /**
@@ -109,7 +113,7 @@ class AuthController extends Controller
             'password' => Hash::make($data['password']),
             // First user registered should be enabled and admin
             'admin'    => $firstUser,
-            'enabled'  => $firstUser
+            'enabled'  => $firstUser || !config('upste.require_user_approval')
         ]);
 
         return $user;
