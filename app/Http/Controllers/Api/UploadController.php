@@ -110,7 +110,7 @@ class UploadController extends Controller
         ]);
         $upload->save();
         
-        $uploadFileHandle = fopen($file->getRealPath(), 'r');
+        $uploadFileHandle = fopen($file->getRealPath(), 'rb');
         Storage::put("uploads/$newName", $uploadFileHandle);
 
         $result = [
