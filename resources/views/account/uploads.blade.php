@@ -11,14 +11,17 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="media">
-                                    <div class="media-left">
+                                    <div class="media-left hidden-sm hidden-xs">
                                         <a href="{{ route('files.get', $upload) }}">
                                             <img src="{{ $upload->getThumbnail() }}" class="img-thumbnail" alt="{{ $upload->original_name }}">
                                         </a>
                                     </div>
-                                    <div class="media-body hidden-xs">
+                                    <div class="media-body">
                                         <div class="col-lg-10">
-                                            <h4 class="media-heading">{{ str_limit($upload->original_name, 20) }}</h4>
+                                            <h4 class="media-heading visible-lg">{{ str_limit($upload->original_name, 30) }}</h4>
+                                            <h4 class="media-heading visible-md">{{ str_limit($upload->original_name, 20) }}</h4>
+                                            <h4 class="media-heading visible-xs visible-sm">{{ str_limit($upload->original_name, 10) }}</h4>
+                                            <h5 class="visible-xs visible-sm"><b>URL:</b> <a href="{{ route('files.get', $upload) }}">{{ route('files.get', $upload) }}</a></h5>
                                             <h5><b>Size:</b> {{ App\Helpers::formatBytes($upload->size) }}</h5>
                                             <h5><b>Views:</b> {{ $upload->views }}</h5>
                                             <h5><b>Uploaded:</b> {{ $upload->created_at->copy()->tz(Auth::user()->preferences->timezone) }}</h5>
