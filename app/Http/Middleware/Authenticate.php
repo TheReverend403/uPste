@@ -41,23 +41,21 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', StatusCode::UNAUTHORIZED);
             } else {
-                flash()->error('You must log in to access that page.')->important();
+                flash()->error(trans('messages.not_logged_in'))->important();
 
                 return redirect()->route('login');
             }
         }
 
         if (config('upste.require_user_approval') && !Auth::user()->enabled) {
-            flash()->error(
-                'Your account has not been approved. You will be notified via email when your account status changes.'
-            )->important();
+            flash()->error(trans('messages.not_activated'))->important();
             Auth::logout();
 
             return redirect()->route('login');
         }
 
         if (Auth::user()->banned) {
-            flash()->error('You are banned. Contact an admin if you believe this is an error.')->important();
+            flash()->error(trans('messages.banned'))->important();
             Auth::logout();
 
             return redirect()->route('login');

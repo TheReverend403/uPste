@@ -38,7 +38,6 @@ class Handler extends ExceptionHandler
     public function report(Exception $e)
     {
         if ($this->shouldReport($e) && php_sapi_name() != 'cli') {
-
             $data = [
                 'ip'        => request()->getClientIp(),
                 'url'       => request()->fullUrl(),

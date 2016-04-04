@@ -14,6 +14,10 @@ return [
     'could_not_read_image'  => 'Error occurred while reading file.',
     'unsupported_image'     => 'Unsupported image type.',
     'preferences_saved'     => 'Preferences updated!',
+    'banned'                => 'You are banned. Contact an admin if you believe this is an error.',
+    'not_logged_in'         => 'You must log in to access that page.',
+    'not_activated'         => 'Your account has not been approved. You will be notified via email when your account status changes.',
+    'activation_pending'    => 'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.',
     'admin'                 => [
         'no_uploads_found'        => ':name has no uploads.',
         'unbanned_user'           => 'Unbanned :name.',

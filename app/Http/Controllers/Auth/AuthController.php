@@ -62,9 +62,7 @@ class AuthController extends Controller
         });
 
         if (config('upste.require_user_approval')) {
-            flash()->success(
-                'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.')
-                ->important();
+            flash()->success(trans('messages.activation_pending'))->important();
         } else {
             Auth::login($user);
         }
