@@ -109,8 +109,8 @@ class UploadController extends Controller
             'original_hash' => $originalHash
         ]);
         $upload->save();
-
-        $uploadFileHandle = fopen($file->getRealPath(), 'b');
+        
+        $uploadFileHandle = fopen($file->getRealPath(), 'r');
         Storage::put("uploads/$newName", $uploadFileHandle);
 
         $result = [
