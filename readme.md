@@ -10,7 +10,7 @@ uPste is a file hosting application with an emphasis on serving technology commu
 
 It is released under the [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.html).
 
-The official demo of this project is available at https://u.pste.pw, although not very useful without an account.
+The official demo of this project is available at https://u.pste.pw.
 
 Interested in contributing, want some help or just have some questions? Join us on [irc.rizon.net in #leliana](https://qchat.rizon.net/?channels=leliana)
 
