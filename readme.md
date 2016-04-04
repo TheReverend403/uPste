@@ -64,3 +64,5 @@ composer update
 ````
 
 If everything went well and you didn't get any errors, you can now bring your site back online with `php artisan up`
+
+If you change .env values and they don't seem to be doing anything, try running `composer recache` to rebuild the site caches, including the config cache.

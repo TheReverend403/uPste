@@ -77,7 +77,16 @@
       "php artisan up"
     ],
     "cs": "phpcs --standard=PSR2 app/ || true",
-    "cbf": "phpcbf --standard=PSR2 app/ || true"
+    "cbf": "phpcbf --standard=PSR2 app/ || true",
+    "recache": [
+      "php artisan down",
+      "php artisan optimize",
+      "php artisan cache:clear",
+      "php artisan config:cache",
+      "php artisan view:clear",
+      "php artisan route:cache",
+      "php artisan up"
+    ]
   },
   "config": {
     "preferred-install": "dist"
