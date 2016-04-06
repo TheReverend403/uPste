@@ -5,4 +5,4 @@ v 1.0.0
   - Switched filesystem structure from uploads/$filename to uploads/md5(user_id)/md5(first_character_of_filename) to help performance on certain filesystems.
 
 v 1.0.0 Breaking Changes
-  - Due to the directory structure change, you will be required to run `foreach (\App\Models\Upload::all() as $upload) { $upload->migrate(); }` in the `php artisan tinker` console on the commandline immediately after upgrade in order for your uploads to be available again. It is recommended you make a backup of storage/app/ first.
+  - Due to the directory structure change, you will be required to run `foreach (\App\Models\Upload::all() as $upload) { $upload->migrate(); }` in the `php artisan tinker` console immediately after upgrade in order for your uploads to be available again. It is recommended you make a backup of storage/app/ first.
