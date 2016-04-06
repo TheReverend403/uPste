@@ -48,6 +48,18 @@ class Upload extends Model
      */
     protected $hidden = ['user_id', 'id'];
 
+    public function save(array $options = [])
+    {
+        if (!Storage::exists($this->getDir())) {
+            Storage::makeDirectory($this->getDir());
+        }
+
+        if (!Storage::exists($this->getThumbnailDir())) {
+            Storage::makeDirectory($this->getThumbnailDir());
+        }
+        return parent::save($options);
+    }
+
     /**
      * Get the user that owns the upload.
      */
@@ -63,15 +75,42 @@ class Upload extends Model
         return parent::create($attributes);
     }
 
+    public function getDir($fullDir = false) {
+        if ($fullDir) {
+            return storage_path(sprintf('app/uploads/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8'))));
+        }
+        return sprintf('uploads/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8')));
+    }
+
+    public function getPath($fullPath = false) {
+        return $this->getDir($fullPath) . $this->name;
+    }
+
+    public function getThumbnailDir($fullDir = false) {
+        if ($fullDir) {
+            return storage_path(sprintf('app/thumbnails/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8'))));
+        }
+        return sprintf('thumbnails/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8')));
+    }
+
+    public function getThumbnailPath($fullPath = false) {
+        return $this->getThumbnailDir($fullPath) . $this->name;
+    }
+
     public function forceDelete()
     {
-        if (Storage::exists("uploads/" . $this->name)) {
-            Storage::delete("uploads/" . $this->name);
+        if (Storage::exists($this->getPath())) {
+            Storage::delete($this->getPath());
+            if (!count(Storage::files($this->getDir()))) {
+                Storage::deleteDir($this->getDir());
+            }
         }
 
-        $file = 'thumbnails/' . $this->name;
-        if (Storage::exists($file)) {
-            Storage::delete($file);
+        if (Storage::exists($this->getThumbnailPath())) {
+            Storage::delete($this->getThumbnailPath());
+            if (!count(Storage::files($this->getThumbnailDir()))) {
+                Storage::deleteDir($this->getThumbnailDir());
+            }
         }
 
         Helpers::invalidateCache();
@@ -79,9 +118,35 @@ class Upload extends Model
         return parent::forceDelete();
     }
 
+    /**
+     * Migrates files from the old uploads/$filename structure to a more efficient one.
+     * Should only be called once from the command line.
+     */
+    public function migrate() {
+        if (php_sapi_name() !== 'cli') {
+            return;
+        }
+
+        if (!Storage::exists($this->getDir())) {
+            Storage::makeDirectory($this->getDir());
+        }
+
+        if (!Storage::exists($this->getThumbnailDir())) {
+            Storage::makeDirectory($this->getThumbnailDir());
+        }
+
+        if (Storage::exists('uploads/' . $this->name)) {
+            Storage::move('uploads/' . $this->name, $this->getPath());
+        }
+
+        if (Storage::exists('thumbnails/' . $this->name)) {
+            Storage::move('thumbnails/' . $this->name, $this->getThumbnailPath());
+        }
+    }
+
     public function getThumbnail()
     {
-        if (Storage::exists('thumbnails/' . $this->name)) {
+        if (Storage::exists($this->getThumbnailDir() . $this->name)) {
             return route('account.uploads.thumbnail', $this);
         }
         return elixir('assets/img/thumbnail.png');

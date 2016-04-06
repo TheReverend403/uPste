@@ -62,8 +62,6 @@ class UploadController extends Controller
             ];
 
             $existing->original_name = $originalName;
-            // Force-update updated_at to move $existing to the top of /u/uploads
-            $existing->touch();
             $existing->save();
 
             return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
@@ -72,7 +70,20 @@ class UploadController extends Controller
         $randomLen = config('upste.upload_slug_length');
         do {
             $newName = str_random($randomLen++) . ".$ext";
-        } while (Storage::exists("uploads/$newName"));
+        } while (Upload::whereName($newName)->first());
+
+        $upload = Upload::create([
+            'user_id'       => Auth::id(),
+            'hash'          => sha1_file($file),
+            'name'          => $newName,
+            'size'          => $file->getSize(),
+            'original_name' => $originalName,
+            'original_hash' => $originalHash
+        ]);
+        $upload->save();
+        
+        $uploadFileHandle = fopen($file->getRealPath(), 'rb');
+        Storage::put($upload->getPath(), $uploadFileHandle);
 
         if (Helpers::shouldThumbnail($file)) {
             try {
@@ -86,7 +97,7 @@ class UploadController extends Controller
             }
 
             $img->backup();
-            $img->resize(128, 128)->save(storage_path('app/thumbnails/' . $newName));
+            $img->resize(128, 128)->save($upload->getThumbnailPath(true));
             $img->reset();
 
             if (Helpers::shouldStripExif($file)) {
@@ -99,19 +110,6 @@ class UploadController extends Controller
             }
             $img->destroy();
         }
-
-        $upload = Upload::create([
-            'user_id'       => Auth::id(),
-            'hash'          => sha1_file($file),
-            'name'          => $newName,
-            'size'          => $file->getSize(),
-            'original_name' => $originalName,
-            'original_hash' => $originalHash
-        ]);
-        $upload->save();
-        
-        $uploadFileHandle = fopen($file->getRealPath(), 'rb');
-        Storage::put("uploads/$newName", $uploadFileHandle);
 
         $result = [
             'url'  => route('files.get', $upload)

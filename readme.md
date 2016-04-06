@@ -55,6 +55,8 @@ The first user registered will be automatically enabled and made an admin, so ta
 
 # Upgrading
 
+**WARNING:** It is strongly recommended you check the release notes for each new version to see if there are any breaking changes that affect you. 
+
 Upgrading is easy. Just run the following commands, and make sure to check .env.example for any new config options you need to set.
 
 ````bash

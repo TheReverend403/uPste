@@ -39,17 +39,17 @@ class Helpers
     {
         switch (config('upste.sendfile_method')) {
             case 'x-accel':
-                return response()->make()->header('X-Accel-Redirect', '/uploads/' . $upload->name)
+                return response()->make()->header('X-Accel-Redirect', '/' . $upload->getPath())
                     ->header('Content-Type', '')
                     ->header('Content-Disposition', sprintf('inline; filename="%s"', $upload->original_name));
                 break;
             case 'x-sendfile':
-                return response()->make()->header('X-Sendfile', storage_path('app/uploads/' . $upload->name))
+                return response()->make()->header('X-Sendfile', $upload->getPath(true))
                     ->header('Content-Type', '')
                     ->header('Content-Disposition', sprintf('inline; filename="%s"', $upload->original_name));
                 break;
             default:
-                return response()->download(storage_path('app/uploads/' . $upload->name), $upload->original_name);
+                return response()->download($upload->getPath(true), $upload->original_name);
         }
     }
 

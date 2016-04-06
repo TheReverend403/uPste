@@ -99,6 +99,6 @@ class AccountController extends Controller
             return abort(StatusCode::NOT_FOUND);
         }
 
-        return response()->download(storage_path('app/thumbnails/' . $upload->name));
+        return response()->download($upload->getThumbnailPath(true));
     }
 }

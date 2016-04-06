@@ -8,6 +8,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
+use Storage;
 
 /**
  * App\Models\User
@@ -75,6 +76,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function forceDelete()
     {
+        if (Storage::exists('uploads/' . md5($this->id))) {
+            Storage::deleteDirectory('uploads/' . md5($this->id));
+        }
+
+        if (Storage::exists('thumbnails/' . md5($this->id))) {
+            Storage::deleteDirectory('thumbnails/' . md5($this->id));
+        }
+
         Helpers::invalidateCache();
 
         return parent::forceDelete();
