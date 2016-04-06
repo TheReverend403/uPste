@@ -1,7 +1,5 @@
 <?php
 
-use App\Helpers;
-
 return [
     'file_deleted'          => 'Deleted :name.',
     'api_key_changed'       => 'Your API key was reset. New API key: :api_key',

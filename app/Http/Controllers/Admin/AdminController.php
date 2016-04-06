@@ -91,7 +91,7 @@ class AdminController extends Controller
         }
 
         $user->forceDelete();
-        flash()->success('messages.admin.deleted_user', ['name' => $user->name]);
+        flash()->success(trans('messages.admin.deleted_user', ['name' => $user->name]));
 
         return redirect()->back();
     }
