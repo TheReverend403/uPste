@@ -70,7 +70,7 @@ class UploadController extends Controller
         $randomLen = config('upste.upload_slug_length');
         do {
             $newName = str_random($randomLen++) . ".$ext";
-        } while (Upload::whereName($newName)->first());
+        } while (Upload::whereName($newName)->first() || $newName === 'index.php');
 
         $upload = Upload::create([
             'user_id'       => Auth::id(),

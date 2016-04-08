@@ -6,7 +6,7 @@ server {
 
     client_max_body_size 100M;
 
-    location ~ \.php$ {
+    location ~ /index\.php$ {
         include         fastcgi_params;
         try_files       $uri =404;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -33,6 +33,8 @@ server {
     index index.php;
 
     include mime.types;
+
+    # Very important to at least serve .php files as plaintext, otherwise your site WILL be hacked in no time at all.
     types {
         text/plain txt ini html htm shtml sh desktop;
         text/plain pl go py cs c java fish php;
@@ -44,7 +46,8 @@ server {
     gzip on;
     expires modified +1h;
 
-    location ~ \.php$ {
+    # It is very important to be specific here, otherwise your users won't be able to upload PHP files to be served as plaintext.
+    location ~ /index\.php$ {
         include         fastcgi_params;
         try_files       $uri =404;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;

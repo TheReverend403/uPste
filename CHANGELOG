@@ -1,6 +1,9 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
 v 1.0.2
+  - Make the example nginx config a little safer.
+
+v 1.0.2
   - Add email to /u/preferences.
   - Fix broken view counter.
   - Make user created_at timestamp use user timezone in /a/users.
