@@ -22,11 +22,18 @@ class PreferencesController extends AccountController
 
     public function post(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'timezone'         => 'required|timezone',
             'pagination-items' => 'required|min:3|max:100|integer',
             'email'            => 'required|email|max:255|unique:users',
-        ]);
+        ];
+
+        // Allow the validator to pass the uniqueness check if the email hasn't changed
+        if ($request->input('email') === Auth::user()->email) {
+            $rules['email'] = 'required|email|max:255';
+        }
+
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return redirect()->route('account.preferences')
