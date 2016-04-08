@@ -39,7 +39,7 @@ class Upload extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'hash', 'size', 'user_id', 'original_name', 'original_hash', 'downloads'];
+    protected $fillable = ['name', 'hash', 'size', 'user_id', 'original_name', 'original_hash', 'downloads', 'views'];
 
     /**
      * The attributes excluded from the model's JSON form.
