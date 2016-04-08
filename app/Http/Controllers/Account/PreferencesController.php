@@ -25,6 +25,7 @@ class PreferencesController extends AccountController
         $validator = Validator::make($request->all(), [
             'timezone'         => 'required|timezone',
             'pagination-items' => 'required|min:3|max:100|integer',
+            'email'            => 'required|email|max:255|unique:users',
         ]);
 
         if ($validator->fails()) {
@@ -38,7 +39,10 @@ class PreferencesController extends AccountController
             'pagination_items' => $request->input('pagination-items'),
         ])->save();
 
+        Auth::user()->fill(['email' => $request->input('email')])->save();
+
         flash()->success(trans('messages.preferences_saved'));
+
         return redirect()->route('account.preferences');
     }
 }

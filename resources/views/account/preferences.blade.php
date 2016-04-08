@@ -6,6 +6,11 @@
     <div class="container-sm">
         <form action="{{ route('account.preferences') }}" method="POST" class="form-horizontal">
             <div class="form-group">
+                <label for="pref-email">Email</label>
+                <input class="form-control" type="text" name="email" id="pref-email" placeholder="New Email" value="{{ Auth::user()->email }}">
+            </div>
+
+            <div class="form-group">
                 <label for="pref-timezone">Timezone</label>
                 <select class="form-control" name="timezone" id="pref-timezone">
                     @foreach(timezone_identifiers_list() as $timezone)
