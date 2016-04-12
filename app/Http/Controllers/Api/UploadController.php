@@ -80,8 +80,7 @@ class UploadController extends Controller
             'original_name' => $originalName,
             'original_hash' => $originalHash
         ]);
-        $upload->save();
-        
+
         $uploadFileHandle = fopen($file->getRealPath(), 'rb');
         Storage::put($upload->getPath(), $uploadFileHandle);
 

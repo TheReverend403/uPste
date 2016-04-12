@@ -114,7 +114,7 @@ class AuthController extends Controller
             'enabled'  => $firstUser || !config('upste.require_user_approval')
         ]);
 
-        UserPreferences::create(['user_id' => $user->id])->save();
+        UserPreferences::create(['user_id' => $user->id]);
 
         return $user;
     }
