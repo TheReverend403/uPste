@@ -46,7 +46,7 @@ class UploadController extends Controller
             )], StatusCode::FORBIDDEN);
         }
 
-        $ext = $file->getClientOriginalExtension();
+        $ext = strtolower($file->getClientOriginalExtension());
         if (empty($ext)) {
             $ext = 'txt';
         }
