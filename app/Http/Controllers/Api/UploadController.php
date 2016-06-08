@@ -72,11 +72,9 @@ class UploadController extends Controller
             $newName = str_random($randomLen++) . ".$ext";
         } while (Upload::whereName($newName)->first() || $newName === 'index.php');
 
-        $upload = Upload::create([
+        $upload = new Upload([
             'user_id'       => Auth::id(),
-            'hash'          => sha1_file($file),
             'name'          => $newName,
-            'size'          => $file->getSize(),
             'original_name' => $originalName,
             'original_hash' => $originalHash
         ]);
@@ -95,20 +93,32 @@ class UploadController extends Controller
                 return response()->json([trans('messages.unsupported_image_type')], StatusCode::INTERNAL_SERVER_ERROR);
             }
 
-            $img->backup();
-            $img->resize(128, 128)->save($upload->getThumbnailPath(true));
-            $img->reset();
+            try {
+                $upload->createDirs();
+                $img->backup();
+                $img->resize(128, 128)->save($upload->getThumbnailPath(true));
+                $img->reset();
+            } catch (NotWritableException $ex) {
+                Log::error($ex);
+                $upload->deleteDirs();
+                return response()->json([trans('messages.could_not_write_image')], StatusCode::INTERNAL_SERVER_ERROR);
+            }
 
             if (Helpers::shouldStripExif($file)) {
                 try {
-                    $img->save($file, 100);
+                    $img->save($upload->getPath(true));
                 } catch (NotWritableException $ex) {
                     Log::error($ex);
+                    $upload->deleteDirs();
                     return response()->json([trans('messages.could_not_write_image')], StatusCode::INTERNAL_SERVER_ERROR);
                 }
             }
             $img->destroy();
         }
+
+        $upload->hash = sha1_file($upload->getPath(true));
+        $upload->size = filesize($upload->getPath(true));
+        $upload->save();
 
         $result = [
             'url'  => route('files.get', $upload)

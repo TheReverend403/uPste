@@ -1,7 +1,8 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
-v 1.0.4 (unreleased)
+v 1.0.4
   - Don't call save() after create(), it's redundant.
+  - Actually strip EXIF info from images and save them to the right file.
 
 v 1.0.3
   - Make the example nginx config a little safer.

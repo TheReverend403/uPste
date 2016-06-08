@@ -40,7 +40,6 @@ class Upload extends Model
      * @var array
      */
     protected $fillable = ['name', 'hash', 'size', 'user_id', 'original_name', 'original_hash', 'downloads', 'views'];
-
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -48,16 +47,11 @@ class Upload extends Model
      */
     protected $hidden = ['user_id', 'id'];
 
-    public function save(array $options = [])
+    public static function create(array $attributes = [])
     {
-        if (!Storage::exists($this->getDir())) {
-            Storage::makeDirectory($this->getDir());
-        }
+        Helpers::invalidateCache();
 
-        if (!Storage::exists($this->getThumbnailDir())) {
-            Storage::makeDirectory($this->getThumbnailDir());
-        }
-        return parent::save($options);
+        return parent::create($attributes);
     }
 
     /**
@@ -68,36 +62,18 @@ class Upload extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public static function create(array $attributes = [])
+    public function createDirs()
     {
-        Helpers::invalidateCache();
-
-        return parent::create($attributes);
-    }
-
-    public function getDir($fullDir = false) {
-        if ($fullDir) {
-            return storage_path(sprintf('app/uploads/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8'))));
+        if (!Storage::exists($this->getDir())) {
+            Storage::makeDirectory($this->getDir());
         }
-        return sprintf('uploads/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8')));
-    }
 
-    public function getPath($fullPath = false) {
-        return $this->getDir($fullPath) . $this->name;
-    }
-
-    public function getThumbnailDir($fullDir = false) {
-        if ($fullDir) {
-            return storage_path(sprintf('app/thumbnails/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8'))));
+        if (!Storage::exists($this->getThumbnailDir())) {
+            Storage::makeDirectory($this->getThumbnailDir());
         }
-        return sprintf('thumbnails/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8')));
     }
 
-    public function getThumbnailPath($fullPath = false) {
-        return $this->getThumbnailDir($fullPath) . $this->name;
-    }
-
-    public function forceDelete()
+    public function deleteDirs()
     {
         if (Storage::exists($this->getPath())) {
             Storage::delete($this->getPath());
@@ -112,17 +88,50 @@ class Upload extends Model
                 Storage::deleteDir($this->getThumbnailDir());
             }
         }
+    }
 
+    public function getDir($fullDir = false)
+    {
+        if ($fullDir) {
+            return storage_path(sprintf('app/uploads/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8'))));
+        }
+
+        return sprintf('uploads/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8')));
+    }
+
+    public function getThumbnailDir($fullDir = false)
+    {
+        if ($fullDir) {
+            return storage_path(sprintf('app/thumbnails/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8'))));
+        }
+
+        return sprintf('thumbnails/%s/%s/', md5($this->user_id), md5(mb_substr($this->name, 0, 1, 'utf-8')));
+    }
+
+    public function forceDelete()
+    {
+        $this->deleteDirs();
         Helpers::invalidateCache();
 
         return parent::forceDelete();
+    }
+
+    public function getPath($fullPath = false)
+    {
+        return $this->getDir($fullPath) . $this->name;
+    }
+
+    public function getThumbnailPath($fullPath = false)
+    {
+        return $this->getThumbnailDir($fullPath) . $this->name;
     }
 
     /**
      * Migrates files from the old uploads/$filename structure to a more efficient one.
      * Should only be called once from the command line.
      */
-    public function migrate() {
+    public function migrate()
+    {
         if (php_sapi_name() !== 'cli') {
             return;
         }
@@ -149,6 +158,7 @@ class Upload extends Model
         if (Storage::exists($this->getThumbnailDir() . $this->name)) {
             return route('account.uploads.thumbnail', $this);
         }
+
         return elixir('assets/img/thumbnail.png');
     }
 
