@@ -15,6 +15,7 @@ use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\Exception\NotWritableException;
 use Log;
 use Storage;
+use Symfony\Component\HttpFoundation\File\File;
 use Teapot\StatusCode;
 
 class UploadController extends Controller
@@ -116,8 +117,10 @@ class UploadController extends Controller
             $img->destroy();
         }
 
-        $upload->hash = sha1_file($upload->getPath(true));
-        $upload->size = filesize($upload->getPath(true));
+        $savedFile = new File($upload->getPath(true));
+        $upload->hash = sha1_file($savedFile);
+        $upload->size = $savedFile->getSize();
+
         $upload->save();
 
         $result = [
