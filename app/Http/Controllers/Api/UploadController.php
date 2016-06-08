@@ -26,12 +26,12 @@ class UploadController extends Controller
             return response()->json([trans('messages.upload_file_not_found')], StatusCode::BAD_REQUEST);
         }
 
-        $file = $request->file('file');
-        if (!$file->isValid()) {
+        $uploadedFile = $request->file('file');
+        if (!$uploadedFile->isValid()) {
             return response()->json([trans('messages.invalid_file_upload')], StatusCode::BAD_REQUEST);
         }
 
-        if ($file->getSize() >= config('upste.upload_limit')) {
+        if ($uploadedFile->getSize() >= config('upste.upload_limit')) {
             return response()->json([trans(
                 'messages.upload_too_large',
                 ['limit' => Helpers::formatBytes(config('upste.upload_limit'))]
@@ -40,20 +40,20 @@ class UploadController extends Controller
 
         // If this upload would hit the quota defined in .env, reject it.
         if (config('upste.user_storage_quota') > 0 && !Auth::user()->isPrivilegedUser() &&
-            (Cache::get('uploads_size:' . Auth::id()) + $file->getSize()) >= config('upste.user_storage_quota')) {
+            (Cache::get('uploads_size:' . Auth::id()) + $uploadedFile->getSize()) >= config('upste.user_storage_quota')) {
             return response()->json([trans(
                 'messages.reached_upload_limit',
                 ['limit' => Helpers::formatBytes(config('upste.user_storage_quota'))]
             )], StatusCode::FORBIDDEN);
         }
 
-        $ext = strtolower($file->getClientOriginalExtension());
+        $ext = strtolower($uploadedFile->getClientOriginalExtension());
         if (empty($ext)) {
             $ext = 'txt';
         }
 
-        $originalHash = sha1_file($file);
-        $originalName = $file->getClientOriginalName();
+        $originalHash = sha1_file($uploadedFile);
+        $originalName = $uploadedFile->getClientOriginalName();
 
         // Check to see if we already have this file for this user.
         $existing = Upload::whereOriginalHash($originalHash)->whereUserId(Auth::id())->first();
@@ -80,12 +80,12 @@ class UploadController extends Controller
             'original_hash' => $originalHash
         ]);
 
-        $uploadFileHandle = fopen($file->getRealPath(), 'rb');
+        $uploadFileHandle = fopen($uploadedFile->getRealPath(), 'rb');
         Storage::put($upload->getPath(), $uploadFileHandle);
 
-        if (Helpers::shouldThumbnail($file)) {
+        if (Helpers::shouldThumbnail($uploadedFile)) {
             try {
-                $img = Image::make($file);
+                $img = Image::make($uploadedFile);
             } catch (NotReadableException $ex) {
                 Log::error($ex);
                 return response()->json([trans('messages.could_not_read_image')], StatusCode::INTERNAL_SERVER_ERROR);
@@ -105,7 +105,7 @@ class UploadController extends Controller
                 return response()->json([trans('messages.could_not_write_image')], StatusCode::INTERNAL_SERVER_ERROR);
             }
 
-            if (Helpers::shouldStripExif($file)) {
+            if (Helpers::shouldStripExif($uploadedFile)) {
                 try {
                     $img->save($upload->getPath(true));
                 } catch (NotWritableException $ex) {
