@@ -82,6 +82,7 @@ class UploadController extends Controller
 
         $uploadFileHandle = fopen($uploadedFile->getRealPath(), 'rb');
         Storage::put($upload->getPath(), $uploadFileHandle);
+        fclose($uploadFileHandle);
 
         if (Helpers::shouldThumbnail($uploadedFile)) {
             try {
@@ -135,7 +136,7 @@ class UploadController extends Controller
         $user = Auth::user();
 
         if (Cache::get('uploads_count:' . $user->id) !== 0) {
-            $uploads = $user->uploads->slice(0, $request->input('limit', $user->uploads->count()));
+            $uploads = $user->uploads->slice(0, $request->input('limit', Helpers::PAGINATION_DEFAULT_ITEMS));
             return response()->json($uploads, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
         }
         return response()->json([trans('messages.no_uploads_found')], StatusCode::NOT_FOUND, [], JSON_UNESCAPED_SLASHES);
