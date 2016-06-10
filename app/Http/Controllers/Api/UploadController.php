@@ -74,7 +74,6 @@ class UploadController extends Controller
         } while (Upload::whereName($newName)->first() || $newName === 'index.php');
 
         $upload = new Upload([
-            'user_id'       => Auth::id(),
             'name'          => $newName,
             'original_name' => $originalName,
             'original_hash' => $originalHash
@@ -122,7 +121,7 @@ class UploadController extends Controller
         $upload->hash = sha1_file($savedFile);
         $upload->size = $savedFile->getSize();
 
-        $upload->save();
+        Auth::user()->uploads()->save($upload);
 
         $result = [
             'url'  => route('files.get', $upload)
