@@ -75,17 +75,21 @@ class Upload extends Model
 
     public function deleteDirs()
     {
-        if (Storage::exists($this->getPath())) {
-            Storage::delete($this->getPath());
-            if (!count(Storage::files($this->getDir()))) {
-                Storage::deleteDir($this->getDir());
+        $path = $this->getPath();
+        $dir = $this->getDir();
+        if (Storage::exists($path)) {
+            Storage::delete($path);
+            if (!count(Storage::files($dir))) {
+                Storage::deleteDir($dir);
             }
         }
 
-        if (Storage::exists($this->getThumbnailPath())) {
-            Storage::delete($this->getThumbnailPath());
-            if (!count(Storage::files($this->getThumbnailDir()))) {
-                Storage::deleteDir($this->getThumbnailDir());
+        $path = $this->getThumbnailPath();
+        $dir = $this->getThumbnailDir();
+        if (Storage::exists($path)) {
+            Storage::delete($path);
+            if (!count(Storage::files($dir))) {
+                Storage::deleteDir($dir);
             }
         }
     }
