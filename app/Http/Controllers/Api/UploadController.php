@@ -59,7 +59,7 @@ class UploadController extends Controller
         $existing = Upload::whereOriginalHash($originalHash)->whereUserId(Auth::id())->first();
         if ($existing) {
             $result = [
-                'url'  => route('files.get', $existing)
+                'url' => route('files.get', $existing)
             ];
 
             $existing->original_name = $originalName;
@@ -89,9 +89,11 @@ class UploadController extends Controller
                 $img = Image::make($uploadedFile);
             } catch (NotReadableException $ex) {
                 Log::error($ex);
+
                 return response()->json([trans('messages.could_not_read_image')], StatusCode::INTERNAL_SERVER_ERROR);
             } catch (NotSupportedException $ex) {
                 Log::error($ex);
+
                 return response()->json([trans('messages.unsupported_image_type')], StatusCode::INTERNAL_SERVER_ERROR);
             }
 
@@ -100,22 +102,18 @@ class UploadController extends Controller
                 $img->backup();
                 $img->resize(128, 128)->save($upload->getThumbnailPath(true));
                 $img->reset();
+
+                if (Helpers::shouldStripExif($uploadedFile)) {
+                    $img->save($upload->getPath(true));
+                }
             } catch (NotWritableException $ex) {
                 Log::error($ex);
                 $upload->deleteDirs();
-                return response()->json([trans('messages.could_not_write_image')], StatusCode::INTERNAL_SERVER_ERROR);
-            }
 
-            if (Helpers::shouldStripExif($uploadedFile)) {
-                try {
-                    $img->save($upload->getPath(true));
-                } catch (NotWritableException $ex) {
-                    Log::error($ex);
-                    $upload->deleteDirs();
-                    return response()->json([trans('messages.could_not_write_image')], StatusCode::INTERNAL_SERVER_ERROR);
-                }
+                return response()->json([trans('messages.could_not_write_image')], StatusCode::INTERNAL_SERVER_ERROR);
+            } finally {
+                $img->destroy();
             }
-            $img->destroy();
         }
 
         $savedFile = new File($upload->getPath(true));
@@ -125,7 +123,7 @@ class UploadController extends Controller
         $upload->save();
 
         $result = [
-            'url'  => route('files.get', $upload)
+            'url' => route('files.get', $upload)
         ];
 
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
@@ -137,8 +135,10 @@ class UploadController extends Controller
 
         if (Cache::get('uploads_count:' . $user->id) !== 0) {
             $uploads = $user->uploads->slice(0, $request->input('limit', Helpers::PAGINATION_DEFAULT_ITEMS));
+
             return response()->json($uploads, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
         }
+
         return response()->json([trans('messages.no_uploads_found')], StatusCode::NOT_FOUND, [], JSON_UNESCAPED_SLASHES);
     }
 }
