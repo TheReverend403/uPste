@@ -137,7 +137,7 @@ class Upload extends Model
     public function migrate()
     {
         if (php_sapi_name() !== 'cli') {
-            trigger_error("CLI-only (Upload#migrate()) function called outside of CLI SAPI.", E_ERROR);
+            trigger_error("CLI-only (Upload#migrate()) function called outside of CLI SAPI.", E_USER_ERROR);
             return;
         }
 
