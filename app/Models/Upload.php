@@ -47,11 +47,10 @@ class Upload extends Model
      */
     protected $hidden = ['user_id', 'id'];
 
-    public static function create(array $attributes = [])
+    public function save(array $options = [])
     {
         Helpers::invalidateCache();
-
-        return parent::create($attributes);
+        return parent::save($options);
     }
 
     /**

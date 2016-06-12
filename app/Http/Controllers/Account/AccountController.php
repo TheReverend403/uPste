@@ -6,13 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
 use App\Models\User;
-use App\Models\UserPreferences;
 use Auth;
 use Cache;
 use App\Helpers;
 use Illuminate\Mail\Message;
 use Mail;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Teapot\StatusCode;
 
 class AccountController extends Controller

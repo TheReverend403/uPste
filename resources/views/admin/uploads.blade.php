@@ -6,7 +6,7 @@
     @if($uploads->count())
         <div class="text-center">
             <h2>{{ $user->name }}'{{ ends_with($user->name, 's') ?: 's' }} Uploads</h2>
-            <p>Total: {{ $uploads->count() }} ({{ App\Helpers::formatBytes($uploads->sum('size')) }})</p>
+            <p>Total: {{ $uploadsTotalCount }} ({{ App\Helpers::formatBytes($uploadsTotalSize) }})</p>
         </div>
         <hr>
         @foreach ($uploads->chunk(2) as $chunk)

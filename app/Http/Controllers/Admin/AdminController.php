@@ -106,9 +106,17 @@ class AdminController extends Controller
 
     public function getUploads(User $user)
     {
-        $uploads = $user->uploads()->orderBy('created_at', 'desc')->paginate(Auth::user()->preferences->pagination_items);
+        $allUploads = $user->uploads();
+        $uploads = $allUploads->orderBy('created_at', 'desc')->paginate(Auth::user()->preferences->pagination_items);
+        $uploadsTotalCount = Cache::rememberForever('uploads_count:' . $user->id, function () use ($allUploads) {
+            return $allUploads->count();
+        });
 
-        return view('admin.uploads', compact('uploads', 'user'));
+        $uploadsTotalSize = Cache::rememberForever('uploads_size:' . $user->id, function () use ($allUploads) {
+            return $allUploads->sum('size');
+        });
+
+        return view('admin.uploads', compact('uploads', 'user', 'uploadsTotalCount', 'uploadsTotalSize'));
     }
 
     public function postUserAccept(User $user)
