@@ -112,9 +112,9 @@ class AdminController extends Controller
             return $allUploads->count();
         });
 
-        $uploadsTotalSize = Cache::rememberForever('uploads_size:' . $user->id, function () use ($allUploads) {
+        $uploadsTotalSize = Helpers::formatBytes(Cache::rememberForever('uploads_size:' . $user->id, function () use ($allUploads) {
             return $allUploads->sum('size');
-        });
+        }));
 
         return view('admin.uploads', compact('uploads', 'user', 'uploadsTotalCount', 'uploadsTotalSize'));
     }
