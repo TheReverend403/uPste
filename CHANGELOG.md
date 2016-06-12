@@ -1,5 +1,8 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
+v 1.0.5
+  - Show correct counts on admin user pages and update caches after saving a file.
+
 v 1.0.4
   - Don't call save() after create(), it's redundant.
   - Actually strip EXIF info from images and save them to the right file.
