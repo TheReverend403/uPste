@@ -13,7 +13,7 @@
                                 <div class="media">
                                     <div class="media-left hidden-sm hidden-xs">
                                         <a href="{{ route('files.get', $upload) }}">
-                                            <img src="{{ $upload->getThumbnail() }}" class="img-thumbnail" alt="{{ $upload->original_name }}">
+                                            <img src="{{ $upload->getThumbnailUrl() }}" class="img-thumbnail" alt="{{ $upload->original_name }}">
                                         </a>
                                     </div>
                                     <div class="media-body">

@@ -45,7 +45,7 @@ class Upload extends Model
      *
      * @var array
      */
-    protected $hidden = ['user_id', 'id'];
+    protected $hidden = ['user_id', 'id', 'updated_at'];
 
     public function save(array $options = [])
     {
@@ -157,7 +157,7 @@ class Upload extends Model
         }
     }
 
-    public function getThumbnail()
+    public function getThumbnailUrl()
     {
         if (Storage::exists($this->getThumbnailDir() . $this->name)) {
             return route('account.uploads.thumbnail', $this);
