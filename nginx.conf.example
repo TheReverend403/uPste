@@ -1,7 +1,7 @@
 server {
-    listen 127.0.0.1:80;
+    listen 80;
     server_name u.localhost;
-    root /home/rev/src/pste.pw/upload/public;
+    root /path/to/pste/public;
     index index.php;
 
     client_max_body_size 100M;
@@ -27,7 +27,7 @@ server {
 }
 
 server {
-    listen 127.0.0.1:80;
+    listen 80;
     server_name a.localhost;
     root /path/to/pste/public;
     index index.php;
