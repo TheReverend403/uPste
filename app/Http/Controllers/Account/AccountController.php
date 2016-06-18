@@ -9,6 +9,7 @@ use App\Models\User;
 use Auth;
 use Cache;
 use App\Helpers;
+use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Mail;
 use Teapot\StatusCode;
@@ -93,10 +94,10 @@ class AccountController extends Controller
 
     public function getThumbnail(Upload $upload)
     {
-        if (Auth::id() !== $upload->user_id && !Auth::user()->isPrivilegedUser()) {
+        if (!Auth::check() || Auth::id() !== $upload->user_id && !Auth::user()->isPrivilegedUser()) {
             return abort(StatusCode::NOT_FOUND);
         }
 
-        return response()->download($upload->getThumbnailPath(true));
+        return response()->download($upload->getThumbnailPath(true), 'thumbnail.' . $upload->name);
     }
 }
