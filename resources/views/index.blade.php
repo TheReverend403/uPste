@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="container-sm text-center jumbotron">
-        <h2>Welcome to {{ config('upste.domain') }}</h2>
-        <p>{{ config('upste.domain') }} is a {{ config('upste.require_user_approval') ? 'private ' : '' }}file hosting website powered by <a href="https://github.com/TheReverend403/uPste">uPste</a></p>
+        <h2>Welcome to {{ config('upste.site_name') }}</h2>
+        <p>{{ config('upste.site_name') }} is a {{ config('upste.require_user_approval') ? 'private ' : '' }}file hosting website powered by <a href="https://github.com/TheReverend403/uPste">uPste</a></p>
         @if (config('upste.require_user_approval'))
             @if (config('upste.owner_name') && config('upste.owner_email'))
             <p>Accounts are given with approval from {{ config('upste.owner_name') }} &lt;<a

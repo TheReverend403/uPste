@@ -1,6 +1,6 @@
 Hi {{ $name }},
 
-Unfortunately, your request for an account at {{ config('upste.domain') }} was rejected.
+Unfortunately, your request for an account at {{ config('upste.site_name') }} was rejected.
 This is most likely because the site owner doesn't know you or wasn't expecting your request.
 
 @if(config('upste.irc_server') && config('upste.irc_channel'))

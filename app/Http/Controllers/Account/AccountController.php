@@ -85,7 +85,7 @@ class AccountController extends Controller
         flash()->success(trans('messages.api_key_changed', ['api_key' => $newKey]))->important();
 
         Mail::queue(['text' => 'emails.user.api_key_reset'], $user->toArray(), function (Message $message) use ($user) {
-            $message->subject(sprintf("[%s] API Key Reset", config('upste.domain')));
+            $message->subject(sprintf("[%s] API Key Reset", config('upste.site_name')));
             $message->to($user->email);
         });
 

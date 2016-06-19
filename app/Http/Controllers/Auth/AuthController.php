@@ -57,7 +57,7 @@ class AuthController extends Controller
         $user = $this->create($data);
 
         Mail::queue(['text' => 'emails.admin.new_registration'], $data, function (Message $message) use ($data) {
-            $message->subject(sprintf("[%s] New User Registration", config('upste.domain')));
+            $message->subject(sprintf("[%s] New User Registration", config('upste.site_name')));
             $message->to(config('upste.owner_email'));
         });
 
