@@ -1,7 +1,7 @@
 <div class="jumbotron">
     <p>Your API key is:</p>
     <pre class="apikey">{{ Auth::user()->apikey }}</pre>
-    <p>This key allows anyone to upload to u.pste.pw as you. Do not let anyone else see it.</p>
+    <p>This key allows anyone to upload to {{ config('upste.domain') }} as you. Do not let anyone else see it.</p>
     <form action="{{ route('account.resetkey') }}" method="POST">
         <div class="form-group text-right">
             <button type="submit" class="btn btn-danger">Reset Key</button>
