@@ -17,7 +17,7 @@
     <div class="container-sm text-center">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Welcome to {{ config('upste.domain') }}, {{ Auth::user()->name }}. Here's everything you need to
+                <h3 class="panel-title">Welcome to {{ config('upste.site_name') }}, {{ Auth::user()->name }}. Here's everything you need to
                     know.</h3>
             </div>
             <div class="panel-body">

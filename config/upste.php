@@ -2,7 +2,6 @@
 
 return [
     'site_name'             => env('SITE_NAME', 'uPste'),
-    'domain'                => env('DOMAIN', 'example.com'),
     'upload_url'            => str_finish(env('UPLOAD_URL', 'https://a.example.com'), '/'),
     'upload_domain'         => parse_url(env('UPLOAD_URL', 'https://a.example.com'), PHP_URL_HOST),
     'upload_slug_length'    => env('UPLOAD_SLUG_LENGTH', 3),
