@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Teapot\StatusCode;
@@ -46,7 +45,7 @@ class AdminAuthenticate
             }
         }
 
-        if (!Auth::user()->isPrivilegedUser()) {
+        if (!$this->auth->user()->isPrivilegedUser()) {
             flash()->error('You do not have permission to access that area.');
 
             return redirect()->back();

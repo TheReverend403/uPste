@@ -38,21 +38,21 @@ class ApiAuthenticate
     public function handle($request, Closure $next)
     {
         if (!$request->has('key')) {
-            return response()->json(["error" => "missing_api_key"], StatusCode::UNAUTHORIZED);
+            return response()->json(['missing_api_key'], StatusCode::UNAUTHORIZED);
         }
 
         $apiKey = $request->input('key');
         $user = User::whereApikey($apiKey)->first();
         if (!$user) {
-            return response()->json(["error" => "invalid_api_key"], StatusCode::UNAUTHORIZED);
+            return response()->json(['invalid_api_key'], StatusCode::UNAUTHORIZED);
         }
 
         if (!$user->enabled) {
-            return response()->json(["error" => "account_not_approved"], StatusCode::UNAUTHORIZED);
+            return response()->json(['account_not_approved'], StatusCode::UNAUTHORIZED);
         }
 
         if ($user->banned) {
-            return response()->json(["error" => "user_banned"], StatusCode::UNAUTHORIZED);
+            return response()->json(['user_banned'], StatusCode::UNAUTHORIZED);
         }
 
         Auth::onceUsingId($user->id);
