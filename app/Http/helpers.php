@@ -127,28 +127,4 @@ class Helpers
 
         return false;
     }
-
-    /**
-     * Determines the real file extension of an image via exif_imagetype
-     *
-     * @param UploadedFile $file
-     * @return string
-     */
-    public static function getImageType(UploadedFile $file)
-    {
-        if (function_exists('exif_imagetype')) {
-            try {
-                $imageType = exif_imagetype($file);
-                if ($imageType !== false) {
-                    return image_type_to_extension($imageType, false);
-                }
-            } catch (Exception $ex) {
-                Log::error($ex);
-
-                return $file->getClientOriginalExtension();
-            }
-        }
-
-        return $file->getClientOriginalExtension();
-    }
 }

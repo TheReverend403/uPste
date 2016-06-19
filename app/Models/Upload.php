@@ -40,6 +40,7 @@ class Upload extends Model
      * @var array
      */
     protected $fillable = ['name', 'hash', 'size', 'user_id', 'original_name', 'original_hash', 'downloads', 'views'];
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -136,17 +137,11 @@ class Upload extends Model
     public function migrate()
     {
         if (php_sapi_name() !== 'cli') {
-            trigger_error("CLI-only (Upload#migrate()) function called outside of CLI SAPI.", E_USER_ERROR);
+            trigger_error('CLI-only (Upload#migrate()) function called outside of CLI SAPI.', E_USER_ERROR);
             return;
         }
 
-        if (!Storage::exists($this->getDir())) {
-            Storage::makeDirectory($this->getDir());
-        }
-
-        if (!Storage::exists($this->getThumbnailDir())) {
-            Storage::makeDirectory($this->getThumbnailDir());
-        }
+        $this->createDirs();
 
         if (Storage::exists('uploads/' . $this->name)) {
             Storage::move('uploads/' . $this->name, $this->getPath());
