@@ -16,4 +16,5 @@ return [
     'recaptcha_enabled'     => env('RECAPTCHA_PUBLIC_KEY', null) && env('RECAPTCHA_PUBLIC_KEY', null),
     'sendfile_method'       => env('SENDFILE_METHOD', null),
     'require_user_approval' => env('REQUIRE_USER_APPROVAL', true),
+    'password_hash_rounds'  => env('PASSWORD_HASH_ROUNDS', 10),
 ];

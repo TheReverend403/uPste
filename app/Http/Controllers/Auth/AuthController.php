@@ -108,7 +108,7 @@ class AuthController extends Controller
             'name'     => $data['name'],
             'email'    => $data['email'],
             'apikey'   => $apiKey,
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make($data['password'], ['rounds' => config('upste.password_hash_rounds')]),
             // First user registered should be enabled and admin
             'admin'    => $firstUser,
             'enabled'  => $firstUser || !config('upste.require_user_approval')
@@ -119,10 +119,10 @@ class AuthController extends Controller
         return $user;
     }
 
-    protected function authenticated(Request $request, User $user)
+    public function authenticated(Request $request, User $user)
     {
-        if (Hash::needsRehash($user->password)) {
-            $user->password = Hash::make($request->input('password'));
+        if (Hash::needsRehash($user->password, ['rounds' => config('upste.password_hash_rounds')])) {
+            $user->password = Hash::make($request->input('password'), ['rounds' => config('upste.password_hash_rounds')]);
             $user->save();
         }
 
