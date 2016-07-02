@@ -148,6 +148,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
+        Msurguy\Honeypot\HoneypotServiceProvider::class,
 
     ],
 
@@ -179,6 +180,7 @@ return [
         'File'      => Illuminate\Support\Facades\File::class,
         'Flash'     => Laracasts\Flash\Flash::class,
         'Hash'      => Illuminate\Support\Facades\Hash::class,
+        'Honeypot'  => Msurguy\Honeypot\HoneypotFacade::class,
         'Image'     => Intervention\Image\Facades\Image::class,
         'Inspiring' => Illuminate\Foundation\Inspiring::class,
         'Lang'      => Illuminate\Support\Facades\Lang::class,

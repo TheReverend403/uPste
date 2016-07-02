@@ -62,7 +62,7 @@ class AuthController extends Controller
         });
 
         if (config('upste.require_user_approval')) {
-            flash()->success(trans('messages.activation_pending'))->important();
+            flash()->success(trans('messages.activation_pending', ['email' => $user->email]))->important();
         } else {
             Auth::login($user);
         }
@@ -82,6 +82,8 @@ class AuthController extends Controller
             'name'     => 'required|max:255|unique:users|alpha_num',
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
+            'my_name'  => 'honeypot',
+            'my_time'  => 'required|honeytime:5'
         ];
 
         if (config('upste.recaptcha_enabled')) {

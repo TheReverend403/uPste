@@ -23,6 +23,7 @@
                     {!! Recaptcha::render() !!}
                 </div>
             @endif
+            {!! Honeypot::generate('my_name', 'my_time') !!}
             <div class="text-right">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>

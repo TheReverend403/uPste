@@ -15,7 +15,7 @@ return [
     'banned'                => 'You are banned. Contact an admin if you believe this is an error.',
     'not_logged_in'         => 'You must log in to access that page.',
     'not_activated'         => 'Your account has not been approved. You will be notified via email when your account status changes.',
-    'activation_pending'    => 'Your account request has successfully been registered. You will receive an email when an admin accepts or rejects your request.',
+    'activation_pending'    => 'Your account request has been successfully registered. You will receive a notification email at :email when an admin accepts or rejects your request.',
     'admin'                 => [
         'no_uploads_found'        => ':name has no uploads.',
         'unbanned_user'           => 'Unbanned :name.',
