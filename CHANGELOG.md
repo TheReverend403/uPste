@@ -1,5 +1,9 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
+v 1.0.7
+  - Add bcrypt work factor to env
+  - Add Honeypot service to further reduce spambots registering
+
 v 1.0.6
   - Unify references to site under site\_name variable.
   - Hide updated\_at from uploads and rename getThumbnail() to getThumbnailUrl().
