@@ -1,8 +1,11 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
+v 1.0.8
+  - Switch to fit() for image resizing as it retains aspect ratio.
+
 v 1.0.7
   - Add bcrypt work factor to env
-  - Add Honeypot service to further reduce spambots registering
+  - Add Honeypot service to further reduce spambots registering.
 
 v 1.0.6
   - Unify references to site under site\_name variable.
