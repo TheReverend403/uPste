@@ -38,7 +38,7 @@ server {
     # SVG served as plaintext due to https://hackerone.com/reports/148853
     types {
         text/plain txt ini html htm shtml sh desktop;
-        text/plain pl go py cs c java fish php svg;
+        text/plain pl go py cs c java fish php svg js;
         text/plain rb rs lua ls hy asm S conf vim;
         text/plain moon log tcl tk md coffee;
         text/plain scss ts less d hs;
