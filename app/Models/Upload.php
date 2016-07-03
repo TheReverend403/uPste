@@ -31,6 +31,8 @@ use Storage;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereOriginalHash($value)
  * @property integer $views
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereViews($value)
+ * @property string $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereDeletedAt($value)
  */
 class Upload extends Model
 {
@@ -159,6 +161,10 @@ class Upload extends Model
         }
 
         return elixir('assets/img/thumbnail.png');
+    }
+
+    public function hasPreview() {
+        return $this->getThumbnailUrl() !== elixir('assets/img/thumbnail.png');
     }
 
     public function getRouteKeyName()
