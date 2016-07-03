@@ -35,9 +35,10 @@ server {
     include mime.types;
 
     # Very important to at least serve .php files as plaintext, otherwise your site WILL be hacked in no time at all.
+    # SVG served as plaintext due to https://hackerone.com/reports/148853
     types {
         text/plain txt ini html htm shtml sh desktop;
-        text/plain pl go py cs c java fish php;
+        text/plain pl go py cs c java fish php svg;
         text/plain rb rs lua ls hy asm S conf vim;
         text/plain moon log tcl tk md coffee;
         text/plain scss ts less d hs;
