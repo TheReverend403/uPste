@@ -100,7 +100,7 @@ class UploadController extends Controller
             try {
                 $upload->createDirs();
                 $img->backup();
-                $img->resize(128, 128)->save($upload->getThumbnailPath(true));
+                $img->fit(128, 128)->save($upload->getThumbnailPath(true));
                 $img->reset();
 
                 if (Helpers::shouldStripExif($uploadedFile)) {
