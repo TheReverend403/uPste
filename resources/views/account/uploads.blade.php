@@ -16,8 +16,8 @@
                             <div class="panel-body">
                                 <div class="media">
                                     <div class="media-left hidden-sm hidden-xs">
-                                        <a href="{{ route('files.get', $upload) }}" class="{{ $upload->hasPreview() ? 'preview' : 'nopreview' }}">
-                                            <img src="{{ $upload->getThumbnailUrl() }}" class="img-thumbnail" title="{{ $upload->original_name }}" alt="{{ $upload->original_name }}">
+                                        <a href="{{ route('files.get', $upload) }}" class="{{ $upload->hasPreview() ? 'preview' : 'nopreview' }}" title="{{ $upload->original_name }}">
+                                            <img src="{{ $upload->getThumbnailUrl() }}" class="img-thumbnail" alt="{{ $upload->original_name }}">
                                         </a>
                                     </div>
                                     <div class="media-body">

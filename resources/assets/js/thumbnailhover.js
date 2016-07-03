@@ -52,8 +52,7 @@ this.imagePreview = function () {
             this.title = this.t;
             $("#preview").remove();
         }
-    )
-        .mousemove(callback);
+    ).mousemove(callback);
 };
 
 
