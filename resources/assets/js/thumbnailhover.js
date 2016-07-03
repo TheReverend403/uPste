@@ -44,7 +44,7 @@ this.imagePreview = function () {
             this.t = this.title;
             this.title = "";
             var c = (this.t != "") ? "<br/>" + this.t : "";
-            $("body").append("<p id='preview'><img src='" + this.href + "' alt='Preview' style='max-width:512px; max-height:512px;' />" + c + "</p>");
+            $("body").append("<p id='preview'><img src='" + this.href + "' alt='Preview' />" + c + "</p>");
             callback(e);
             $("#preview").fadeIn("fast");
         },
