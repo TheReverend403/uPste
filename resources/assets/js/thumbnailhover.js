@@ -8,33 +8,56 @@
  *
  */
 
-this.imagePreview = function(){
+// https://stackoverflow.com/questions/16289159/how-to-show-image-preview-on-thumbnail-hover
 
-    xOffset = 10;
+this.imagePreview = function () {
+    /* CONFIG */
+
+    xOffset = 15;
     yOffset = 30;
 
-    $("a.preview").hover(function(e){
+    // these 2 variable determine popup's distance from the cursor
+    // you might want to adjust to get the right result
+    var Mx = $(document).width();
+    var My = $(document).height();
+
+    /* END CONFIG */
+    var callback = function (event) {
+        var $img = $("#preview");
+
+        // top-right corner coords' offset
+        var trc_x = xOffset + $img.width();
+        var trc_y = yOffset + $img.height();
+
+        trc_x = Math.min(trc_x + event.pageX, Mx);
+        trc_y = Math.min(trc_y + event.pageY, My);
+
+        $img.css("top", (trc_y - $img.height()) + "px")
+            .css("left", (trc_x - $img.width()) + "px")
+            .css("z-index", 1000);
+    };
+
+    $("a.preview").hover(function (e) {
+            Mx = $(document).width();
+            My = $(document).height();
+
             this.t = this.title;
             this.title = "";
             var c = (this.t != "") ? "<br/>" + this.t : "";
-            $("body").append("<p id='preview'><img src='"+ this.href +"' alt='Image preview' />"+ c +"</p>");
-            $("#preview")
-                .css("top",(e.pageY - xOffset) + "px")
-                .css("left",(e.pageX + yOffset) + "px")
-                .css("z-index", 1000)
-                .fadeIn("fast");
+            $("body").append("<p id='preview'><img src='" + this.href + "' alt='Image preview' />" + c + "</p>");
+            callback(e);
+            $("#preview").fadeIn("fast");
         },
-        function(){
+        function () {
             this.title = this.t;
             $("#preview").remove();
-        });
-    $("a.preview").mousemove(function(e){
-        $("#preview")
-            .css("top",(e.pageY - xOffset) + "px")
-            .css("left",(e.pageX + yOffset) + "px");
-    });
+        }
+    )
+        .mousemove(callback);
 };
 
-$(document).ready(function(){
+
+// starting the script on page load
+$(document).ready(function () {
     imagePreview();
 });
