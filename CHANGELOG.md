@@ -1,5 +1,8 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
+v 1.0.10
+  - Fixed all the bugs in image previews.
+
 v 1.0.9
   - Add image previews on thumbnail hover.
 
