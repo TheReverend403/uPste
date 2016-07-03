@@ -11,21 +11,16 @@
 // https://stackoverflow.com/questions/16289159/how-to-show-image-preview-on-thumbnail-hover
 
 this.imagePreview = function () {
-    /* CONFIG */
 
-    xOffset = 15;
-    yOffset = 30;
+    var xOffset = 15;
+    var yOffset = 30;
 
-    // these 2 variable determine popup's distance from the cursor
-    // you might want to adjust to get the right result
     var Mx = $(document).width();
     var My = $(document).height();
 
-    /* END CONFIG */
     var callback = function (event) {
         var $img = $("#preview");
 
-        // top-right corner coords' offset
         var trc_x = xOffset + $img.width();
         var trc_y = yOffset + $img.height();
 
@@ -38,25 +33,22 @@ this.imagePreview = function () {
     };
 
     $("a.preview").hover(function (e) {
-            Mx = $(document).width();
-            My = $(document).height();
+        Mx = $(document).width();
+        My = $(document).height();
 
-            this.t = this.title;
-            this.title = "";
-            var c = (this.t != "") ? "<br/>" + this.t : "";
-            $("body").append("<p id='preview'><img src='" + this.href + "' alt='Preview' />" + c + "</p>");
-            callback(e);
-            $("#preview").fadeIn("fast");
-        },
-        function () {
-            this.title = this.t;
-            $("#preview").remove();
-        }
-    ).mousemove(callback);
+        this.t = this.title;
+        this.title = "";
+        var c = (this.t != "") ? "<br/>" + this.t : "";
+        $("body").append("<p id='preview'><img src='" + this.href + "' alt='Preview' />" + c + "</p>");
+        callback(e);
+        $("#preview").fadeIn("fast");
+    },
+    function () {
+        this.title = this.t;
+        $("#preview").remove();
+    }).mousemove(callback);
 };
 
-
-// starting the script on page load
 $(document).ready(function () {
     imagePreview();
 });
