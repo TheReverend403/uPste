@@ -123,7 +123,8 @@ class UploadController extends Controller
         $upload->save();
 
         $result = [
-            'url' => route('files.get', $upload)
+            'url' => route('files.get', $upload),
+            'delete_url' => route('account.uploads.delete', $upload),
         ];
 
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);

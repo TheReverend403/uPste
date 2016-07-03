@@ -75,7 +75,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'u'], function () {
             'as' => 'account.uploads', 'uses' => 'Account\AccountController@getUploads']);
 
         Route::post('{upload}/delete', [
-            'as' => 'account.uploads.delete', 'uses' => 'Account\AccountController@postUploadsDelete']);
+            'as' => 'account.uploads.delete', 'uses' => 'Account\AccountController@deleteUpload']);
+
+        Route::get('{upload}/delete', [
+            'as' => 'account.uploads.delete', 'uses' => 'Account\AccountController@deleteUpload']);
 
         Route::get('{upload}/thumbnail', [
             'as' => 'account.uploads.thumbnail', 'uses' => 'Account\AccountController@getThumbnail']);
@@ -128,9 +131,6 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
 Route::group(['middleware' => 'api', 'prefix' => 'api'], function () {
     Route::post('upload', [
         'as' => 'api.upload', 'uses' => 'Api\UploadController@post']);
-
-    Route::get('upload', [
-        'as' => 'api.upload', 'uses' => 'Api\UploadController@get']);
 });
 
 /*

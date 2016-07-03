@@ -36,8 +36,8 @@
 -F file=@example.png \
 {{ route('api.upload') }}</pre>
 <hr>
-<h4 class="text-info">GET {{ route('api.upload') }}</h4>
-<p class="text-muted">Returns a JSON array of your uploads.</p>
+<h4 class="text-info">DELETE {{ route('api.upload') }}</h4>
+<p class="text-muted">Delete a file by filename.</p>
 <table class="table table-bordered">
     <thead>
     <tr>
@@ -48,11 +48,16 @@
     </thead>
     <tbody>
     <tr>
-        <td>limit</td>
-        <td>Limit the amount of uploads returned by the API.</td>
-        <td>No</td>
+        <td>file</td>
+        <td>The short filename of the file to be deleted</td>
+        <td>Yes</td>
     </tr>
     </tbody>
 </table>
 <p>Example</p>
-<pre>curl {{ route('api.upload', ['key' => Auth::user()->apikey, 'limit' => 15]) }}</pre>
+<pre>curl \
+-X DELETE \
+-F key={{ Auth::user()->apikey }} \
+-F file=xpl.png \
+{{ route('api.upload') }}
+</pre>

@@ -62,7 +62,7 @@ class AccountController extends Controller
         return view('account.uploads', compact('uploads'));
     }
 
-    public function postUploadsDelete(Upload $upload)
+    public function deleteUpload(Upload $upload)
     {
         if (Auth::id() !== $upload->user_id && !Auth::user()->isPrivilegedUser()) {
             return abort(StatusCode::NOT_FOUND);
