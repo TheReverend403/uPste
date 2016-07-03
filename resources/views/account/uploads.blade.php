@@ -2,6 +2,10 @@
 
 @section('title', 'My Uploads')
 
+@section('stylesheets')
+    <link href="{{ elixir('assets/css/thumbnailhover.css') }}" rel="stylesheet">
+@stop
+
 @section('content')
     @if(count($uploads))
         @foreach ($uploads->chunk(2) as $chunk)
@@ -12,8 +16,8 @@
                             <div class="panel-body">
                                 <div class="media">
                                     <div class="media-left hidden-sm hidden-xs">
-                                        <a href="{{ route('files.get', $upload) }}">
-                                            <img src="{{ $upload->getThumbnailUrl() }}" class="img-thumbnail" alt="{{ $upload->original_name }}">
+                                        <a href="{{ route('files.get', $upload) }}" class="preview">
+                                            <img src="{{ $upload->getThumbnailUrl() }}" class="img-thumbnail" title="{{ $upload->original_name }}" alt="{{ $upload->original_name }}">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -51,3 +55,7 @@
         </div>
     @endif
 @stop
+
+@section('javascript')
+    <script src="{{ elixir('assets/js/thumbnailhover.js') }}" type="application/javascript"></script>
+@endsection

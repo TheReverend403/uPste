@@ -24,9 +24,13 @@ elixir(function(mix) {
         'error.scss'
     ], 'public/assets/css/error.css');
 
+    mix.sass('thumbnailhover.scss', 'public/assets/css/thumbnailhover.css');
+
     mix.styles([
         '../../../node_modules/dropzone/dist/basic.css'
     ], 'public/assets/css/dropzone.css');
+
+    mix.scripts('thumbnailhover.js', 'public/assets/js/thumbnailhover.js');
 
     mix.scripts([
         '../../../node_modules/dropzone/dist/dropzone.js',
@@ -44,11 +48,13 @@ elixir(function(mix) {
     ], 'public/assets/js/global.js');
 
     mix.version([
-        "assets/css/global.css",
-        "assets/css/error.css",
-        "assets/css/dropzone.css",
-        "assets/js/global.js",
-        "assets/js/dropzone.js",
+        'assets/css/global.css',
+        'assets/css/error.css',
+        'assets/js/thumbnailhover.js',
+        'assets/css/thumbnailhover.css',
+        'assets/css/dropzone.css',
+        'assets/js/global.js',
+        'assets/js/dropzone.js',
         'assets/img/favicon.png',
         'assets/img/thumbnail.png'
     ]);
