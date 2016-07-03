@@ -34,8 +34,7 @@ this.imagePreview = function () {
 
         $img.css("top", (trc_y - $img.height()) + "px")
             .css("left", (trc_x - $img.width()) + "px")
-            .css("z-index", 1000)
-            .css("max-width", 512);
+            .css("z-index", 1000);
     };
 
     $("a.preview").hover(function (e) {
@@ -45,7 +44,7 @@ this.imagePreview = function () {
             this.t = this.title;
             this.title = "";
             var c = (this.t != "") ? "<br/>" + this.t : "";
-            $("body").append("<p id='preview'><img src='" + this.href + "' alt='Preview' />" + c + "</p>");
+            $("body").append("<p id='preview'><img src='" + this.href + "' alt='Preview' style='max-width:512px; max-height:512px;' />" + c + "</p>");
             callback(e);
             $("#preview").fadeIn("fast");
         },
