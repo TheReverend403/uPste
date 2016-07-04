@@ -78,6 +78,7 @@
       "php artisan config:cache",
       "php artisan view:clear",
       "php artisan route:cache",
+      "php artisan queue:restart",
       "php artisan up"
     ],
     "cs": "phpcs --standard=PSR2 app/ || true",
