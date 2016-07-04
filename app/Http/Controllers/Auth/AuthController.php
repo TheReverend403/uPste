@@ -56,8 +56,13 @@ class AuthController extends Controller
         $data = $request->all();
         $user = $this->create($data);
 
-        $requestRoute = route('admin.requests');
-        Mail::queue(['text' => 'emails.admin.new_registration'], compact('user', 'requestRoute'), function (Message $message) use ($data) {
+        $mailData = ['user' => $user];
+        if (config('upste.require_user_approval')) {
+            $requestRoute = route('admin.requests');
+            $mailData['requestRoute'] = $requestRoute;
+        }
+        
+        Mail::queue(['text' => 'emails.admin.new_registration'], $mailData, function (Message $message) use ($data) {
             $message->subject('New User Registration');
             $message->to(config('upste.owner_email'));
         });
