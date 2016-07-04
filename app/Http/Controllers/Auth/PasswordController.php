@@ -55,7 +55,7 @@ class PasswordController extends Controller
         $broker = $this->getBroker();
 
         $passwordRoute = route('account.password.email');
-        view()->composer('emails.user.password_reset', function($view) {
+        view()->composer('emails.user.password_reset', function($view) use ($passwordRoute) {
             $view->with(compact('passwordRoute'));
         });
 
