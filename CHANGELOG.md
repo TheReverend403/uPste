@@ -1,5 +1,8 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
+v 1.1.1
+  - Clean up email subjects and fix routes when using daemon queue worker.
+
 v 1.1.0
   - Add deletion URLs for sharex compatibility.
 
