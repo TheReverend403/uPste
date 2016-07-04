@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
             ];
 
             Mail::queue(['text' => 'emails.admin.exception'], $data, function (Message $message) use ($data) {
-                $message->subject(sprintf("[%s] Application Exception", config('upste.site_name')));
+                $message->subject('Application Exception');
                 $message->to(config('upste.owner_email'));
             });
         }

@@ -54,6 +54,11 @@ class PasswordController extends Controller
 
         $broker = $this->getBroker();
 
+        $passwordRoute = route('account.password.email');
+        view()->composer('emails.user.password_reset', function($view) {
+            $view->with(compact('passwordRoute'));
+        });
+
         $response = Password::broker($broker)->sendResetLink($request->only('email'), function (Message $message) {
             $message->subject($this->getEmailSubject());
         });

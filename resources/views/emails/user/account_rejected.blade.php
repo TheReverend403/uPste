@@ -1,4 +1,4 @@
-Hi {{ $name }},
+Hi {{ $user->name }},
 
 Unfortunately, your request for an account at {{ config('upste.site_name') }} was rejected.
 This is most likely because the site owner doesn't know you or wasn't expecting your request.

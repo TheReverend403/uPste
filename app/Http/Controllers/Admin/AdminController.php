@@ -123,8 +123,9 @@ class AdminController extends Controller
     {
         $user->fill(['enabled' => true])->save();
 
-        Mail::queue(['text' => 'emails.user.account_accepted'], $user->toArray(), function (Message $message) use ($user) {
-            $message->subject(sprintf("[%s] Account Request Accepted", config('upste.site_name')));
+        $loginRoute = route('login');
+        Mail::queue(['text' => 'emails.user.account_accepted'], compact('user', 'loginRoute'), function (Message $message) use ($user) {
+            $message->subject('Account Request Accepted');
             $message->to($user->email);
         });
 
@@ -136,8 +137,8 @@ class AdminController extends Controller
 
     public function postUserReject(User $user)
     {
-        Mail::queue(['text' => 'emails.user.account_rejected'], $user->toArray(), function (Message $message) use ($user) {
-            $message->subject(sprintf("[%s] Account Request Rejected", config('upste.site_name')));
+        Mail::queue(['text' => 'emails.user.account_rejected'], compact('user'), function (Message $message) use ($user) {
+            $message->subject('Account Request Rejected');
             $message->to($user->email);
         });
 

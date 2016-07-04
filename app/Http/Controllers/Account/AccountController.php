@@ -74,18 +74,19 @@ class AccountController extends Controller
         return redirect()->back();
     }
 
-    public function postResetKey()
+    public function postResetKey(Request $request)
     {
         do {
             $newKey = str_random(Helpers::API_KEY_LENGTH);
         } while (User::whereApikey($newKey)->first());
 
-        $user = Auth::user();
+        $user = $request->user();
         $user->fill(['apikey' => $newKey])->save();
         flash()->success(trans('messages.api_key_changed', ['api_key' => $newKey]))->important();
 
-        Mail::queue(['text' => 'emails.user.api_key_reset'], $user->toArray(), function (Message $message) use ($user) {
-            $message->subject(sprintf("[%s] API Key Reset", config('upste.site_name')));
+        $passwordRoute = route('account.password.email');
+        Mail::queue(['text' => 'emails.user.api_key_reset'], compact('user', 'passwordRoute'), function (Message $message) use ($user) {
+            $message->subject('API Key Reset');
             $message->to($user->email);
         });
 
