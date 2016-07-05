@@ -129,6 +129,6 @@ class Helpers
 
     public static function properize($string)
     {
-        return $string . ends_with($string, 's') ? '\'' : 's';
+        return $string . '\'' . (ends_with($string, 's') ? '' : 's');
     }
 }
