@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers;
 use App\Models\Upload;
 use App\Http\Requests;
+use Cache;
 use DB;
 use Illuminate\Http\Request;
 use Log;
@@ -22,7 +23,11 @@ class DownloadController extends Controller
             }
 
             if (!$request->user() || $request->user()->id !== $upload->user_id) {
-                DB::table('uploads')->where('id', $upload->id)->increment('views');
+                $cacheKey = 'cached_view:' . $request->getClientIp();
+                if (!Cache::has($cacheKey)) {
+                    Cache::put($cacheKey, 1, 60);
+                    DB::table('uploads')->where('id', $upload->id)->increment('views');
+                }
             }
 
             return Helpers::sendFile($upload);
