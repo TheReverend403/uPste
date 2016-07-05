@@ -19,7 +19,7 @@ class PreferencesController extends AccountController
     {
         $rules = [
             'timezone'         => 'required|timezone',
-            'pagination-items' => 'required|min:3|max:100|integer',
+            'pagination-items' => 'required|min:4|max:50|integer',
             'email'            => 'required|email|max:255|unique:users',
         ];
 
