@@ -66,13 +66,13 @@ class Upload extends Model
 
     public function save(array $options = [])
     {
-        static::invalidateCache();
+        $this->invalidateCache();
         $this->user->invalidateCache();
 
         return parent::save($options);
     }
 
-    public static function invalidateCache()
+    public function invalidateCache()
     {
         Cache::forget('uploads');
         Cache::forget('uploads_total_size');
