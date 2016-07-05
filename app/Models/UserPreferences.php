@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
 
 /**
  * App\Models\UserPreferences
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\UserPreferences whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class UserPreferences extends \Eloquent
+class UserPreferences extends Eloquent
 {
     public $incrementing = false;
     protected $primaryKey = 'user_id';

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Cache;
 use DB;
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
 use Storage;
 
 /**
@@ -35,7 +35,7 @@ use Storage;
  * @property string $deleted_at
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereDeletedAt($value)
  */
-class Upload extends \Eloquent
+class Upload extends Eloquent
 {
     /**
      * The attributes that are mass assignable.

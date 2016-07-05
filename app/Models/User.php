@@ -5,11 +5,11 @@ namespace App\Models;
 use App\Helpers;
 use Cache;
 use DB;
+use Eloquent;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Database\Eloquent\Model;
 use Storage;
 
 /**
@@ -41,7 +41,7 @@ use Storage;
  * @mixin \Eloquent
  * @property-read \App\Models\UserPreferences $preferences
  */
-class User extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract
+class User extends Eloquent implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
     /**
