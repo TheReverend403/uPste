@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Helpers;
 use App\Models\Upload;
 use App\Http\Requests;
-use Auth;
+use DB;
+use Illuminate\Http\Request;
 use Log;
 use Storage;
 use Teapot\StatusCode;
 
 class DownloadController extends Controller
 {
-    public function get(Upload $upload)
+    public function get(Request $request, Upload $upload)
     {
         if (Storage::exists($upload->getPath())) {
             if ($upload->user->banned) {
@@ -20,8 +21,8 @@ class DownloadController extends Controller
                 return abort(StatusCode::NOT_FOUND);
             }
 
-            if (!Auth::check() || Auth::id() !== $upload->user_id) {
-                $upload->fill(['views' => $upload->views + 1])->save();
+            if (!$request->user() || $request->user()->id !== $upload->user_id) {
+                DB::table('uploads')->where('id', $upload->id)->increment('views');
             }
 
             return Helpers::sendFile($upload);

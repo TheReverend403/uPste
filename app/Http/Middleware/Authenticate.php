@@ -5,6 +5,8 @@ namespace App\Http\Middleware;
 use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
+use Session;
 use Teapot\StatusCode;
 
 class Authenticate
@@ -34,29 +36,28 @@ class Authenticate
      * @param  \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check()) {
+        if (!$this->auth->check()) {
             Auth::logout();
-            if ($request->ajax()) {
-                return response('Unauthorized.', StatusCode::UNAUTHORIZED);
-            } else {
-                flash()->error(trans('messages.not_logged_in'))->important();
-
-                return redirect()->route('login');
-            }
-        }
-
-        if (config('upste.require_user_approval') && !Auth::user()->enabled) {
-            flash()->error(trans('messages.not_activated'))->important();
-            Auth::logout();
+            Session::flush();
+            flash()->error(trans('messages.not_logged_in'))->important();
 
             return redirect()->route('login');
         }
 
-        if (Auth::user()->banned) {
-            flash()->error(trans('messages.banned'))->important();
+        if (config('upste.require_user_approval') && !$request->user()->enabled) {
             Auth::logout();
+            Session::flush();
+            flash()->error(trans('messages.not_activated'))->important();
+
+            return redirect()->route('login');
+        }
+
+        if ($request->user()->banned) {
+            Auth::logout();
+            Session::flush();
+            flash()->error(trans('messages.not_activated'))->important();
 
             return redirect()->route('login');
         }

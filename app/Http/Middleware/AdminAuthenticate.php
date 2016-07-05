@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
 use Teapot\StatusCode;
 
 class AdminAuthenticate
@@ -33,19 +35,15 @@ class AdminAuthenticate
      * @param  \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if ($this->auth->guest()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', StatusCode::UNAUTHORIZED);
-            } else {
-                flash()->error('You must log in to access that page.');
+        if (!$this->auth->check()) {
+            flash()->error('You must log in to access that page.');
 
-                return redirect()->route('login');
-            }
+            return redirect()->route('login');
         }
 
-        if (!$this->auth->user()->isPrivilegedUser()) {
+        if (!$request->user()->isPrivilegedUser()) {
             flash()->error('You do not have permission to access that area.');
 
             return redirect()->back();

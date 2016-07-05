@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
-use Auth;
-use Cache;
 use App\Helpers;
 use Illuminate\Http\Request;
 use Image;
@@ -33,13 +31,13 @@ class UploadController extends Controller
 
         if ($uploadedFile->getSize() >= config('upste.upload_limit')) {
             $responseMsg = trans('messages.upload_too_large', ['limit' => Helpers::formatBytes(config('upste.upload_limit'))]);
-            return response()->json($responseMsg, StatusCode::REQUEST_ENTITY_TOO_LARGE);
+            return response()->json([$responseMsg], StatusCode::REQUEST_ENTITY_TOO_LARGE);
         }
 
         // If this upload would hit the quota defined in .env, reject it.
         if (config('upste.user_storage_quota') > 0 && !$request->user()->isPrivilegedUser() && ($request->user()->getUploadsSize() + $uploadedFile->getSize()) >= config('upste.user_storage_quota')) {
             $responseMsg = trans('messages.reached_upload_limit', ['limit' => Helpers::formatBytes(config('upste.user_storage_quota'))]);
-            return response()->json($responseMsg, StatusCode::FORBIDDEN);
+            return response()->json([$responseMsg], StatusCode::FORBIDDEN);
         }
 
         $ext = strtolower($uploadedFile->getClientOriginalExtension());
@@ -112,9 +110,9 @@ class UploadController extends Controller
             }
         }
 
-        $savedFile = new File($upload->getPath(true));
+        $savedFile = $upload->getPath(true);
         $upload->hash = sha1_file($savedFile);
-        $upload->size = $savedFile->getSize();
+        $upload->size = filesize($savedFile);
 
         $upload->save();
 

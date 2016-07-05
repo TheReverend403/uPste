@@ -10,14 +10,9 @@ use Validator;
 
 class PreferencesController extends AccountController
 {
-    public function __construct()
+    public function get(Request $request)
     {
-        parent::__construct();
-    }
-
-    public function get()
-    {
-        return view('account.preferences', ['user_preferences' => Auth::user()->preferences]);
+        return view('account.preferences', ['user_preferences' => $request->user()->preferences]);
     }
 
     public function post(Request $request)
@@ -29,7 +24,7 @@ class PreferencesController extends AccountController
         ];
 
         // Allow the validator to pass the uniqueness check if the email hasn't changed
-        if ($request->input('email') === Auth::user()->email) {
+        if ($request->input('email') === $request->user()->email) {
             $rules['email'] = 'required|email|max:255';
         }
 
@@ -40,13 +35,13 @@ class PreferencesController extends AccountController
                 ->withErrors($validator);
         }
 
-        Auth::user()->preferences->fill([
+        $request->user()->preferences->fill([
             'user_id'          => Auth::id(),
             'timezone'         => $request->input('timezone'),
             'pagination_items' => $request->input('pagination-items'),
         ])->save();
 
-        Auth::user()->fill(['email' => $request->input('email')])->save();
+        $request->user()->fill(['email' => $request->input('email')])->save();
 
         flash()->success(trans('messages.preferences_saved'));
 

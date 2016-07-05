@@ -15,20 +15,6 @@ class Helpers
     const API_KEY_LENGTH = 64;
 
     /**
-     * Invalidates cache items like user counts, upload counts etc...
-     */
-    public static function invalidateCache()
-    {
-        if (Auth::check()) {
-            Auth::user()->invalidateCache();
-        }
-
-        Cache::forget('users');
-        Cache::forget('uploads');
-        Cache::forget('uploads_total_size');
-    }
-
-    /**
      * Handle sending a file, preferably by offloading to the webserver.
      *
      * @param Upload $upload

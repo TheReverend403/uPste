@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
 use App\Models\User;
-use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Mail;
@@ -35,16 +34,16 @@ class AccountController extends Controller
         return response()->view('account.resources.bash')->header('Content-Type', 'text/plain');
     }
 
-    public function getUploads()
+    public function getUploads(Request $request)
     {
-        $uploads = Auth::user()->uploads()->orderBy('created_at', 'desc')->paginate(Auth::user()->preferences->pagination_items);
+        $uploads = $request->user()->uploads()->orderBy('created_at', 'desc')->paginate($request->user()->preferences->pagination_items);
 
         return view('account.uploads', compact('uploads'));
     }
 
-    public function deleteUpload(Upload $upload)
+    public function deleteUpload(Request $request, Upload $upload)
     {
-        if (Auth::id() !== $upload->user_id && !Auth::user()->isPrivilegedUser()) {
+        if ($request->user()->id !== $upload->user_id && !$request->user()->isPrivilegedUser()) {
             return abort(StatusCode::NOT_FOUND);
         }
 
@@ -73,9 +72,9 @@ class AccountController extends Controller
         return redirect()->route('account');
     }
 
-    public function getThumbnail(Upload $upload)
+    public function getThumbnail(Request $request, Upload $upload)
     {
-        if (!Auth::check() || Auth::id() !== $upload->user_id && !Auth::user()->isPrivilegedUser()) {
+        if (!$request->user() || $request->user()->id !== $upload->user_id && !$request->user()->isPrivilegedUser()) {
             return abort(StatusCode::NOT_FOUND);
         }
 

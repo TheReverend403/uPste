@@ -6,6 +6,7 @@ use App\Models\User;
 use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
 use Teapot\StatusCode;
 
 class ApiAuthenticate
@@ -35,7 +36,7 @@ class ApiAuthenticate
      * @param  \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (!$request->has('key')) {
             return response()->json(['missing_api_key'], StatusCode::UNAUTHORIZED);

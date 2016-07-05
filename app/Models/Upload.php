@@ -35,7 +35,7 @@ use Storage;
  * @property string $deleted_at
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Upload whereDeletedAt($value)
  */
-class Upload extends Model
+class Upload extends \Eloquent
 {
     /**
      * The attributes that are mass assignable.
@@ -83,7 +83,7 @@ class Upload extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     public function forceDelete()

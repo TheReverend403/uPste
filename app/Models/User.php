@@ -41,7 +41,7 @@ use Storage;
  * @mixin \Eloquent
  * @property-read \App\Models\UserPreferences $preferences
  */
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+class User extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
     /**
