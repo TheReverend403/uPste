@@ -1,5 +1,8 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
+v 1.1.6
+  - [FIX] Prevent an edge case with view caching involving two users having the same file hash.
+
 v 1.1.5
   - Make view cache file-specific.
 
