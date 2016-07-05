@@ -1,5 +1,8 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
+v 1.1.5
+  - Make view cache file-specific.
+
 v 1.1.4
   - Cache client IPs on file view so views can't be spammed.
 
