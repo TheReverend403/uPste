@@ -23,7 +23,7 @@ class DownloadController extends Controller
             }
 
             if (!$request->user() || $request->user()->id !== $upload->user_id) {
-                $cacheKey = 'cached_view:' . $request->getClientIp();
+                $cacheKey = sprintf('cached_view:%s:%s', $request->getClientIp(), $upload->hash);
                 if (!Cache::has($cacheKey)) {
                     Cache::put($cacheKey, 1, 60);
                     DB::table('uploads')->where('id', $upload->id)->increment('views');
