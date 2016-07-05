@@ -9,8 +9,8 @@
 @section('content')
     @if($uploads->count())
         <div class="text-center">
-            <h2>{{ $user->name }}'{{ ends_with($user->name, 's') ?: 's' }} Uploads</h2>
-            <p>Total: {{ $uploadsTotalCount }} ({{ $uploadsTotalSize }})</p>
+            <h2>{{ App\Helpers::properize($user->name) }} Uploads</h2>
+            <p>Total: {{ $user->getUploadsCount() }} ({{ App\Helpers::formatBytes($user->getUploadsSize()) }})</p>
         </div>
         <hr>
         @foreach ($uploads->chunk(2) as $chunk)

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Helpers;
+use Cache;
+use DB;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -61,21 +63,32 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token', 'apikey', 'enabled', 'banned', 'admin'];
 
+    public static function count()
+    {
+        return Cache::rememberForever('users', function () {
+            return DB::table('users')->where('enabled', true)->count();
+        });
+    }
+
     /**
      * Get this user's uploads.
      */
     public function uploads()
     {
-        return $this->hasMany('App\Models\Upload');
+        return $this->hasMany(Upload::class);
     }
 
     public function preferences()
     {
-        return $this->hasOne('App\Models\UserPreferences');
+        return $this->hasOne(UserPreferences::class);
     }
 
     public function forceDelete()
     {
+        foreach ($this->uploads as $upload) {
+            $upload->forceDelete();
+        }
+
         if (Storage::exists('uploads/' . md5($this->id))) {
             Storage::deleteDirectory('uploads/' . md5($this->id));
         }
@@ -84,9 +97,50 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             Storage::deleteDirectory('thumbnails/' . md5($this->id));
         }
 
-        Helpers::invalidateCache();
+        $this->invalidateCache();
+        $this->invalidateGlobalCache();
 
         return parent::forceDelete();
+    }
+
+    public function invalidateCache()
+    {
+        Cache::forget('uploads_size:' . $this->id);
+        Cache::forget('uploads_count:' . $this->id);
+    }
+
+    private function invalidateGlobalCache() {
+        Cache::forget('users');
+    }
+
+    public function setEnabledAttribute($value)
+    {
+        $this->attributes['enabled'] = $value;
+        $this->invalidateGlobalCache();
+    }
+
+    public function getUploadsCount()
+    {
+        return Cache::rememberForever('uploads_count:' . $this->id, function () {
+            return $this->uploads->count();
+        });
+    }
+
+    public function getStorageQuota()
+    {
+        $userStorageQuota = Helpers::formatBytes($this->getUploadsSize());
+        if (config('upste.user_storage_quota') > 0 && !$this->isPrivilegedUser()) {
+            $userStorageQuota = sprintf("%s / %s", $userStorageQuota, Helpers::formatBytes(config('upste.user_storage_quota')));
+        }
+
+        return $userStorageQuota;
+    }
+
+    public function getUploadsSize()
+    {
+        return Cache::rememberForever('uploads_size:' . $this->id, function () {
+            return $this->uploads->sum('size');
+        });
     }
 
     public function isPrivilegedUser()

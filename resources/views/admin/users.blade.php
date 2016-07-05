@@ -30,7 +30,7 @@
                         <td><a href="mailto:{{ $user->email }}"
                                title="Send an email to {{ $user->name }}">{{ $user->email }}</a></td>
                         <td>{{ $user->created_at->copy()->tz(Auth::user()->preferences->timezone) }}</td>
-                        <td>{{ Cache::get('uploads_count:' . $user->id) }} ({{ App\Helpers::formatBytes(Cache::get('uploads_size:' . $user->id)) }})</td>
+                        <td>{{ $user->getUploadsCount() }} ({{ App\Helpers::formatBytes($user->getUploadsSize()) }})</td>
                         <td>
                             <ul class="list-unstyled list-inline list-noborder">
                                 @if (!$user->banned)

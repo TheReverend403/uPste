@@ -20,8 +20,7 @@ class Helpers
     public static function invalidateCache()
     {
         if (Auth::check()) {
-            Cache::forget('uploads_count:' . Auth::id());
-            Cache::forget('uploads_size:' . Auth::id());
+            Auth::user()->invalidateCache();
         }
 
         Cache::forget('users');
@@ -126,5 +125,10 @@ class Helpers
         }
 
         return false;
+    }
+
+    public static function properize($string)
+    {
+        return $string . ends_with($string, 's') ? '\'' : 's';
     }
 }

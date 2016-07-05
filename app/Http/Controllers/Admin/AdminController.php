@@ -10,17 +10,14 @@ use Cache;
 use App\Helpers;
 use Illuminate\Mail\Message;
 use Mail;
-use Storage;
-use View;
 
 class AdminController extends Controller
 {
     public function __construct()
     {
-        parent::__construct();
         if (config('upste.require_user_approval')) {
             $requestCount = User::whereEnabled(false)->count();
-            View::share('requestCount', $requestCount);
+            view()->share('requestCount', $requestCount);
         }
     }
 
@@ -42,18 +39,7 @@ class AdminController extends Controller
 
     public function getUsers()
     {
-        $users = User::whereEnabled(true)->with('uploads')->paginate(Auth::user()->preferences->pagination_items);
-
-        foreach ($users as $user) {
-            Cache::rememberForever('uploads_count:' . $user->id, function () use ($user) {
-                return $user->uploads->count();
-            });
-
-            Cache::rememberForever('uploads_size:' . $user->id, function () use ($user) {
-                return $user->uploads->sum('size');
-            });
-        }
-
+        $users = User::whereEnabled(true)->paginate(Auth::user()->preferences->pagination_items);
         return view('admin.users', compact('users'));
     }
 
@@ -79,17 +65,6 @@ class AdminController extends Controller
             return redirect()->back();
         }
 
-        // Reimplemented here to allow CASCADE to do it's job, as opposed to using $upload->forceDelete()
-        foreach ($user->uploads as $upload) {
-            if (Storage::exists("uploads/" . $upload->name)) {
-                Storage::delete("uploads/" . $upload->name);
-            }
-
-            if (Storage::exists("thumbnails/" . $upload->name)) {
-                Storage::delete("thumbnails/" . $upload->name);
-            }
-        }
-
         $user->forceDelete();
         flash()->success(trans('messages.admin.deleted_user', ['name' => $user->name]));
 
@@ -108,20 +83,14 @@ class AdminController extends Controller
     {
         $allUploads = $user->uploads();
         $uploads = $allUploads->orderBy('created_at', 'desc')->paginate(Auth::user()->preferences->pagination_items);
-        $uploadsTotalCount = Cache::rememberForever('uploads_count:' . $user->id, function () use ($allUploads) {
-            return $allUploads->count();
-        });
 
-        $uploadsTotalSize = Helpers::formatBytes(Cache::rememberForever('uploads_size:' . $user->id, function () use ($allUploads) {
-            return $allUploads->sum('size');
-        }));
-
-        return view('admin.uploads', compact('uploads', 'user', 'uploadsTotalCount', 'uploadsTotalSize'));
+        return view('admin.uploads', compact('uploads', 'user'));
     }
 
     public function postUserAccept(User $user)
     {
-        $user->fill(['enabled' => true])->save();
+        $user->enabled = true;
+        $user->save();
 
         $loginRoute = route('login');
         Mail::queue(['text' => 'emails.user.account_accepted'], compact('user', 'loginRoute'), function (Message $message) use ($user) {
@@ -130,7 +99,6 @@ class AdminController extends Controller
         });
 
         flash()->success(trans('messages.admin.account_accepted', ['name' => $user->name]));
-        Helpers::invalidateCache();
 
         return redirect()->back();
     }

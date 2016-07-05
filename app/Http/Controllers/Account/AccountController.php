@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Account;
 
+use App\Helpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
 use App\Models\User;
 use Auth;
-use Cache;
-use App\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Mail;
@@ -16,25 +15,6 @@ use Teapot\StatusCode;
 
 class AccountController extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $userUploadCount = Cache::rememberForever('uploads_count:' . Auth::id(), function () {
-            return Auth::user()->uploads->count();
-        });
-
-        $userUploadTotalSize = Cache::rememberForever('uploads_size:' . Auth::id(), function () {
-            return Auth::user()->uploads->sum('size');
-        });
-
-        $userStorageQuota = Helpers::formatBytes(Cache::get('uploads_size:' . Auth::id()));
-        if (config('upste.user_storage_quota') > 0 && !Auth::user()->isPrivilegedUser()) {
-            $userStorageQuota = sprintf("%s / %s", $userStorageQuota, Helpers::formatBytes(config('upste.user_storage_quota')));
-        }
-
-        view()->share(compact('userUploadCount', 'userUploadTotalSize', 'userStorageQuota'));
-    }
-
     public function getIndex()
     {
         return view('account.index');

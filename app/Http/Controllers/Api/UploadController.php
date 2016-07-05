@@ -32,19 +32,14 @@ class UploadController extends Controller
         }
 
         if ($uploadedFile->getSize() >= config('upste.upload_limit')) {
-            return response()->json([trans(
-                'messages.upload_too_large',
-                ['limit' => Helpers::formatBytes(config('upste.upload_limit'))]
-            )], StatusCode::REQUEST_ENTITY_TOO_LARGE);
+            $responseMsg = trans('messages.upload_too_large', ['limit' => Helpers::formatBytes(config('upste.upload_limit'))]);
+            return response()->json($responseMsg, StatusCode::REQUEST_ENTITY_TOO_LARGE);
         }
 
         // If this upload would hit the quota defined in .env, reject it.
-        if (config('upste.user_storage_quota') > 0 && !Auth::user()->isPrivilegedUser() &&
-            (Cache::get('uploads_size:' . Auth::id()) + $uploadedFile->getSize()) >= config('upste.user_storage_quota')) {
-            return response()->json([trans(
-                'messages.reached_upload_limit',
-                ['limit' => Helpers::formatBytes(config('upste.user_storage_quota'))]
-            )], StatusCode::FORBIDDEN);
+        if (config('upste.user_storage_quota') > 0 && !$request->user()->isPrivilegedUser() && ($request->user()->getUploadsSize() + $uploadedFile->getSize()) >= config('upste.user_storage_quota')) {
+            $responseMsg = trans('messages.reached_upload_limit', ['limit' => Helpers::formatBytes(config('upste.user_storage_quota'))]);
+            return response()->json($responseMsg, StatusCode::FORBIDDEN);
         }
 
         $ext = strtolower($uploadedFile->getClientOriginalExtension());
@@ -56,10 +51,11 @@ class UploadController extends Controller
         $originalName = $uploadedFile->getClientOriginalName();
 
         // Check to see if we already have this file for this user.
-        $existing = Upload::whereOriginalHash($originalHash)->whereUserId(Auth::id())->first();
+        $existing = Upload::whereOriginalHash($originalHash)->whereUserId($request->user()->id)->first();
         if ($existing) {
             $result = [
-                'url' => route('files.get', $existing)
+                'url' => route('files.get', $existing),
+                'delete_url' => route('account.uploads.delete', $existing),
             ];
 
             $existing->original_name = $originalName;
@@ -74,7 +70,7 @@ class UploadController extends Controller
         } while (Upload::whereName($newName)->first() || $newName === 'index.php');
 
         $upload = new Upload([
-            'user_id'       => Auth::id(),
+            'user_id'       => $request->user()->id,
             'name'          => $newName,
             'original_name' => $originalName,
             'original_hash' => $originalHash
@@ -128,18 +124,5 @@ class UploadController extends Controller
         ];
 
         return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
-    }
-
-    public function get(Request $request)
-    {
-        $user = Auth::user();
-
-        if (Cache::get('uploads_count:' . $user->id) !== 0) {
-            $uploads = $user->uploads->slice(0, $request->input('limit', Helpers::PAGINATION_DEFAULT_ITEMS));
-
-            return response()->json($uploads, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
-        }
-
-        return response()->json([trans('messages.no_uploads_found')], StatusCode::NOT_FOUND, [], JSON_UNESCAPED_SLASHES);
     }
 }

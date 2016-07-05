@@ -38,7 +38,6 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        parent::__construct();
         $this->redirectPath = route('index');
     }
 
