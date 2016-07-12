@@ -120,7 +120,8 @@ return [
             'path'     => env('REDIS_PATH', '/tmp/redis.sock'),
             'port'     => env('REDIS_PORT', 6379),
             'database' => env('REDIS_DATABASE', 0),
-            'scheme'   => env('REDIS_SCHEME', 'tcp')
+            'scheme'   => env('REDIS_SCHEME', 'tcp'),
+            'password' => env('REDIS_PASSWORD', null),
         ],
 
     ],
