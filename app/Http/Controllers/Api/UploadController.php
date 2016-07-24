@@ -59,7 +59,7 @@ class UploadController extends Controller
             $existing->original_name = $originalName;
             $existing->save();
 
-            return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
+            return response()->json($result, StatusCode::CREATED)->setJsonOptions(JSON_UNESCAPED_SLASHES);
         }
 
         $randomLen = config('upste.upload_slug_length');
@@ -121,6 +121,6 @@ class UploadController extends Controller
             'delete_url' => route('account.uploads.delete', $upload),
         ];
 
-        return response()->json($result, StatusCode::CREATED, [], JSON_UNESCAPED_SLASHES);
+        return response()->json($result, StatusCode::CREATED)->setJsonOptions(JSON_UNESCAPED_SLASHES);
     }
 }
