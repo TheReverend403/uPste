@@ -46,6 +46,14 @@ class Authenticate
             return redirect()->route('login');
         }
 
+        if (config('upste.require_email_verification') && !$request->user()->confirmed) {
+            Auth::logout();
+            Session::flush();
+            flash()->error(trans('messages.not_confirmed'))->important();
+
+            return redirect()->route('login');
+        }
+
         if (config('upste.require_user_approval') && !$request->user()->enabled) {
             Auth::logout();
             Session::flush();

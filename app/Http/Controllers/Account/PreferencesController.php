@@ -20,13 +20,7 @@ class PreferencesController extends AccountController
         $rules = [
             'timezone'         => 'required|timezone',
             'pagination-items' => 'required|min:4|max:50|integer',
-            'email'            => 'required|email|max:255|unique:users',
         ];
-
-        // Allow the validator to pass the uniqueness check if the email hasn't changed
-        if ($request->input('email') === $request->user()->email) {
-            $rules['email'] = 'required|email|max:255';
-        }
 
         $validator = Validator::make($request->all(), $rules);
 
@@ -40,8 +34,6 @@ class PreferencesController extends AccountController
             'timezone'         => $request->input('timezone'),
             'pagination_items' => $request->input('pagination-items'),
         ])->save();
-
-        $request->user()->fill(['email' => $request->input('email')])->save();
 
         flash()->success(trans('messages.preferences_saved'));
 

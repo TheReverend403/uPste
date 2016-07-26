@@ -30,7 +30,6 @@ class AuthController extends Controller
     */
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
     protected $redirectPath = '/';
 
     /**
@@ -57,20 +56,28 @@ class AuthController extends Controller
         $data = $request->all();
         $user = $this->create($data);
 
-        $mailData = ['user' => $user];
-        if (config('upste.require_user_approval')) {
-            $requestRoute = route('admin.requests');
-            $mailData['requestRoute'] = $requestRoute;
+        if (config('upste.require_email_verification') && !$user->confirmed) {
+            $confirmRoute = route('register.confirmation', $user->confirmation_code);
+            Mail::queue(['text' => 'emails.user.account_confirmation'], compact('user', 'confirmRoute'), function (Message $message) use ($user) {
+                $message->subject('Account Confirmation');
+                $message->to($user->email);
+            });
+            flash()->info(trans('messages.confirmation_pending', ['email' => $user->email]))->important();
+        } else {
+            $mailData = ['user' => $user];
+            if (config('upste.require_user_approval')) {
+                $requestRoute = route('admin.requests');
+                $mailData['requestRoute'] = $requestRoute;
+                flash()->success(trans('messages.activation_pending', ['email' => $user->email]))->important();
+            }
+
+            Mail::queue(['text' => 'emails.admin.new_registration'], $mailData, function (Message $message) use ($data) {
+                $message->subject('New User Registration');
+                $message->to(config('upste.owner_email'));
+            });
         }
 
-        Mail::queue(['text' => 'emails.admin.new_registration'], $mailData, function (Message $message) use ($data) {
-            $message->subject('New User Registration');
-            $message->to(config('upste.owner_email'));
-        });
-
-        if (config('upste.require_user_approval')) {
-            flash()->success(trans('messages.activation_pending', ['email' => $user->email]))->important();
-        } else {
+        if (!config('upste.require_user_approval') && !config('upste.require_email_verification')) {
             Auth::login($user);
         }
 
@@ -112,20 +119,64 @@ class AuthController extends Controller
             $apiKey = str_random(Helpers::API_KEY_LENGTH);
         } while (User::whereApikey($apiKey)->first());
 
-        $firstUser = User::count() == 0;
+        do {
+            $confirmationCode = str_random(32);
+        } while (User::whereConfirmationCode($confirmationCode)->first());
+
+        $firstUser = DB::table('users')->count() == 0;
+        $confirmed = $firstUser || !config('upste.require_email_verification');
+        $enabled = $firstUser || !config('upste.require_user_approval');
+
         $user = User::create([
-            'name'     => $data['name'],
-            'email'    => $data['email'],
-            'apikey'   => $apiKey,
-            'password' => Hash::make($data['password'], ['rounds' => config('upste.password_hash_rounds')]),
+            'name'              => $data['name'],
+            'email'             => $data['email'],
+            'apikey'            => $apiKey,
+            'password'          => Hash::make($data['password'], ['rounds' => config('upste.password_hash_rounds')]),
+            'confirmed'         => $confirmed,
+            'confirmation_code' => $confirmed ? null : $confirmationCode,
             // First user registered should be enabled and admin
-            'admin'    => $firstUser,
-            'enabled'  => $firstUser || !config('upste.require_user_approval')
+            'admin'             => $firstUser,
+            'enabled'           => $enabled
         ]);
 
         UserPreferences::create(['user_id' => $user->id]);
 
         return $user;
+    }
+
+    public function confirm($confirmationCode)
+    {
+        if (!$confirmationCode) {
+            flash()->error(trans('messages.no_such_confirmation_code'))->important();
+
+            return redirect()->route('index');
+        }
+
+        $user = User::whereConfirmationCode($confirmationCode)->first();
+
+        if (!$user) {
+            flash()->error(trans('messages.no_such_confirmation_code'))->important();
+
+            return redirect()->route('index');
+        }
+
+        $user->confirmed = true;
+        $user->confirmation_code = null;
+        $user->save();
+
+        $mailData = ['user' => $user];
+        if (config('upste.require_user_approval')) {
+            $requestRoute = route('admin.requests');
+            $mailData['requestRoute'] = $requestRoute;
+            flash()->info(trans('messages.activation_pending', ['email' => $user->email]))->important();
+        }
+
+        Mail::queue(['text' => 'emails.admin.new_registration'], $mailData, function (Message $message) {
+            $message->subject('New User Registration');
+            $message->to(config('upste.owner_email'));
+        });
+
+        return redirect()->route('login');
     }
 
     public function authenticated(Request $request, User $user)

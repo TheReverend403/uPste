@@ -30,6 +30,12 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('register', [
         'as' => 'register', 'uses' => 'Auth\AuthController@postRegister']);
 
+    if (config('upste.require_email_verification')) {
+        Route::get('register/verify/{confirmationCode}', [
+            'as'   => 'register.confirmation', 'uses' => 'Auth\AuthController@confirm'
+        ]);
+    }
+
     Route::group(['prefix' => 'password'], function () {
         Route::get('email', [
             'as' => 'account.password.email', 'uses' => 'Auth\PasswordController@getEmail']);
@@ -111,7 +117,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'a'], function () {
 
         Route::post('{user}/delete', [
             'as' => 'admin.users.delete', 'uses' => 'Admin\AdminController@postUserDelete']);
-        
+
         if (config('upste.require_user_approval')) {
             Route::get('requests', [
                 'as' => 'admin.requests', 'uses' => 'Admin\AdminController@getRequests']);

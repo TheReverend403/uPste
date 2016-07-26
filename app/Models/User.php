@@ -40,6 +40,10 @@ use Storage;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Models\UserPreferences $preferences
+ * @property boolean $confirmed
+ * @property string $confirmation_code
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereConfirmed($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereConfirmationCode($value)
  */
 class User extends Eloquent implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -55,7 +59,7 @@ class User extends Eloquent implements AuthenticatableContract, CanResetPassword
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'apikey', 'password', 'enabled', 'banned', 'admin'];
+    protected $fillable = ['name', 'email', 'apikey', 'password', 'enabled', 'banned', 'admin', 'confirmed', 'confirmation_code'];
     /**
      * The attributes excluded from the model's JSON form.
      *

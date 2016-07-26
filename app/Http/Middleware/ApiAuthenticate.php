@@ -48,7 +48,11 @@ class ApiAuthenticate
             return response()->json(['invalid_api_key'], StatusCode::UNAUTHORIZED);
         }
 
-        if (!$user->enabled) {
+        if (config('upste.require_email_verification') && !$request->user()->confirmed) {
+            return response()->json(['email_not_confirmed'], StatusCode::UNAUTHORIZED);
+        }
+
+        if (config('upste.require_user_approval') && !$user->enabled) {
             return response()->json(['account_not_approved'], StatusCode::UNAUTHORIZED);
         }
 
