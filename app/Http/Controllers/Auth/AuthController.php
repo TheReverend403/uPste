@@ -164,6 +164,8 @@ class AuthController extends Controller
         $user->confirmation_code = null;
         $user->save();
 
+        flash()->success(trans('messages.email_confirmed'))->important();
+
         $mailData = ['user' => $user];
         if (config('upste.require_user_approval')) {
             $requestRoute = route('admin.requests');
