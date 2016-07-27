@@ -1,5 +1,8 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
+v 1.2.1
+  - [FIX] Fix API error when no session is available.
+
 v 1.2.0
   - [FEATURE] Add option email confirmation on register.
 
