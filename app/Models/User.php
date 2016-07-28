@@ -70,7 +70,7 @@ class User extends Eloquent implements AuthenticatableContract, CanResetPassword
     public static function count()
     {
         return Cache::rememberForever('users', function () {
-            return DB::table('users')->where('enabled', true)->count();
+            return DB::table('users')->where('enabled', true)->where('confirmed', true)->count();
         });
     }
 
@@ -120,6 +120,12 @@ class User extends Eloquent implements AuthenticatableContract, CanResetPassword
     public function setEnabledAttribute($value)
     {
         $this->attributes['enabled'] = $value;
+        $this->invalidateGlobalCache();
+    }
+
+    public function setConfirmedAttribute($value)
+    {
+        $this->attributes['confirmed'] = $value;
         $this->invalidateGlobalCache();
     }
 

@@ -15,7 +15,7 @@ class AdminController extends Controller
     public function __construct()
     {
         if (config('upste.require_user_approval')) {
-            $requestCount = User::whereEnabled(false)->count();
+            $requestCount = User::whereEnabled(false)->whereConfirmed(true)->count();
             view()->share('requestCount', $requestCount);
         }
     }
@@ -31,14 +31,14 @@ class AdminController extends Controller
 
     public function getRequests(Request $request)
     {
-        $users = User::whereEnabled(false)->orderBy('created_at', 'asc')->paginate($request->user()->preferences->pagination_items);
+        $users = User::whereEnabled(false)->whereConfirmed(true)->orderBy('created_at', 'asc')->paginate($request->user()->preferences->pagination_items);
 
         return view('admin.requests', compact('users'));
     }
 
     public function getUsers(Request $request)
     {
-        $users = User::whereEnabled(true)->paginate($request->user()->preferences->pagination_items);
+        $users = User::whereEnabled(true)->whereConfirmed(true)->paginate($request->user()->preferences->pagination_items);
         return view('admin.users', compact('users'));
     }
 
