@@ -1,5 +1,8 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
+v 1.2.2
+  - [FIX] Account for email confirmation in user SELECTs.
+
 v 1.2.1
   - [FIX] Fix API error when no session is available.
 
