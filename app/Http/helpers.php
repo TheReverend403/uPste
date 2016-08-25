@@ -133,6 +133,10 @@ class Helpers
             return $extensions->first();
         }
 
+        if ($file->getExtension()) {
+            return $file->getExtension();
+        }
+
         return 'txt';
     }
 }
