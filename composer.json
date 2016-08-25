@@ -29,7 +29,8 @@
     "intervention/image": "^2.3",
     "greggilbert/recaptcha": "^2.1",
     "msurguy/honeypot": "^1.0",
-    "predis/predis": "^1.1"
+    "predis/predis": "^1.1",
+    "ralouphie/mimey": "^1.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

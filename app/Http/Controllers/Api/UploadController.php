@@ -40,11 +40,7 @@ class UploadController extends Controller
             return response()->json([$responseMsg], StatusCode::FORBIDDEN);
         }
 
-        $ext = strtolower($uploadedFile->getClientOriginalExtension());
-        if (empty($ext)) {
-            $ext = 'txt';
-        }
-
+        $ext = Helpers::detectFileExtension($uploadedFile);
         $originalHash = sha1_file($uploadedFile);
         $originalName = $uploadedFile->getClientOriginalName();
 
@@ -78,7 +74,7 @@ class UploadController extends Controller
         Storage::put($upload->getPath(), $uploadFileHandle);
         fclose($uploadFileHandle);
 
-        if (Helpers::shouldThumbnail($uploadedFile)) {
+        if (Helpers::isImage($uploadedFile)) {
             try {
                 $img = Image::make($uploadedFile);
             } catch (NotReadableException $ex) {

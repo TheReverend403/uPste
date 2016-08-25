@@ -5,8 +5,11 @@ namespace App;
 use App\Models\Upload;
 use Auth;
 use Cache;
+use Dflydev\ApacheMimeTypes\PhpRepository;
 use Exception;
+use Image;
 use Log;
+use Mimey\MimeTypes;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Helpers
@@ -89,7 +92,7 @@ class Helpers
         return false;
     }
 
-    public static function shouldThumbnail(UploadedFile $file)
+    public static function isImage(UploadedFile $file)
     {
         if (function_exists('exif_imagetype')) {
             try {
@@ -116,5 +119,20 @@ class Helpers
     public static function properize($string)
     {
         return $string . '\'' . (ends_with($string, 's') ? '' : 's');
+    }
+
+    public static function detectFileExtension(UploadedFile $file)
+    {
+        $mimeTypes = new MimeTypes;
+        $extensions = collect($mimeTypes->getAllMimeTypes(mime_content_type($file)));
+        if ($extensions->count() >= 1) {
+            if ($extensions->has('jpeg')) {
+                return 'jpg';
+            }
+
+            return $extensions->first();
+        }
+
+        return 'txt';
     }
 }
