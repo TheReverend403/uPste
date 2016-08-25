@@ -1,5 +1,8 @@
 Please view this file on the master branch, on stable branches it's out of date.
 
+v 1.2.3
+  - [ENHANCEMENT] Add better file extension detection.
+
 v 1.2.2
   - [FIX] Account for email confirmation in user SELECTs.
 
