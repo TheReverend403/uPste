@@ -124,13 +124,13 @@ class Helpers
     public static function detectFileExtension(UploadedFile $file)
     {
         $mimeTypes = new MimeTypes;
-        $extensions = collect($mimeTypes->getAllMimeTypes(mime_content_type($file)));
-        if ($extensions->count() >= 1) {
-            if ($extensions->has('jpeg')) {
+        $extension = $mimeTypes->getExtension(mime_content_type($file));
+        if ($extension) {
+            if ($extension == 'jpeg') {
                 return 'jpg';
             }
 
-            return $extensions->first();
+            return $extension;
         }
 
         if ($file->getExtension()) {
