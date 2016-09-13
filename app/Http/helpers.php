@@ -123,6 +123,10 @@ class Helpers
 
     public static function detectFileExtension(UploadedFile $file)
     {
+        if ($file->getClientOriginalExtension()) {
+            return $file->getClientOriginalExtension();
+        }
+
         $mimeTypes = new MimeTypes;
         $extension = $mimeTypes->getExtension(mime_content_type($file->getRealPath()));
         if ($extension) {
@@ -131,10 +135,6 @@ class Helpers
             }
 
             return $extension;
-        }
-
-        if ($file->getClientOriginalExtension()) {
-            return $file->getClientOriginalExtension();
         }
 
         return 'txt';
