@@ -16,7 +16,7 @@ return [
     'not_logged_in'             => 'You must log in to access that page.',
     'not_activated'             => 'Your account has not been approved. You will be notified via email when your account status changes.',
     'activation_pending'        => 'Your account request has been successfully registered. You will receive a notification email at :email when an admin accepts or rejects your request.',
-    'email_confirmed'           => 'Your email has been confirmed, you may now log in.',
+    'email_confirmed'           => 'Your email has been confirmed, and you have been automatically logged in.',
     'confirmation_pending'      => 'Please check your email for a confirmation code from ' . config('mail.from.address'),
     'not_confirmed'             => 'Your account has not been confirmed. Please check your email for a confirmation code from ' . config('mail.from.address'),
     'no_such_confirmation_code' => 'We couldn\'t find a pending registration with that confirmation code.',

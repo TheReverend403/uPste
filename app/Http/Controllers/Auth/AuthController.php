@@ -178,7 +178,8 @@ class AuthController extends Controller
             $message->to(config('upste.owner_email'));
         });
 
-        return redirect()->route('login');
+        Auth::login($user);
+        return redirect()->route('index');
     }
 
     public function authenticated(Request $request, User $user)
