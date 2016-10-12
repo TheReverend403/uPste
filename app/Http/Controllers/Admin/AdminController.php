@@ -47,13 +47,13 @@ class AdminController extends Controller
         if ($user->isSuperUser()) {
             flash()->error(trans('messages.admin.failed_superuser_action', ['type' => 'ban']));
 
-            return redirect()->back();
+            return redirect()->route('admin.users');
         }
 
         $user->fill(['banned' => true])->save();
         flash()->success(trans('messages.admin.banned_user', ['name' => $user->name]));
 
-        return redirect()->back();
+        return redirect()->route('admin.users');
     }
 
     public function postUserDelete(User $user)
@@ -61,13 +61,13 @@ class AdminController extends Controller
         if ($user->isSuperUser()) {
             flash()->error(trans('messages.admin.failed_superuser_action', ['type' => 'delete']));
 
-            return redirect()->back();
+            return redirect()->route('admin.users');
         }
 
         $user->forceDelete();
         flash()->success(trans('messages.admin.deleted_user', ['name' => $user->name]));
 
-        return redirect()->back();
+        return redirect()->route('admin.users');
     }
 
     public function postUserUnban(User $user)
@@ -75,7 +75,7 @@ class AdminController extends Controller
         $user->fill(['banned' => false])->save();
         flash()->success(trans('messages.admin.unbanned_user', ['name' => $user->name]));
 
-        return redirect()->back();
+        return redirect()->route('admin.users');
     }
 
     public function getUploads(Request $request, User $user)
@@ -99,7 +99,7 @@ class AdminController extends Controller
 
         flash()->success(trans('messages.admin.account_accepted', ['name' => $user->name]));
 
-        return redirect()->back();
+        return redirect()->route('admin.users');
     }
 
     public function postUserReject(User $user)
@@ -112,6 +112,6 @@ class AdminController extends Controller
         $user->forceDelete();
         flash()->success(trans('messages.admin.account_rejected', ['name' => $user->name]));
 
-        return redirect()->back();
+        return redirect()->route('admin.users');
     }
 }

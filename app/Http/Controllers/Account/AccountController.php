@@ -50,7 +50,7 @@ class AccountController extends Controller
         $upload->forceDelete();
         flash()->success(trans('messages.file_deleted', ['name' => $upload->original_name]));
 
-        return redirect()->back();
+        return redirect()->route('account.uploads');
     }
 
     public function postResetKey(Request $request)
