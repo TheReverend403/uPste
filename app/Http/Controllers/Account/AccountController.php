@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Upload;
 use App\Models\User;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Mail;
@@ -56,9 +57,16 @@ class AccountController extends Controller
     public function deleteAllUploads(Request $request)
     {
         $uploads = $request->user()->uploads()->get();
+        $uploadIds = [];
         foreach ($uploads as $upload) {
-            $upload->forceDelete();
+            $upload->deleteDirs();
+            $upload->invalidateCache();
+            $uploadIds[] = $upload->id;
         }
+
+        DB::table('uploads')->whereIn('id', $uploadIds)->delete();
+
+        $request->user()->invalidateCache();
 
         flash()->success(trans('messages.all_uploads_deleted'));
 
