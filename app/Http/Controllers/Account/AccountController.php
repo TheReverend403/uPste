@@ -53,6 +53,18 @@ class AccountController extends Controller
         return redirect()->route('account.uploads');
     }
 
+    public function deleteAllUploads(Request $request)
+    {
+        $uploads = $request->user()->uploads()->get();
+        foreach ($uploads as $upload) {
+            $upload->forceDelete();
+        }
+
+        flash()->success(trans('messages.all_uploads_deleted'));
+
+        return redirect()->route('account.uploads');
+    }
+
     public function postResetKey(Request $request)
     {
         do {
