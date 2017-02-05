@@ -20,7 +20,7 @@ return [
     'confirmation_pending'      => 'Please check your email for a confirmation code from ' . config('mail.from.address'),
     'not_confirmed'             => 'Your account has not been confirmed. Please check your email for a confirmation code from ' . config('mail.from.address'),
     'no_such_confirmation_code' => 'We couldn\'t find a pending registration with that confirmation code.',
-    'delete_all_uploads'        => 'Delete uploads',
+    'delete_all_uploads'        => 'Delete all uploads',
     'confirm_deletion'          => 'Are you sure you want to delete all your uploads?',
     'all_uploads_deleted'       => 'All your uploads have been deleted',
     'admin'                     => [
