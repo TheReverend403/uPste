@@ -8,6 +8,13 @@
 
 @section('content')
     @if(count($uploads))
+        <div class="actions-area text-right">
+            <form action="{{ route('account.uploads.delete_all') }}" confirm="{{ trans('messages.confirm_deletion') }}" method="POST">
+                <button type="submit" class="btn btn-danger btn-sm" title="Delete" >{{ trans('messages.delete_all_uploads') }} <i class="fa fa-remove"></i></button>
+                {!! csrf_field() !!}
+            </form>
+        </div>
+        <br>
         @foreach ($uploads->chunk(2) as $chunk)
             <div class="row">
                 @foreach ($chunk as $upload)

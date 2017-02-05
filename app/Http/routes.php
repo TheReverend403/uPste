@@ -80,6 +80,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'u'], function () {
         Route::get('/', [
             'as' => 'account.uploads', 'uses' => 'Account\AccountController@getUploads']);
 
+        Route::post('/delete', [
+            'as' => 'account.uploads.delete_all', 'uses' => 'Account\AccountController@deleteAllUploads']);
+
         Route::post('{upload}/delete', [
             'as' => 'account.uploads.delete', 'uses' => 'Account\AccountController@deleteUpload']);
 
