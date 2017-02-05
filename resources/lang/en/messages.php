@@ -7,7 +7,7 @@ return [
     'upload_file_not_found'     => 'You didn\'t supply a file to upload.',
     'upload_quota_reached'      => 'You have reached the per-user storage quota of :limit.',
     'upload_too_large'          => 'This file exceeds the max upload size of :limit.',
-    'no_uploads_found'          => 'You do not have anything uploaded.',
+    'no_uploads_found'          => 'You do not currently have anything uploaded.',
     'could_not_write_image'     => 'Error occurred while saving file.',
     'could_not_read_image'      => 'Error occurred while reading file.',
     'unsupported_image'         => 'Unsupported image type.',
