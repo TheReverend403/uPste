@@ -37,7 +37,7 @@ class Helpers
                     ->header('Content-Disposition', sprintf('inline; filename="%s"', $upload->original_name));
                 break;
             default:
-                return response()->download($upload->getPath(true), $upload->original_name);
+                return response()->file($upload->getPath(true), ['Content-Disposition' => sprintf('inline; filename="%s"', $upload->original_name)]);
         }
     }
 
